@@ -26,12 +26,12 @@ class _ProfileState extends State<Profile> {
       widget.profile = myProfile;
       if (getLoggedF()){
         name = myProfile["name"];
-        photo = myProfile["picture"]["data"]["url"];
+        //photo = myProfile["picture"]["data"]["url"];
         email = myProfile["email"];
       }
       if (getLoggedG()){
         name = myProfile.displayName;
-        photo = myProfile.photoUrl;
+        //photo = myProfile.photoUrl;
         email = myProfile.email;
       }
     }));
@@ -41,7 +41,6 @@ class _ProfileState extends State<Profile> {
   void initState() {
     super.initState();
     check();
-    //data();
   }
 
 
@@ -56,7 +55,7 @@ class _ProfileState extends State<Profile> {
               mainAxisSize: MainAxisSize.min,
               children: [
                 Text ("$name"),
-                Image.network(photo, height: 150.0, width: 150.0,),
+                //Image.network(photo, height: 150.0, width: 150.0,),
                 Text ("$email"),
                 OutlineButton(
                   child: Text("See map"),

@@ -4,13 +4,12 @@ import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'displayMenuStation.dart';
 
 
-retrieveMessages() async {
+retrieveMessages(station) async {
 
-  var response = await DB.getDB().collection('messages').findOne({'name': "andrea"});
-  var list = response['messages'];
+  var response = await DB.getDB().collection('messages').find({'station': station}).toList();
 
-  //print('elenco messaggi: $b');
-  return list;
+  return response;
+
 }
 
 retrieveMarkers () async {
@@ -40,6 +39,10 @@ buildMarkers (response, context){
     ));
   }
   return _markers;
+}
+
+saveMessage (myEmail, myName, myText, myStation) async {
+  await DB.getDB().collection('messages').insertOne({'email': myEmail, 'name': myName, 'text': myText, 'station': myStation});
 }
 
 

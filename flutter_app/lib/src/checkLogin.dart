@@ -8,6 +8,9 @@ var checkFBlogin;
 var checkGlogin;
 bool isLoggedG = false;
 bool isLoggedF = false;
+var name;
+var email;
+var photo;
 
 checkSession () async {
   if (checkFBlogin!=null){
@@ -17,6 +20,9 @@ checkSession () async {
         final graphResponse = await http.get('https://graph.facebook.com/v2.12/me?fields=name,picture,email&access_token=${token}');
         final profile = JSON.jsonDecode(graphResponse.body);
         isLoggedF = true;
+        name = profile['name'];
+        photo = profile["picture"]["data"]["url"];
+        email = profile["email"];
         return profile;
         break;
       case FacebookLoginStatus.cancelledByUser:
@@ -27,6 +33,9 @@ checkSession () async {
   }
   if (await checkGlogin.isSignedIn()){
     isLoggedG = true;
+    name = checkGlogin.currentUser.displayName;
+    photo = checkGlogin.currentUser.photoUrl;
+    email = checkGlogin.currentUser.email;
     return checkGlogin.currentUser;
   }
 
@@ -46,6 +55,18 @@ getLoggedG (){
 
 getLoggedF (){
   return isLoggedF;
+}
+
+getName(){
+  return name;
+}
+
+getEmail(){
+  return email;
+}
+
+getPhoto (){
+  return photo;
 }
 
 
