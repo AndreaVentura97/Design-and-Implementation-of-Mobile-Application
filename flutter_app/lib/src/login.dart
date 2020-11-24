@@ -4,6 +4,10 @@ import 'package:http/http.dart' as http;
 import 'dart:convert' as JSON;
 import 'profile.dart';
 import 'package:google_sign_in/google_sign_in.dart';
+import 'checkLogin.dart';
+
+
+
 
 class Login extends StatefulWidget {
   @override
@@ -20,8 +24,9 @@ class _LoginState extends State<Login> {
   final facebookLogin = FacebookLogin();
   GoogleSignIn _googleSignIn = GoogleSignIn(scopes: ['email']);
 
-  _loginWithFB() async{
+  _loginWithFB() async {
     final result = await facebookLogin.logIn(['email']);
+    setCheckFb(result);
     switch (result.status) {
       case FacebookLoginStatus.loggedIn:
         final token = result.accessToken.token;
@@ -34,7 +39,7 @@ class _LoginState extends State<Login> {
         });
 
         Navigator.push(context, MaterialPageRoute(builder:(context)=>
-        Profile(name: userProfile["name"], photo: userProfile["picture"]["data"]["url"], email: userProfile["email"])),);
+        Profile()));
 
         break;
 
@@ -54,8 +59,9 @@ class _LoginState extends State<Login> {
       setState(() {
         _isLoggedInG = true;
       });
+      setCheckG(_googleSignIn);
       Navigator.push(context, MaterialPageRoute(builder:(context)=>
-    Profile(name: _googleSignIn.currentUser.displayName, photo: _googleSignIn.currentUser.photoUrl, email: _googleSignIn.currentUser.email)),);
+    Profile()),);
 
     } catch (err){
       print(err);

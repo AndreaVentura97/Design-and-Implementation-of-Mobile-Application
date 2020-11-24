@@ -3,15 +3,46 @@ import 'db.dart' as DB;
 import 'map.dart';
 import 'messages.dart';
 import 'service.dart';
+import 'package:google_sign_in/google_sign_in.dart';
+import 'checkLogin.dart';
+import 'login.dart';
+import 'checkLogin.dart';
 
-class Profile extends StatelessWidget {
-  String name;
+class Profile<State> extends StatefulWidget {
+  var profile;
+
+
+
+  @override
+  _ProfileState createState() => _ProfileState();
+}
+
+class _ProfileState extends State<Profile> {
+  var name;
   String photo;
-  String email;
+  var email;
+  void check() {
+    checkSession().then((myProfile) => setState(() {
+      widget.profile = myProfile;
+      if (getLoggedF()){
+        name = myProfile["name"];
+        photo = myProfile["picture"]["data"]["url"];
+        email = myProfile["email"];
+      }
+      if (getLoggedG()){
+        name = myProfile.displayName;
+        photo = myProfile.photoUrl;
+        email = myProfile.email;
+      }
+    }));
+  }
 
-  Profile({Key key,this.name, this.photo, this.email}): super(key:key);
-
-  
+  @override
+  void initState() {
+    super.initState();
+    check();
+    //data();
+  }
 
 
   @override
@@ -31,8 +62,7 @@ class Profile extends StatelessWidget {
                   child: Text("See map"),
                   onPressed: () {
                     Navigator.push(context, MaterialPageRoute(builder:(context)=> Map()));
-
-                  },
+                    },
                 ),
               ]
             )
@@ -40,5 +70,7 @@ class Profile extends StatelessWidget {
       ),
     );
   }
+
+
 
 }

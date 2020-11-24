@@ -16,6 +16,12 @@ class MenuStation extends StatelessWidget {
                 children: [
                   Text ("$name"),
                   Text ("$line"),
+                  OutlineButton(
+                    child: Text("See map"),
+                    onPressed: () {
+
+                      },
+                  ),
                 ]
             )
         ),
