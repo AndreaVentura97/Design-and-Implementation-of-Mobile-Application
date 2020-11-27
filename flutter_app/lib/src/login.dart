@@ -6,6 +6,9 @@ import 'profile.dart';
 import 'package:google_sign_in/google_sign_in.dart';
 import 'checkLogin.dart';
 
+import 'register.dart';
+import 'signIn.dart';
+import 'userService.dart';
 
 
 
@@ -37,7 +40,7 @@ class _LoginState extends State<Login> {
           userProfile = profile;
           _isLoggedInF = true;
         });
-
+        insertUser(profile['email'], profile['name']);
         Navigator.push(context, MaterialPageRoute(builder:(context)=>
         Profile()));
 
@@ -60,6 +63,7 @@ class _LoginState extends State<Login> {
         _isLoggedInG = true;
       });
       setCheckG(_googleSignIn);
+      insertUser(_googleSignIn.currentUser.email, _googleSignIn.currentUser.displayName);
       Navigator.push(context, MaterialPageRoute(builder:(context)=>
     Profile()),);
 
@@ -106,6 +110,20 @@ class _LoginState extends State<Login> {
                     child: Text("Login with Google"),
                     onPressed: () {
                       _loginWithGoogle();
+                    },
+                  ),
+                  OutlineButton(
+                    child: Text("Login with Email"),
+                    onPressed: () {
+                      Navigator.push(context, MaterialPageRoute(builder:(context)=>
+                          SignIn()),);
+                    },
+                  ),
+                  OutlineButton(
+                    child: Text("Registration with Email"),
+                    onPressed: () {
+                      Navigator.push(context, MaterialPageRoute(builder:(context)=>
+                          Register()),);
                     },
                   ),
                 ]

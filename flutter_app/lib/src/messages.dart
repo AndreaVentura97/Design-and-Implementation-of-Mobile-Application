@@ -2,12 +2,6 @@ import 'package:flutter/material.dart';
 import 'service.dart';
 
 
-
-
-
-
-
-
 class Messages extends StatefulWidget {
   String station = "";
 

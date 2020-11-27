@@ -2,6 +2,8 @@ import 'package:flutter/material.dart';
 import 'service.dart';
 import 'checkLogin.dart';
 import 'messages.dart';
+import 'userService.dart';
+import 'checkLogin.dart';
 
 class MenuStation extends StatefulWidget {
   var profile;
@@ -67,6 +69,12 @@ class _MenuStationState extends State<MenuStation> {
                     onPressed: () {
                       Navigator.push(context, MaterialPageRoute(builder:(context)=>
                           Messages(station: widget.name)),);
+                    },
+                  ),
+                  OutlineButton(
+                    child: Text("Add to my stations"),
+                    onPressed: () {
+                      addMyStations(getEmail(), widget.name);
                     },
                   ),
                 ]

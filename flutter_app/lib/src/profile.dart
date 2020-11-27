@@ -7,10 +7,13 @@ import 'package:google_sign_in/google_sign_in.dart';
 import 'checkLogin.dart';
 import 'login.dart';
 import 'checkLogin.dart';
+import 'userService.dart';
+import 'myStations.dart';
+import 'package:flutter_countdown_timer/flutter_countdown_timer.dart' as Timer;
 
 class Profile<State> extends StatefulWidget {
   var profile;
-
+  var myStations;
 
 
   @override
@@ -29,11 +32,22 @@ class _ProfileState extends State<Profile> {
         photo = myProfile["picture"]["data"]["url"];
         email = myProfile["email"];
       }
-      if (getLoggedG()){
+      else if (getLoggedG()){
         name = myProfile.displayName;
         //photo = myProfile.photoUrl;
         email = myProfile.email;
       }
+      else if (getLoggedM()){
+      name = checkMemail.displayName;
+      email = checkMemail.email;
+      }
+
+    }));
+  }
+
+  void takeMyStations (){
+    retrieveMyStations(getEmail()).then((stations)=> setState((){
+      widget.myStations = stations;
     }));
   }
 
@@ -41,6 +55,7 @@ class _ProfileState extends State<Profile> {
   void initState() {
     super.initState();
     check();
+    takeMyStations();
   }
 
 
@@ -77,7 +92,7 @@ class _ProfileState extends State<Profile> {
             children: [
               Row(
                 children: [
-                  Image.network(photo, height: 150.0, width: 150.0,),
+                  //Image.network(photo, height: 150.0, width: 150.0,),
                   Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
@@ -127,6 +142,12 @@ class _ProfileState extends State<Profile> {
                 child: Text("See map"),
                 onPressed: () {
                   Navigator.push(context, MaterialPageRoute(builder:(context)=> Map()));
+                },
+              ),
+              OutlineButton(
+                child: Text("See my favourite stations"),
+                onPressed: () {
+                  Navigator.push(context, MaterialPageRoute(builder:(context)=> MyStations (myStations: widget.myStations)));
                 },
               ),
             ]

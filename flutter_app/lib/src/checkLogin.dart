@@ -6,8 +6,10 @@ import 'dart:convert' as JSON;
 
 var checkFBlogin;
 var checkGlogin;
+var checkMemail;
 bool isLoggedG = false;
 bool isLoggedF = false;
+bool isLoggedM = false;
 var name;
 var email;
 var photo;
@@ -31,12 +33,18 @@ checkSession () async {
         break;
     }
   }
-  if (await checkGlogin.isSignedIn()){
+  if (checkGlogin != null){
     isLoggedG = true;
     name = checkGlogin.currentUser.displayName;
     photo = checkGlogin.currentUser.photoUrl;
     email = checkGlogin.currentUser.email;
     return checkGlogin.currentUser;
+  }
+  if (isLoggedM){
+    name = checkMemail.displayName;
+    email = checkMemail.email;
+    photo = checkMemail.photoURL;
+    return checkMemail;
   }
 
 }
@@ -47,6 +55,10 @@ checkSession () async {
 
 setCheckG(result){
   checkGlogin = result;
+}
+
+setCheckF(result){
+  checkMemail = result;
 }
 
 getLoggedG (){
@@ -63,6 +75,14 @@ getName(){
 
 getEmail(){
   return email;
+}
+
+setLoggedMail (flag){
+  isLoggedM = flag;
+}
+
+getLoggedM() {
+  return isLoggedM;
 }
 
 getPhoto (){
