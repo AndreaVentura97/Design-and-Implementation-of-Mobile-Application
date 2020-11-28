@@ -2,6 +2,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'checkLogin.dart';
 import 'profile.dart';
+import 'adminScreen.dart';
 
 class SignIn extends StatefulWidget {
   @override
@@ -88,7 +89,7 @@ class _SignInState extends State<SignIn> {
   }
 
   void _signInWithEmailAndPassword() async {
-    try {
+    //try {
       final User user = (await _auth.signInWithEmailAndPassword(
         email: _emailController.text,
         password: _passwordController.text,
@@ -97,16 +98,24 @@ class _SignInState extends State<SignIn> {
       //if (!user.emailVerified) {
         //await user.sendEmailVerification();
       //}
-      setCheckF(user);
-      setLoggedMail(true);
-      Navigator.of(context).pushReplacement(MaterialPageRoute(builder: (_) {
-        return Profile();
-      }));
-    } catch (e) {
-      Scaffold.of(context).showSnackBar(SnackBar(
-        content: Text("Failed to sign in with Email & Password"),
-      ));
-    }
+      if (_emailController.text == "admin@live.it" && _passwordController.text == "adminadmin"){
+        Navigator.of(context).pushReplacement(MaterialPageRoute(builder: (_) {
+          return AdminScreen();
+        }));
+      }
+      else {
+        setCheckF(user);
+        setLoggedMail(true);
+        Navigator.of(context).pushReplacement(MaterialPageRoute(builder: (_) {
+          return Profile();
+        }));
+      }
+
+    //} catch (e) {
+      //Scaffold.of(context).showSnackBar(SnackBar(
+      //  content: Text("Failed to sign in with Email & Password"),
+      //));
+    //}
   }
 
   void _signOut() async {
