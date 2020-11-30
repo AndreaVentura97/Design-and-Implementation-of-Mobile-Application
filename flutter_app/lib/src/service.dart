@@ -5,11 +5,8 @@ import 'displayMenuStation.dart';
 
 
 retrieveMessages(station) async {
-
   var response = await DB.getDB().collection('messages').find({'station': station}).toList();
-
   return response;
-
 }
 
 retrieveMarkers () async {
@@ -32,10 +29,11 @@ buildMarkers (response, context){
         infoWindow: InfoWindow (
           title: name,
           snippet: line,
+            onTap: (){
+              Navigator.push(context, MaterialPageRoute(builder:(context)=>MenuStation(name:name, line:line)));
+            }
         ),
-        onTap: (){
-          Navigator.push(context, MaterialPageRoute(builder:(context)=>MenuStation(name:name, line:line)));
-        }
+
     ));
   }
   return _markers;
