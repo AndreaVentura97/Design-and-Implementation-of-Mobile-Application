@@ -29,7 +29,13 @@ class _LoginState extends State<Login> {
 
   getprefs() async {
     getLogged().then((log)=> setState((){
-      isLogged = log;
+      if (log!=null){
+        isLogged = log;
+      }
+      else {
+        isLogged = false;
+      }
+
     }));
   }
 
