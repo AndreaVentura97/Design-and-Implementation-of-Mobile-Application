@@ -1,15 +1,14 @@
 import 'package:flutter/material.dart';
 import 'db.dart' as DB;
 import 'map.dart';
-import 'messages.dart';
-import 'service.dart';
-import 'package:google_sign_in/google_sign_in.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 import 'checkLogin.dart';
 import 'login.dart';
 import 'checkLogin.dart';
 import 'userService.dart';
 import 'myStations.dart';
-import 'package:flutter_countdown_timer/flutter_countdown_timer.dart' as Timer;
+
+
 
 class Profile<State> extends StatefulWidget {
   var profile;
@@ -24,38 +23,26 @@ class _ProfileState extends State<Profile> {
   var name;
   String photo;
   var email;
-  void check() {
-    checkSession().then((myProfile) => setState(() {
-      widget.profile = myProfile;
-      if (getLoggedF()){
-        name = myProfile["name"];
-        photo = myProfile["picture"]["data"]["url"];
-        email = myProfile["email"];
-      }
-      else if (getLoggedG()){
-        name = myProfile.displayName;
-        //photo = myProfile.photoUrl;
-        email = myProfile.email;
-      }
-      else if (getLoggedM()){
-      name = checkMemail.displayName;
-      email = checkMemail.email;
-      }
 
+  bool status;
+
+  void takeProfile() {
+    exportProfile().then((myProfile)=> setState((){
+      name = myProfile[0];
+      email = myProfile[1];
+      photo = myProfile[2];
     }));
   }
 
-  void takeMyStations (){
-    retrieveMyStations(getEmail()).then((stations)=> setState((){
-      widget.myStations = stations;
-    }));
-  }
+
+
+
 
   @override
   void initState() {
     super.initState();
-    check();
-    takeMyStations();
+    takeProfile();
+
   }
 
 
@@ -147,7 +134,14 @@ class _ProfileState extends State<Profile> {
               OutlineButton(
                 child: Text("See my favourite stations"),
                 onPressed: () {
-                  Navigator.push(context, MaterialPageRoute(builder:(context)=> MyStations (myStations: widget.myStations)));
+                  Navigator.push(context, MaterialPageRoute(builder:(context)=> MyStations (email: email)));
+                },
+              ),
+              OutlineButton(
+                child: Text("Logout"),
+                onPressed: () {
+                  setLogged(false);
+                  Navigator.push(context, MaterialPageRoute(builder:(context)=> Login()));
                 },
               ),
             ]

@@ -1,93 +1,60 @@
-import 'package:flutter/material.dart';
-import 'package:flutter_facebook_login/flutter_facebook_login.dart';
-import 'package:http/http.dart' as http;
-import 'dart:convert' as JSON;
+import 'package:shared_preferences/shared_preferences.dart';
 
-
-var checkFBlogin;
-var checkGlogin;
-var checkMemail;
-bool isLoggedG = false;
-bool isLoggedF = false;
-bool isLoggedM = false;
 var name;
 var email;
 var photo;
 
-checkSession () async {
-  if (checkFBlogin!=null){
-    switch (checkFBlogin.status){
-      case FacebookLoginStatus.loggedIn:
-        final token = checkFBlogin.accessToken.token;
-        final graphResponse = await http.get('https://graph.facebook.com/v2.12/me?fields=name,picture,email&access_token=${token}');
-        final profile = JSON.jsonDecode(graphResponse.body);
-        isLoggedF = true;
-        name = profile['name'];
-        photo = profile["picture"]["data"]["url"];
-        email = profile["email"];
-        return profile;
-        break;
-      case FacebookLoginStatus.cancelledByUser:
-        break;
-      case FacebookLoginStatus.error:
-        break;
-    }
-  }
-  if (checkGlogin != null){
-    isLoggedG = true;
-    name = checkGlogin.currentUser.displayName;
-    photo = checkGlogin.currentUser.photoUrl;
-    email = checkGlogin.currentUser.email;
-    return checkGlogin.currentUser;
-  }
-  if (isLoggedM){
-    name = checkMemail.displayName;
-    email = checkMemail.email;
-    photo = checkMemail.photoURL;
-    return checkMemail;
-  }
-
+checkSession (name,email,photo) async {
+  SharedPreferences prefs = await SharedPreferences.getInstance();
+  prefs.setString("name", name);
+  prefs.setString("email", email);
+  if (photo!=null) prefs.setString("photo", photo);
+  name = prefs.getString("name");
+  email = prefs.getString("email");
+  photo = prefs.getString("photo");
+  prefs.setBool("log", true);
+  return true;
 }
 
- setCheckFb (result){
-  checkFBlogin = result;
+getLogged() async {
+  SharedPreferences prefs = await SharedPreferences.getInstance();
+  var flag = prefs.getBool("log");
+  return flag;
 }
 
-setCheckG(result){
-  checkGlogin = result;
+exportProfile() async {
+  SharedPreferences prefs = await SharedPreferences.getInstance();
+  String n,p,e;
+  n = prefs.getString("name");
+  e = prefs.getString("email");
+  p = prefs.getString("photo");
+  var profile = [n, e, p];
+  print(profile);
+  return profile;
 }
 
-setCheckF(result){
-  checkMemail = result;
-}
-
-getLoggedG (){
-  return isLoggedG;
-}
-
-getLoggedF (){
-  return isLoggedF;
-}
-
-getName(){
+getName() {
   return name;
 }
 
-getEmail(){
+getEmail() {
   return email;
-}
-
-setLoggedMail (flag){
-  isLoggedM = flag;
-}
-
-getLoggedM() {
-  return isLoggedM;
 }
 
 getPhoto (){
   return photo;
 }
+
+setLogged(flag) async {
+  SharedPreferences prefs = await SharedPreferences.getInstance();
+  prefs.setBool("log", flag);
+}
+
+
+
+
+
+
 
 
 

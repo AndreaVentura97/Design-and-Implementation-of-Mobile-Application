@@ -1,10 +1,34 @@
 import 'package:flutter/material.dart';
+import 'userService.dart';
+
+class MyStations extends StatefulWidget {
+  var email;
+  MyStationsState createState() => MyStationsState();
+  MyStations({Key key, this.email}) : super(key: key);
+
+}
 
 
-class MyStations extends StatelessWidget {
+class MyStationsState extends State<MyStations> {
   List myStations = [];
 
-  MyStations({Key key, this.myStations}) : super(key: key);
+
+
+  void takeMyStations (){
+    retrieveMyStations(widget.email).then((stations)=> setState((){
+      myStations = stations;
+    }));
+  }
+
+  @override
+  void initState() {
+    super.initState();
+
+    takeMyStations();
+  }
+
+
+
 
   Widget build(BuildContext context) {
     return MaterialApp(

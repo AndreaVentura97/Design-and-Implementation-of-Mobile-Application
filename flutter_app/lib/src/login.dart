@@ -5,11 +5,11 @@ import 'dart:convert' as JSON;
 import 'profile.dart';
 import 'package:google_sign_in/google_sign_in.dart';
 import 'checkLogin.dart';
-
 import 'register.dart';
 import 'signIn.dart';
 import 'userService.dart';
-
+import 'checkLogin.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 
 class Login extends StatefulWidget {
@@ -21,15 +21,27 @@ class Login extends StatefulWidget {
 }
 
 class _LoginState extends State<Login> {
-  bool _isLoggedInF = false;
-  bool _isLoggedInG = false;
+  bool isLogged = false;
+
   Map userProfile;
   final facebookLogin = FacebookLogin();
   GoogleSignIn _googleSignIn = GoogleSignIn(scopes: ['email']);
 
+  getprefs() async {
+    getLogged().then((log)=> setState((){
+      isLogged = log;
+    }));
+  }
+
+
+  void initState() {
+    super.initState();
+    getprefs();
+  }
+
+
   _loginWithFB() async {
     final result = await facebookLogin.logIn(['email']);
-    setCheckFb(result);
     switch (result.status) {
       case FacebookLoginStatus.loggedIn:
         final token = result.accessToken.token;
@@ -38,54 +50,33 @@ class _LoginState extends State<Login> {
         //print(profile);
         setState(() {
           userProfile = profile;
-          _isLoggedInF = true;
+          isLogged = true;
         });
         insertUser(profile['email'], profile['name']);
-        Navigator.push(context, MaterialPageRoute(builder:(context)=>
-        Profile()));
-
+        checkSession(profile['name'], profile['email'], profile["picture"]["data"]["url"]);
         break;
-
-      case FacebookLoginStatus.cancelledByUser:
-        setState(() => _isLoggedInF = false );
+        case FacebookLoginStatus.cancelledByUser:
+        setState(() => isLogged = false );
         break;
       case FacebookLoginStatus.error:
-        setState(() => _isLoggedInF = false );
+        setState(() => isLogged = false );
         break;
     }
-
   }
 
   _loginWithGoogle() async{
     try{
       await _googleSignIn.signIn();
       setState(() {
-        _isLoggedInG = true;
+        isLogged = true;
       });
-      setCheckG(_googleSignIn);
       insertUser(_googleSignIn.currentUser.email, _googleSignIn.currentUser.displayName);
-      Navigator.push(context, MaterialPageRoute(builder:(context)=>
-    Profile()),);
-
+      checkSession(_googleSignIn.currentUser.displayName, _googleSignIn.currentUser.email, _googleSignIn.currentUser.photoUrl);
     } catch (err){
       print(err);
     }
   }
 
-
-  _logoutF(){
-    facebookLogin.logOut();
-    setState(() {
-      _isLoggedInF = false;
-    });
-  }
-
-  _logoutG(){
-    _googleSignIn.signOut();
-    setState(() {
-      _isLoggedInG = false;
-    });
-  }
 
 
 
@@ -96,7 +87,7 @@ class _LoginState extends State<Login> {
     return MaterialApp(
       home: Scaffold(
         body: Center(
-            child: Column (
+            child: (!isLogged) ? Column (
                 crossAxisAlignment: CrossAxisAlignment.start,
                 mainAxisSize: MainAxisSize.min,
                 children: [
@@ -128,7 +119,7 @@ class _LoginState extends State<Login> {
                   ),
                 ]
 
-            )
+            ) : Profile()
             ),
       ),
     );

@@ -104,8 +104,7 @@ class _SignInState extends State<SignIn> {
         }));
       }
       else {
-        setCheckF(user);
-        setLoggedMail(true);
+
         Navigator.of(context).pushReplacement(MaterialPageRoute(builder: (_) {
           return Profile();
         }));

@@ -17,11 +17,14 @@ class MenuStation extends StatefulWidget {
 class _MenuStationState extends State<MenuStation> {
   final myController = TextEditingController();
 
+
   void check() {
-    checkSession().then((myProfile) => setState(() {
+    exportProfile().then((myProfile) => setState(() {
       widget.profile = myProfile;
     }));
   }
+
+
 
   @override
   void initState() {
@@ -59,8 +62,8 @@ class _MenuStationState extends State<MenuStation> {
                   OutlineButton(
                     child: Text("Send comment"),
                     onPressed: () {
-                      var name = getName();
-                      var email = getEmail();
+                      var name = widget.profile[0];
+                      var email = widget.profile[1];
                       saveMessage(name, email, myController.text, widget.name);
                     },
                   ),
@@ -81,7 +84,7 @@ class _MenuStationState extends State<MenuStation> {
                   OutlineButton(
                     child: Text("Add to my stations"),
                     onPressed: () {
-                      addMyStations(getEmail(), widget.name);
+                      addMyStations(widget.profile[1], widget.name);
                     },
                   ),
                 ]
