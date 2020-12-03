@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'checkLogin.dart';
 import 'profile.dart';
 import 'adminScreen.dart';
+import 'package:rflutter_alert/rflutter_alert.dart';
 
 class SignIn extends StatefulWidget {
   @override
@@ -15,6 +16,7 @@ class _SignInState extends State<SignIn> {
   final TextEditingController _emailController = TextEditingController();
   final GlobalKey<ScaffoldState> _scaffoldKey = GlobalKey<ScaffoldState>();
   final TextEditingController _passwordController = TextEditingController();
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -89,35 +91,37 @@ class _SignInState extends State<SignIn> {
   }
 
   void _signInWithEmailAndPassword() async {
-    //try {
+    try {
       final User user = (await _auth.signInWithEmailAndPassword(
         email: _emailController.text,
         password: _passwordController.text,
       ))
           .user;
       //if (!user.emailVerified) {
-        //await user.sendEmailVerification();
+      //await user.sendEmailVerification();
       //}
-      if (_emailController.text == "admin@live.it" && _passwordController.text == "adminadmin"){
+      if (_emailController.text == "admin@live.it" &&
+          _passwordController.text == "adminadmin") {
         Navigator.of(context).pushReplacement(MaterialPageRoute(builder: (_) {
           return AdminScreen();
         }));
       }
       else {
-
         Navigator.of(context).pushReplacement(MaterialPageRoute(builder: (_) {
           return Profile();
         }));
       }
-
-    //} catch (e) {
-      //Scaffold.of(context).showSnackBar(SnackBar(
-      //  content: Text("Failed to sign in with Email & Password"),
-      //));
-    //}
+    } catch (e) {
+      var error= e.message;
+      _openPopup(error);
+    }
   }
 
-  void _signOut() async {
-    await _auth.signOut();
+  _openPopup(e) {
+    Alert(
+      context: context,
+      title: "ERROR",
+      content: Text("$e"),
+    ).show();
   }
 }
