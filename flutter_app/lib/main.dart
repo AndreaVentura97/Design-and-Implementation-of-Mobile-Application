@@ -14,25 +14,16 @@ void main () async {
   server.listen(port, callback: () {
     print('Server listening on port: $port');
   });
-  DB.start();
+  //DB.start();
   WidgetsFlutterBinding.ensureInitialized();
   await Firebase.initializeApp();
-  //prefs = await returnPrefs();
-  //if (await prefs.getBool("pref_logG") || await prefs.getBool("pref_logM") || await prefs.getBool("pref_logF")){
-    //print(await prefs.getBool("pref_logG"));
-    //runApp(Profile());
-  //}
-
-
-
   runApp(MyApp());
 }
 
 
-
+/*
 class MyApp extends StatelessWidget {
   bool flag;
-
   MyApp({Key key, this.flag}) : super(key: key);
 
   @override
@@ -47,5 +38,38 @@ class MyApp extends StatelessWidget {
     );
   }
 }
+*/
 
+class MyApp extends StatefulWidget {
+  MyAppState createState() => MyAppState();
+}
+
+class MyAppState extends State<MyApp>{
+  bool ready = false;
+
+  void setReady() {
+    DB.start().then((result) => setState(() {
+      ready = result;
+    }));
+  }
+  @override
+  void initState() {
+    super.initState();
+    setReady();
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return MaterialApp(
+        title: 'Flutter App',
+        theme: ThemeData(
+          primarySwatch: Colors.blue,
+          visualDensity: VisualDensity.adaptivePlatformDensity,
+        ),
+        home: (ready) ? Login () :
+            Text(("Loading")));
+
+    }
+
+}
 
