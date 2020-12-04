@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'userService.dart';
+import 'displayMenuStation.dart';
 
 class MyStations extends StatefulWidget {
   var email;
@@ -49,6 +50,9 @@ class MyStationsState extends State<MyStations> {
                           fontWeight: FontWeight.w500,
                           color: Colors.black)),
 
+                  onTap: (){
+                    Navigator.push(context, MaterialPageRoute(builder:(context)=>MenuStation(name:myStations[index])));
+                  },
                 );
               },
             )

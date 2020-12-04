@@ -67,9 +67,14 @@ class MyAppState extends State<MyApp>{
           visualDensity: VisualDensity.adaptivePlatformDensity,
         ),
         home: (ready) ? Login () :
-            Text(("Loading")));
+            Center (
+              child: Text("Loading")
+            )
 
-    }
+
+    );
+  }
 
 }
+
 

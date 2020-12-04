@@ -28,6 +28,9 @@ exportProfile() async {
   n = prefs.getString("name");
   e = prefs.getString("email");
   p = prefs.getString("photo");
+  name = p;
+  email = e;
+  photo = p;
   var profile = [n, e, p];
   print(profile);
   return profile;

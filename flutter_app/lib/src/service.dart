@@ -30,7 +30,7 @@ buildMarkers (response, context){
           title: name,
           snippet: line,
             onTap: (){
-              Navigator.push(context, MaterialPageRoute(builder:(context)=>MenuStation(name:name, line:line)));
+              Navigator.push(context, MaterialPageRoute(builder:(context)=>MenuStation(name:name)));
             }
         ),
 
