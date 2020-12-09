@@ -103,7 +103,6 @@ class _RegisterState extends State<Register> {
         //}
         await user.updateProfile(displayName: _displayName.text);
         final user1 = _auth.currentUser;
-
         checkSession(user1.displayName, user1.email, null);
         insertUser(user1.email,user1.displayName);
         Navigator.of(context).pushReplacement(MaterialPageRoute(
@@ -125,3 +124,4 @@ class _RegisterState extends State<Register> {
     ).show();
   }
 }
+

@@ -95,6 +95,7 @@ class _LoginState extends State<Login> {
     }
   }
 
+  @override
   void dispose() {
     _emailController.dispose();
     _passwordController.dispose();
@@ -117,13 +118,19 @@ class _LoginState extends State<Login> {
           return AdminScreen();
         }));
       } else {
+        checkSession(user.displayName,
+            user.email, null);
+        insertUser(user.email, user.displayName);
         Navigator.of(context).pushReplacement(MaterialPageRoute(builder: (_) {
           return Profile();
         }));
       }
     } catch (e) {
+      await setLogged(false);
+      isLogged = false;
       var error = e.message;
-      _openPopup(error);
+        _openPopup(error);
+
     }
   }
 
@@ -134,6 +141,8 @@ class _LoginState extends State<Login> {
       content: Text("$e"),
     ).show();
   }
+
+
 
   @override
   Widget build(BuildContext context) {
@@ -294,6 +303,7 @@ class _LoginState extends State<Login> {
   Widget withEmailPassword() {
     return Form(
       key: _formKey,
+
       //child: Card(
 
       child: Column(

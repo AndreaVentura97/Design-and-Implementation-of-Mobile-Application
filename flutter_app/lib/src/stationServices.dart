@@ -40,15 +40,12 @@ updateMeanClean (station) async {
     return avg;
   }
   avg = total/n;
-
   await DB.getDB().collection('markers').update({'name': station}, {"\$set": {"avgClean":avg}});
   return avg;
 }
 
 retrieveMeanClean(station) async {
   var response = await DB.getDB().collection('markers').findOne({'name': station});
-
   double avg = response['avgClean'];
-
   return avg;
 }
