@@ -8,15 +8,11 @@ import 'profile.dart';
 import 'package:google_sign_in/google_sign_in.dart';
 import 'checkLogin.dart';
 import 'register.dart';
-import 'signIn.dart';
 import 'userService.dart';
-import 'checkLogin.dart';
-import 'package:shared_preferences/shared_preferences.dart';
 import 'package:firebase_auth/firebase_auth.dart';
-import 'checkLogin.dart';
-import 'profile.dart';
 import 'adminScreen.dart';
-import 'package:rflutter_alert/rflutter_alert.dart';
+import 'alert.dart';
+
 
 class Login extends StatefulWidget {
   @override
@@ -121,28 +117,18 @@ class _LoginState extends State<Login> {
         checkSession(user.displayName,
             user.email, null);
         insertUser(user.email, user.displayName);
-        Navigator.of(context).pushReplacement(MaterialPageRoute(builder: (_) {
-          return Profile();
-        }));
+        Navigator.of(context).pushReplacement(MaterialPageRoute(
+            builder: (context) =>
+                Profile()));
       }
     } catch (e) {
       await setLogged(false);
       isLogged = false;
       var error = e.message;
-        _openPopup(error);
+      showAlertDialog(context, error);
 
     }
   }
-
-  _openPopup(e) {
-    Alert(
-      context: context,
-      title: "ERROR",
-      content: Text("$e"),
-    ).show();
-  }
-
-
 
   @override
   Widget build(BuildContext context) {
@@ -194,11 +180,11 @@ class _LoginState extends State<Login> {
                                 crossAxisAlignment: CrossAxisAlignment.center,
                                 children: <Widget>[
                                   withEmailPassword(),
+
                                 ],
                               ),
                             ),
-
-                            Container(
+                          Container(
                               color: Colors.black,
                               margin: EdgeInsets.symmetric(horizontal: 30.0),
                               child: Column(
@@ -305,7 +291,6 @@ class _LoginState extends State<Login> {
       key: _formKey,
 
       //child: Card(
-
       child: Column(
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
@@ -411,4 +396,12 @@ class _LoginState extends State<Login> {
       //)
     );
   }
+
+
+
+
 }
+
+
+
+
