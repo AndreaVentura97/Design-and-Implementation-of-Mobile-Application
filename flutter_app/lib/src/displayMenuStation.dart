@@ -23,6 +23,14 @@ class _MenuStationState extends State<MenuStation> {
   double valueClean;
   double valueMeanClean;
   bool voting = false;
+  int _currentIndex = 0;
+
+  final tabs =[
+    Center(child: Text("First Page")),
+    Center(child: Text("Second Page")),
+    Center(child: Text("Third Page")),
+    Center(child: Text("Fourth Page"))
+  ];
 
   void check() {
     exportProfile().then((myProfile) => setState(() {
@@ -73,7 +81,13 @@ class _MenuStationState extends State<MenuStation> {
   Widget build(BuildContext context) {
     return MaterialApp(
       home: Scaffold(
-        body: Center(
+        appBar: AppBar(
+          title: Center(
+            child: Text("${widget.name}")
+          )
+        ),
+        body: tabs[_currentIndex],
+        /*Center(
             child: Column (
                 crossAxisAlignment: CrossAxisAlignment.start,
                 mainAxisSize: MainAxisSize.min,
@@ -156,6 +170,41 @@ class _MenuStationState extends State<MenuStation> {
                       ) : Text("Loading")
                 ]
             )
+        ),
+
+
+         */
+        bottomNavigationBar: BottomNavigationBar(
+          currentIndex: _currentIndex,
+          //type: BottomNavigationBarType.fixed,
+          selectedFontSize: 15,
+          items: [
+            BottomNavigationBarItem(
+                icon: Icon(Icons.home),
+                title: Text("Page 1"),
+                backgroundColor: Colors.blue
+            ),
+            BottomNavigationBarItem(
+                icon: Icon(Icons.search),
+                title: Text("Page 2"),
+                backgroundColor: Colors.blue
+            ),
+            BottomNavigationBarItem(
+                icon: Icon(Icons.camera),
+                title: Text("Page 3"),
+                backgroundColor: Colors.blue
+            ),
+            BottomNavigationBarItem(
+                icon: Icon(Icons.person),
+                title: Text("Page 4"),
+                backgroundColor: Colors.blue
+            )
+          ],
+          onTap: (index){
+            setState(() {
+              _currentIndex = index;
+            });
+          },
         ),
       ),
     );

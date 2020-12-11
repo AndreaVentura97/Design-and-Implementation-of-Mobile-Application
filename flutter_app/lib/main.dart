@@ -69,7 +69,8 @@ class MyAppState extends State<MyApp>{
         home: (ready) ? Login () :
             Center (
               child: Text("Loading")
-            )
+            ),
+      debugShowCheckedModeBanner:false
 
 
     );

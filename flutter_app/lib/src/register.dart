@@ -1,9 +1,9 @@
-
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'profile.dart';
 import 'checkLogin.dart';
 import 'userService.dart';
+import 'package:auto_size_text/auto_size_text.dart';
 import 'package:rflutter_alert/rflutter_alert.dart';
 
 class Register extends StatefulWidget {
@@ -17,9 +17,13 @@ class _RegisterState extends State<Register> {
   final TextEditingController _displayName = TextEditingController();
   final TextEditingController _emailController = TextEditingController();
   final TextEditingController _passwordController = TextEditingController();
-
+  var _error;
   bool _isSuccess;
-  String _userEmail;
+  bool _secText = true;
+
+
+
+
   @override
   void dispose() {
     _emailController.dispose();
@@ -29,64 +33,237 @@ class _RegisterState extends State<Register> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      body: Center(
-        child: Form(
-            key: _formKey,
-            child: Card(
-              child: Padding(
-                padding: EdgeInsets.all(16),
+    var _blankFocusNode = new FocusNode();
+    var height = MediaQuery.of(context).size.height;
+    var padding = MediaQuery.of(context).padding;
+
+    return MaterialApp(
+      key: _formKey,
+      //backgroundColor: Colors.green,
+      home: Scaffold(
+        backgroundColor: Colors.green,
+        resizeToAvoidBottomInset: true,
+        resizeToAvoidBottomPadding: false,
+        body: SingleChildScrollView(
+          child: GestureDetector(
+            behavior: HitTestBehavior.opaque,
+            onTap: (){
+              FocusScope.of(context).requestFocus(_blankFocusNode);
+            },
+            child: SafeArea(
+              child: Container(
+                height: height - padding.top - padding.bottom,
+                margin: EdgeInsets.symmetric(horizontal: 25.0),
+                color: Colors.red,
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.center,
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: <Widget>[
-                    TextFormField(
-                      controller: _displayName,
-                      decoration: const InputDecoration(labelText: 'Full Name'),
-                      validator: (String value) {
-                        if (value.isEmpty) {
-                          return 'Please enter some text';
-                        }
-                        return null;
-                      },
-                    ),
-                    TextFormField(
-                      controller: _emailController,
-                      decoration: const InputDecoration(labelText: 'Email'),
-                      validator: (String value) {
-                        if (value.isEmpty) {
-                          return 'Please enter some text';
-                        }
-                        return null;
-                      },
-                    ),
-                    TextFormField(
-                      controller: _passwordController,
-                      decoration: const InputDecoration(labelText: 'Password'),
-                      validator: (String value) {
-                        if (value.isEmpty) {
-                          return 'Please enter some text';
-                        }
-                        return null;
-                      },
-                      obscureText: true,
-                    ),
+                  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                  mainAxisSize: MainAxisSize.max,
+                  children: [
+                    showAlert(),
+                    //Box Logo
                     Container(
-                      padding: const EdgeInsets.symmetric(vertical: 16.0),
-                      alignment: Alignment.center,
-                      child: OutlineButton(
-                        child: Text("Register"),
-                        onPressed: () async {
-                          if (_formKey.currentState.validate()) {
-                            _registerAccount();
-                          }
-                        },
+                      color: Colors.black,
+                      width: 200.0,
+                      height: 200.0,
+                      //margin: EdgeInsets.symmetric(vertical: 20.0),
+                      child: Column(
+                          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                          mainAxisSize: MainAxisSize.max,
+                          crossAxisAlignment: CrossAxisAlignment.center,
+                          children: [
+                            Container(
+                              width: 100.0,
+                              height: 100.0,
+                              color: Colors.grey,
+                            ),
+                            Text('Nome applicazione',
+                                style: TextStyle(
+                                  fontSize: 15.0,
+                                  color: Colors.grey,
+                                )),
+                          ]),
+                    ),
+                    Text(
+                      'Registration',
+                      style: TextStyle(
+                        color: Colors.white,
+                        fontSize: 25.0,
+                      ),
+                    ),
+                    Card(
+                      color: Colors.white,
+                      elevation: 5.0,
+                      shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(10.0)),
+                      margin: const EdgeInsets.symmetric(
+                          horizontal: 25.0),
+                      child: Center(
+                        child: Container(
+                          margin: EdgeInsets.all(8.0),
+                          //color: Colors.grey,
+                          child: Column(
+                            crossAxisAlignment: CrossAxisAlignment.center,
+                            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                            mainAxisSize: MainAxisSize.max,
+                            children: <Widget>[
+                              Container(
+                                margin: EdgeInsets.fromLTRB(0.0, 0.0, 0.0, 5.0),
+                                //color: Colors.grey[400],
+                                child: TextFormField(
+                                  controller: _displayName,
+                                  decoration: InputDecoration(
+                                    filled: true,
+                                    fillColor: Colors.grey[200],
+                                    contentPadding: EdgeInsets.zero,
+                                    prefixIcon: Icon(
+                                      Icons.person,
+                                      color: Colors.blue,
+                                    ),
+                                    labelText: 'Full Name',
+                                    labelStyle: TextStyle(
+                                      color: Colors.blue,
+                                      fontSize: 16.0,
+                                    ),
+                                    enabledBorder: OutlineInputBorder(
+                                      borderSide: BorderSide(
+                                          color: Colors.blue, width: 2.0),
+                                      borderRadius: BorderRadius.circular(10.0),
+                                    ),
+                                    focusedBorder: OutlineInputBorder(
+                                      borderSide: BorderSide(
+                                        color: Colors.blue,
+                                        width: 2.0,
+                                      ),
+                                      borderRadius: BorderRadius.circular(10.0),
+                                    ),
+                                  ),
+                                  textInputAction: TextInputAction.next,
+                                  validator: (String value) {
+                                    if (value.isEmpty) {
+                                      return 'Please enter some text';
+                                    }
+                                    return null;
+                                  },
+                                ),
+                              ),
+
+                              Container(
+                                margin: EdgeInsets.fromLTRB(0.0, 0.0, 0.0, 5.0),
+                                //color: Colors.grey[400],
+                                child: TextFormField(
+                                  controller: _emailController,
+                                  decoration: InputDecoration(
+                                    filled: true,
+                                    fillColor: Colors.grey[200],
+                                    contentPadding: EdgeInsets.zero,
+                                    prefixIcon: Icon(
+                                      Icons.mail,
+                                      color: Colors.blue,
+                                    ),
+                                    labelText: 'Email',
+                                    labelStyle: TextStyle(
+                                      color: Colors.blue,
+                                      fontSize: 16.0,
+                                    ),
+                                    enabledBorder: OutlineInputBorder(
+                                      borderSide: BorderSide(
+                                          color: Colors.blue, width: 2.0),
+                                      borderRadius: BorderRadius.circular(10.0),
+                                    ),
+                                    focusedBorder: OutlineInputBorder(
+                                      borderSide: BorderSide(
+                                        color: Colors.blue,
+                                        width: 2.0,
+                                      ),
+                                      borderRadius: BorderRadius.circular(10.0),
+                                    ),
+                                  ),
+                                  textInputAction: TextInputAction.next,
+                                  keyboardType: TextInputType.emailAddress,
+                                  validator: (String value) {
+                                    if (value.isEmpty) {
+                                      return 'Please enter some text';
+                                    }
+                                    return null;
+                                  },
+                                ),
+                              ),
+
+                              Container(
+                                margin: EdgeInsets.fromLTRB(0.0, 0.0, 0.0, 5.0),
+                                //color: Colors.grey[400],
+                                child: TextFormField(
+                                  controller: _passwordController,
+                                  decoration: InputDecoration(
+                                    filled: true,
+                                    fillColor: Colors.grey[200],
+                                    contentPadding: EdgeInsets.zero,
+                                    prefixIcon: Icon(
+                                      Icons.lock,
+                                      color: Colors.blue,
+                                    ),
+                                    labelText: 'Password',
+                                    labelStyle: TextStyle(
+                                      color: Colors.blue,
+                                      fontSize: 16.0,
+                                    ),
+                                    suffixIcon: IconButton(
+                                      icon: Icon(_secText
+                                          ? Icons.remove_red_eye
+                                          : Icons.remove_red_eye_outlined),
+                                      onPressed: () {
+                                        setState(() {
+                                          _secText = !_secText;
+                                        });
+                                      },
+                                    ),
+                                    enabledBorder: OutlineInputBorder(
+                                      borderSide: BorderSide(
+                                          color: Colors.blue, width: 2.0),
+                                      borderRadius: BorderRadius.circular(10.0),
+                                    ),
+                                    focusedBorder: OutlineInputBorder(
+                                      borderSide: BorderSide(
+                                        color: Colors.blue,
+                                        width: 2.0,
+                                      ),
+                                      borderRadius: BorderRadius.circular(10.0),
+                                    ),
+                                  ),
+                                  obscureText: _secText,
+                                  validator: (String value) {
+                                    if (value.isEmpty) {
+                                      return 'Please enter some text';
+                                    }
+                                    return null;
+                                  },
+                                ),
+                              ),
+
+                              Container(
+                                padding: const EdgeInsets.symmetric(vertical: 16.0),
+                                alignment: Alignment.center,
+                                child: OutlineButton(
+                                  child: Text("Register"),
+                                  onPressed: () async {
+                                    // if (_formKey.currentState.validate()) {
+                                       _registerAccount();
+                                    //}
+                                  },
+                                ),
+                              ),
+                            ],
+                          ),
+                        ),
                       ),
                     ),
                   ],
                 ),
               ),
-            )),
+            ),
+          ),
+        ),
       ),
     );
   }
@@ -96,7 +273,8 @@ class _RegisterState extends State<Register> {
       final User user = (await _auth.createUserWithEmailAndPassword(
         email: _emailController.text,
         password: _passwordController.text,
-      )).user;
+      ))
+          .user;
       if (user != null) {
         //if (!user.emailVerified) {
         //await user.sendEmailVerification();
@@ -104,24 +282,51 @@ class _RegisterState extends State<Register> {
         await user.updateProfile(displayName: _displayName.text);
         final user1 = _auth.currentUser;
         checkSession(user1.displayName, user1.email, null);
-        insertUser(user1.email,user1.displayName);
-        Navigator.of(context).pushReplacement(MaterialPageRoute(
-            builder: (context) => Profile()));
+        insertUser(user1.email, user1.displayName);
+        Navigator.of(context).pushReplacement(
+            MaterialPageRoute(builder: (context) => Profile()));
       } else {
         _isSuccess = false;
       }
-    }
-    catch (e) {
-      var error= e.message;
-      _openPopup(error);
+    } catch (e) {
+      setState(() {
+        _error = e.message;
+      });
+      showAlert();
     }
   }
-  _openPopup(e) {
-    Alert(
-        context: context,
-        title: "ERROR",
-        content: Text("$e"),
-    ).show();
+
+  Widget showAlert() {
+    if (_error != null)
+      return Container(
+        color: Colors.amber,
+        width: double.infinity,
+        padding: EdgeInsets.all(8.0),
+        child: Row(
+          children: [
+            Padding(
+              padding: const EdgeInsets.only(right: 8.0),
+              child: Icon(Icons.error_outline),
+            ),
+            Expanded(
+              child: AutoSizeText(
+                "$_error",
+                maxLines: 3,
+              ),
+            ),
+            IconButton(
+                icon: Icon(Icons.close),
+                onPressed: () {
+                  setState(() {
+                    _error = null;
+                  });
+                })
+          ],
+        ),
+      );
+    return SizedBox(
+      height: 0.0,
+    );
   }
 }
 

@@ -1,5 +1,7 @@
+/*
+
 import 'package:flutter/material.dart';
-import 'package:get/get.dart';
+import 'package:auto_size_text/auto_size_text.dart';
 
 showAlertDialog(context,e) {
   BuildContext dialogContext;
@@ -13,6 +15,7 @@ showAlertDialog(context,e) {
         //}));
       }
   );
+  /*
   AlertDialog alert = AlertDialog(
     title: Text("Error"),
     content: Text(e),
@@ -20,8 +23,14 @@ showAlertDialog(context,e) {
       okButton,
     ],
   );
+
+   */
   showDialog(context:context, builder: (BuildContext context) {
     dialogContext = context;
-    return alert;
+    return showAlert(dialogContext,e);
   });
 }
+
+ */
+
+
