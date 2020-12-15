@@ -1,11 +1,11 @@
 import 'package:flutter/material.dart';
-import 'service.dart';
-import 'checkLogin.dart';
+import '../services/service.dart';
+import '../checkLogin.dart';
 import 'messages.dart';
-import 'userService.dart';
+import '../services/userService.dart';
 import 'messagesByDate.dart';
-import 'stationServices.dart';
-import 'checkLogin.dart';
+import '../services/stationServices.dart';
+
 
 class MenuStation extends StatefulWidget {
   var profile;
@@ -86,8 +86,8 @@ class _MenuStationState extends State<MenuStation> {
             child: Text("${widget.name}")
           )
         ),
-        body: tabs[_currentIndex],
-        /*Center(
+        body: //tabs[_currentIndex],
+        Center(
             child: Column (
                 crossAxisAlignment: CrossAxisAlignment.start,
                 mainAxisSize: MainAxisSize.min,
@@ -108,18 +108,19 @@ class _MenuStationState extends State<MenuStation> {
                       saveMessage(name, email, myController.text, widget.name);
                     },
                   ),
-                  OutlineButton(
-                    child: Text("Retrieve all comments about this station "),
-                    onPressed: () {
-                      Navigator.push(context, MaterialPageRoute(builder:(context)=>
-                          Messages(station: widget.name)),);
-                    },
-                  ),
+
                   OutlineButton(
                     child: Text("Retrieve the most recent comments about this station "),
                     onPressed: () {
                       Navigator.push(context, MaterialPageRoute(builder:(context)=>
                           MessagesByDate(station: widget.name)),);
+                    },
+                  ),
+                  OutlineButton(
+                    child: Text("Retrieve all the comments about this station "),
+                    onPressed: () {
+                      Navigator.push(context, MaterialPageRoute(builder:(context)=>
+                          Messages(station: widget.name)),);
                     },
                   ),
                   OutlineButton(
@@ -173,7 +174,7 @@ class _MenuStationState extends State<MenuStation> {
         ),
 
 
-         */
+
         bottomNavigationBar: BottomNavigationBar(
           currentIndex: _currentIndex,
           //type: BottomNavigationBarType.fixed,

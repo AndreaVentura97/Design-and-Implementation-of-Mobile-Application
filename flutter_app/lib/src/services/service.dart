@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
-import 'db.dart' as DB;
+import '../db.dart' as DB;
 import 'package:google_maps_flutter/google_maps_flutter.dart';
-import 'displayMenuStation.dart';
+import '../view/displayMenuStation.dart';
 
 
 retrieveMessages(station) async {

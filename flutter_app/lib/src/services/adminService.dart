@@ -1,4 +1,4 @@
-import 'db.dart' as DB;
+import '../db.dart' as DB;
 
 retrieveStations () async {
   var stations = await DB.getDB().collection('markers').find().toList();

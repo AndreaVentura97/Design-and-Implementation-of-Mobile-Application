@@ -1,4 +1,4 @@
-import 'db.dart' as DB;
+import '../db.dart' as DB;
 
 informationStation (name) async {
   var response = await DB.getDB().collection('markers').findOne({'name': name});

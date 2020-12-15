@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
-import 'service.dart';
-import 'checkLogin.dart';
+import '../services/service.dart';
+import '../checkLogin.dart';
 import 'messages.dart';
-import 'userService.dart';
-import 'checkLogin.dart';
-import 'adminService.dart';
+import '../services/userService.dart';
+import '../checkLogin.dart';
+import '../services/adminService.dart';
 
 class AdminScreenStation extends StatefulWidget {
   final String name;

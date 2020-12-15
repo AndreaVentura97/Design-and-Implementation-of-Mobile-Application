@@ -1,4 +1,4 @@
-import 'db.dart' as DB;
+import '../db.dart' as DB;
 
 
 insertUser (email, name) async {

@@ -1,24 +1,17 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/gestures.dart';
-import 'package:flutter_facebook_login/flutter_facebook_login.dart';
 import 'package:auto_size_text/auto_size_text.dart';
-import 'package:http/http.dart' as http;
-import 'dart:convert' as JSON;
 import 'profile.dart';
-import 'package:google_sign_in/google_sign_in.dart';
-import 'checkLogin.dart';
+import '../handleLogin.dart' as handle;
+import '../checkLogin.dart';
 import 'register.dart';
-import 'userService.dart';
-import 'checkLogin.dart';
-import 'package:shared_preferences/shared_preferences.dart';
 import 'package:firebase_auth/firebase_auth.dart';
-import 'checkLogin.dart';
-import 'profile.dart';
-import 'adminScreen.dart';
-import 'package:rflutter_alert/rflutter_alert.dart';
+
+
 
 class Login extends StatefulWidget {
+
   @override
   State<StatefulWidget> createState() {
     // TODO: implement createState
@@ -31,14 +24,13 @@ class _LoginState extends State<Login> {
   bool _secText = true;
   var _error;
 
-  Map userProfile;
   FirebaseAuth _auth = FirebaseAuth.instance;
   final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
   final TextEditingController _emailController = TextEditingController();
   final GlobalKey<ScaffoldState> _scaffoldKey = GlobalKey<ScaffoldState>();
   final TextEditingController _passwordController = TextEditingController();
-  final facebookLogin = FacebookLogin();
-  GoogleSignIn _googleSignIn = GoogleSignIn(scopes: ['email']);
+
+
 
   getprefs() async {
     getLogged().then((log) => setState(() {
@@ -55,46 +47,6 @@ class _LoginState extends State<Login> {
     getprefs();
   }
 
-  _loginWithFB() async {
-    final result = await facebookLogin.logIn(['email']);
-    switch (result.status) {
-      case FacebookLoginStatus.loggedIn:
-        final token = result.accessToken.token;
-        final graphResponse = await http.get(
-            'https://graph.facebook.com/v2.12/me?fields=name,picture,email&access_token=${token}');
-        final profile = JSON.jsonDecode(graphResponse.body);
-        //print(profile);
-        setState(() {
-          userProfile = profile;
-          isLogged = true;
-        });
-        insertUser(profile['email'], profile['name']);
-        checkSession(profile['name'], profile['email'],
-            profile["picture"]["data"]["url"]);
-        break;
-      case FacebookLoginStatus.cancelledByUser:
-        setState(() => isLogged = false);
-        break;
-      case FacebookLoginStatus.error:
-        setState(() => isLogged = false);
-        break;
-    }
-  }
-
-  _loginWithGoogle() async {
-    try {
-      await _googleSignIn.signIn();
-      setState(() {
-        isLogged = true;
-      });
-      insertUser(_googleSignIn.currentUser.email,
-          _googleSignIn.currentUser.displayName);
-      checkSession(_googleSignIn.currentUser.displayName,
-          _googleSignIn.currentUser.email, _googleSignIn.currentUser.photoUrl);
-    } catch (err) {
-      print(err);
-    }
-  }
 
   @override
   void dispose() {
@@ -103,40 +55,10 @@ class _LoginState extends State<Login> {
     super.dispose();
   }
 
-  void _signInWithEmailAndPassword() async {
-    try {
-      final User user = (await _auth.signInWithEmailAndPassword(
-        email: _emailController.text,
-        password: _passwordController.text,
-      ))
-          .user;
-      //if (!user.emailVerified) {
-      //await user.sendEmailVerification();
-      //}
-      if (_emailController.text == "admin@live.it" &&
-          _passwordController.text == "adminadmin") {
-        Navigator.of(context).pushReplacement(MaterialPageRoute(builder: (_) {
-          return AdminScreen();
-        }));
-      } else {
-        checkSession(user.displayName, user.email, null);
-        insertUser(user.email, user.displayName);
-        Navigator.of(context).pushReplacement(MaterialPageRoute(builder: (_) {
-          return Profile();
-        }));
-      }
-    } catch (e) {
-      await setLogged(false);
-      isLogged = false;
-      setState(() {
-        _error = e.message;
-      });
-    }
-  }
+
   @override
   Widget build(BuildContext context) {
     var _blankFocusNode = new FocusNode();
-
     return MaterialApp(
       key: _scaffoldKey,
       home: Scaffold(
@@ -255,7 +177,9 @@ class _LoginState extends State<Login> {
                                                         BorderRadius.circular(
                                                             15.0)),
                                                 onPressed: () {
-                                                  _loginWithGoogle();
+                                                  handle.loginWithGoogle(context).then((value)=> setState(() {
+                                                    isLogged = value;
+                                                  }));
                                                 },
                                               ),
                                             ),
@@ -275,9 +199,11 @@ class _LoginState extends State<Login> {
                                                         BorderRadius.circular(
                                                             15.0)),
                                                 onPressed: () {
-                                                  _loginWithFB();
-                                                },
-                                              ),
+                                                  handle.loginWithFB(context).then((value)=> setState(() {
+                                                      isLogged = value;
+                                                    }));
+                                                  }
+                                                  ),
                                             ),
                                           ]),
                                     ],
@@ -485,7 +411,11 @@ class _LoginState extends State<Login> {
                   )),
               onPressed: () async {
                 if (_formKey.currentState.validate()) {
-                  _signInWithEmailAndPassword();
+                  handle.signInWithEmailAndPassword(context,_emailController.text,_passwordController.text).then(
+                      (value) => setState (() {
+                        _error = value;
+                      }));
+
                 }
               },
             ),

@@ -1,29 +1,31 @@
 import 'package:flutter/material.dart';
-import 'adminService.dart';
-import 'adminScreenStation.dart';
+import '../services/messagesService.dart';
 
 
+class MessagesByDate extends StatefulWidget {
+  String station;
 
-class AdminScreen extends StatefulWidget {
+  MessagesByDate({Key key, this.station}) : super(key: key);
 
-
-  AdminScreenState createState() => AdminScreenState();
+  MessagesByDateState createState() => MessagesByDateState();
 }
 
 
-class AdminScreenState extends State<AdminScreen> {
-  List stations = [];
+class MessagesByDateState extends State<MessagesByDate> {
+  List messages = [];
 
-  void listStations() {
-    retrieveStations().then((netStations) => setState(() {
-      stations = netStations;
+
+
+  void listMessages(station) {
+    retrieveMessagesByDate(station).then((netMessages) => setState(() {
+      messages = netMessages;
     }));
   }
 
   @override
   void initState() {
     super.initState();
-    listStations();
+    listMessages(widget.station);
   }
 
   Widget build(BuildContext context) {
@@ -31,20 +33,20 @@ class AdminScreenState extends State<AdminScreen> {
 
         home: Scaffold(
             appBar: AppBar(
-              title: Text("Stations"),
+              title: Text("Messages"),
             ),
             body: ListView.builder(
               //shrinkWrap: true,
-              itemCount: stations.length,
+              itemCount: messages.length,
               itemBuilder: (BuildContext context, int index) {
                 return ListTile(
                   contentPadding: EdgeInsets.all(10.0),
-                  title: Text(stations[index]['name'],
+                  title: Text(messages[index]['text'],
                       style: TextStyle(
                           fontSize: 20,
                           fontWeight: FontWeight.w500,
                           color: Colors.black)),
-                  onTap: () => { Navigator.push(context, MaterialPageRoute(builder:(context)=> AdminScreenStation(name: stations[index]['name'])))}
+
                 );
               },
             )

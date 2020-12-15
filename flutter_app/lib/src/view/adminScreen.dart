@@ -1,31 +1,29 @@
 import 'package:flutter/material.dart';
-import 'messagesService.dart';
+import '../services/adminService.dart';
+import 'adminScreenStation.dart';
 
 
-class MessagesByDate extends StatefulWidget {
-  String station;
 
-  MessagesByDate({Key key, this.station}) : super(key: key);
+class AdminScreen extends StatefulWidget {
 
-  MessagesByDateState createState() => MessagesByDateState();
+
+  AdminScreenState createState() => AdminScreenState();
 }
 
 
-class MessagesByDateState extends State<MessagesByDate> {
-  List messages = [];
+class AdminScreenState extends State<AdminScreen> {
+  List stations = [];
 
-
-
-  void listMessages(station) {
-    retrieveMessagesByDate(station).then((netMessages) => setState(() {
-      messages = netMessages;
+  void listStations() {
+    retrieveStations().then((netStations) => setState(() {
+      stations = netStations;
     }));
   }
 
   @override
   void initState() {
     super.initState();
-    listMessages(widget.station);
+    listStations();
   }
 
   Widget build(BuildContext context) {
@@ -33,20 +31,20 @@ class MessagesByDateState extends State<MessagesByDate> {
 
         home: Scaffold(
             appBar: AppBar(
-              title: Text("Messages"),
+              title: Text("Stations"),
             ),
             body: ListView.builder(
               //shrinkWrap: true,
-              itemCount: messages.length,
+              itemCount: stations.length,
               itemBuilder: (BuildContext context, int index) {
                 return ListTile(
                   contentPadding: EdgeInsets.all(10.0),
-                  title: Text(messages[index]['text'],
+                  title: Text(stations[index]['name'],
                       style: TextStyle(
                           fontSize: 20,
                           fontWeight: FontWeight.w500,
                           color: Colors.black)),
-
+                  onTap: () => { Navigator.push(context, MaterialPageRoute(builder:(context)=> AdminScreenStation(name: stations[index]['name'])))}
                 );
               },
             )

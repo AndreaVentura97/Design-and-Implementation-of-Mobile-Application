@@ -32,7 +32,6 @@ exportProfile() async {
   email = e;
   photo = p;
   var profile = [n, e, p];
-  print(profile);
   return profile;
 }
 

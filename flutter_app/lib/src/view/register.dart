@@ -1,10 +1,9 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'profile.dart';
-import 'checkLogin.dart';
-import 'userService.dart';
+import '../checkLogin.dart';
 import 'package:auto_size_text/auto_size_text.dart';
-import 'package:rflutter_alert/rflutter_alert.dart';
+import '../services/userService.dart';
 
 class Register extends StatefulWidget {
   @override

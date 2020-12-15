@@ -41,6 +41,7 @@ dependencies:
   rflutter_alert: ^1.1.0
   auto_size_text: ^2.1.0
   get: ^3.22.2
+  flutter_redux: ^0.7.0
 
 
 
