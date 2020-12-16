@@ -10,8 +10,13 @@ insertUser (email, name) async {
     }
   }
   List <String> myStations = [];
+  List <String> myComments = [];
+  List <String> myLiked = [];
+  List <String> myUnliked = [];
   if (!flag){
-    await DB.getDB().collection('users').insertOne({'email': email, 'name': name, 'myStations': myStations});
+    await DB.getDB().collection('users').insertOne({'email': email, 'name': name,
+      'myStations': myStations, 'myComments': myComments, 'myLiked':myLiked, 'myUnliked':myUnliked
+    });
   }
 }
 
@@ -33,9 +38,20 @@ addMyStations (email, station) async {
 }
 
 retrieveMyStations(email) async{
-  print(email);
   var user = await DB.getDB().collection('users').findOne({'email': email});
   var myStations = user['myStations'].toList();
   return myStations;
+}
+
+retrieveMyLikes(email) async {
+  var user = await DB.getDB().collection('users').findOne({'email': email});
+  var myLiked = user['myLiked'].toList();
+  return myLiked;
+}
+
+retrieveMyUnlikes(email) async {
+  var user = await DB.getDB().collection('users').findOne({'email': email});
+  var myUnliked = user['myUnliked'].toList();
+  return myUnliked;
 }
 

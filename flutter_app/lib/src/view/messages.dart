@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import '../services/service.dart';
 import '../services/messagesService.dart';
+import '../services/userService.dart';
 import 'package:redux/redux.dart';
 import 'package:flutter_redux/flutter_redux.dart';
 import 'package:flutter_app/redux/model/AppState.dart';
@@ -17,6 +18,7 @@ class Messages extends StatefulWidget {
 class MessagesState extends State<Messages> {
   List messages = [];
   List myLikes = [];
+  List myUnlikes = [];
 
 
 
@@ -26,16 +28,18 @@ class MessagesState extends State<Messages> {
     }));
   }
 
-  void listMyLike(station) {
-    retrieveMessages(station).then((netLikes) => setState(() {
-      myLikes = netLikes;
-    }));
-  }
-
   bool checkLike(id) {
     for (int i = 0; i < myLikes.length; i++) {
-      print("sto iterando");
       if (myLikes[i] == id) {
+        return true;
+      }
+    }
+    return false;
+  }
+
+  bool checkUnlike (id){
+    for (int i = 0; i < myUnlikes.length; i++) {
+      if (myUnlikes[i] == id) {
         return true;
       }
     }
@@ -46,12 +50,21 @@ class MessagesState extends State<Messages> {
   void initState() {
     super.initState();
     listMessages(widget.station);
+
   }
 
   Widget build(BuildContext context) {
     return new StoreConnector <AppState,ViewModel>(
       converter : (store) => createViewModel(store),
+      onInit: (store) => createViewModel(store),
       builder: (context,_viewModel) {
+        var email = _viewModel.c.email;
+        retrieveMyLikes(email).then((netLikes) => setState(() {
+          myLikes = netLikes;
+        }));
+        retrieveMyUnlikes(email).then((netUnlikes) => setState(() {
+          myUnlikes = netUnlikes;
+        }));
         return Scaffold(
             appBar: AppBar(
               title: Text("Comments"),
@@ -71,13 +84,34 @@ class MessagesState extends State<Messages> {
                                 color: Colors.black)),
                         IconButton(
                           icon: Icon(
-                              Icons.arrow_circle_up,
+                              Icons.thumb_up,
                               color: ((checkLike(messages[index]['_id']))) ? Colors.green : Colors.grey),
                           onPressed: () {
-                            insertLike(_viewModel.c.email, messages[index]['_id']);
+                            if ((!checkLike(messages[index]['_id']))){
+                              removeUnlike(_viewModel.c.email, messages[index]['_id']);
+                              insertLike(_viewModel.c.email, messages[index]['_id']);
+                              }
+                            else {
+                              removeLike(_viewModel.c.email, messages[index]['_id']);
+                            }
                           }
+                          ),
+                        Text("tot: ${messages[index]['nl']}"),
+                        IconButton(
+                            icon: Icon(
+                                Icons.thumb_down,
+                                color: ((checkUnlike(messages[index]['_id']))) ? Colors.red : Colors.grey),
+                            onPressed: () {
+                              if ((!checkUnlike(messages[index]['_id']))){
+                                removeLike(_viewModel.c.email, messages[index]['_id']);
+                                insertUnlike(_viewModel.c.email, messages[index]['_id']);
+                              }
+                              else {
+                                removeUnlike(_viewModel.c.email, messages[index]['_id']);
+                              }
+                            }
+                        ),
 
-                        )
                       ],
                     )
 
