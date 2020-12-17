@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_app/src/view/viewModel.dart';
 import '../services/service.dart';
 import '../services/messagesService.dart';
 import '../services/userService.dart';
@@ -46,6 +47,15 @@ class MessagesState extends State<Messages> {
     return false;
   }
 
+  retrieveMyPreference(email){
+    retrieveMyLikes(email).then((netLikes) => setState(() {
+      myLikes = netLikes;
+    }));
+    retrieveMyUnlikes(email).then((netUnlikes) => setState(() {
+      myUnlikes = netUnlikes;
+    }));
+  }
+
   @override
   void initState() {
     super.initState();
@@ -56,15 +66,8 @@ class MessagesState extends State<Messages> {
   Widget build(BuildContext context) {
     return new StoreConnector <AppState,ViewModel>(
       converter : (store) => createViewModel(store),
-      onInit: (store) => createViewModel(store),
-      builder: (context,_viewModel) {
-        var email = _viewModel.c.email;
-        retrieveMyLikes(email).then((netLikes) => setState(() {
-          myLikes = netLikes;
-        }));
-        retrieveMyUnlikes(email).then((netUnlikes) => setState(() {
-          myUnlikes = netUnlikes;
-        }));
+        builder: (context,_viewModel) {
+        retrieveMyPreference(_viewModel.c.email);
         return Scaffold(
             appBar: AppBar(
               title: Text("Comments"),
@@ -88,11 +91,18 @@ class MessagesState extends State<Messages> {
                               color: ((checkLike(messages[index]['_id']))) ? Colors.green : Colors.grey),
                           onPressed: () {
                             if ((!checkLike(messages[index]['_id']))){
-                              removeUnlike(_viewModel.c.email, messages[index]['_id']);
-                              insertLike(_viewModel.c.email, messages[index]['_id']);
+                              if(checkUnlike(messages[index]['_id'])){
+                                removeUnlike(_viewModel.c.email, messages[index]['_id']);
+                                minusOne2(messages[index]['_id']);
                               }
+                              insertLike(_viewModel.c.email, messages[index]['_id']);
+                              plusOne(messages[index]['_id']);
+                              messages[index]['nl'] = messages[index]['nl'] + 1;
+                            }
                             else {
                               removeLike(_viewModel.c.email, messages[index]['_id']);
+                              minusOne(messages[index]['_id']);
+                              messages[index]['nl'] = messages[index]['nl'] - 1;
                             }
                           }
                           ),
@@ -103,15 +113,22 @@ class MessagesState extends State<Messages> {
                                 color: ((checkUnlike(messages[index]['_id']))) ? Colors.red : Colors.grey),
                             onPressed: () {
                               if ((!checkUnlike(messages[index]['_id']))){
-                                removeLike(_viewModel.c.email, messages[index]['_id']);
+                                if (checkLike((messages[index]['_id']))){
+                                  removeLike(_viewModel.c.email, messages[index]['_id']);
+                                  minusOne(messages[index]['_id']);
+                                }
                                 insertUnlike(_viewModel.c.email, messages[index]['_id']);
+                                plusOne2(messages[index]['_id']);
+                                messages[index]['nu'] = messages[index]['nu'] + 1;
                               }
                               else {
                                 removeUnlike(_viewModel.c.email, messages[index]['_id']);
+                                minusOne2(messages[index]['_id']);
+                                messages[index]['nu'] = messages[index]['nu'] - 1;
                               }
                             }
                         ),
-
+                        Text("tot: ${messages[index]['nu']}"),
                       ],
                     )
 
@@ -125,14 +142,5 @@ class MessagesState extends State<Messages> {
   }
 }
 
-
-class ViewModel {
-  Customer c;
-  ViewModel({this.c});
-}
-
-createViewModel(Store<AppState> store){
-  return ViewModel(c: store.state.customer);
-}
 
 

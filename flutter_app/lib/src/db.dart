@@ -7,7 +7,7 @@ var string = 'mongodb+srv://dbuser:dbpass@cluster0.sxllj.mongodb.net/data?retryW
 start () async {
   db = await Db.create(
       string);
-  await db.open();
+  await db.open(secure:true);
   print("Connected to MongoDb");
   return true;
 }

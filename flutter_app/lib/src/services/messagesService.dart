@@ -30,7 +30,6 @@ insertLike (email, idComment) async {
     }
     if (!flag) {
       list.add(idComment);
-      plusOne(idComment);
       await DB.getDB().collection('users').update(
           {'email': email}, {"\$set": {"myLiked": list}});
       return true;
@@ -62,8 +61,6 @@ insertUnlike (email, idComment) async {
       list.add(idComment);
       await DB.getDB().collection('users').update(
           {'email': email}, {"\$set": {"myUnliked": list}});
-      print('incremento');
-
       return true;
     }
   }
@@ -112,14 +109,31 @@ removeUnlike (email, idComment) async {
 plusOne (idComment) async {
   var response = await DB.getDB().collection('messages').findOne({'_id': idComment});
   var nl = response['nl'];
-  if(nl==null){
-    print('incremento2');
-    await DB.getDB().collection('messages').update(
-        {'_id': idComment}, {"\$set": {"nl": 1}});
-    return;
-  }
-  print('incremento3');
   nl = nl + 1;
   await DB.getDB().collection('messages').update(
       {'_id': idComment}, {"\$set": {"nl": nl}});
+}
+
+minusOne (idComment) async {
+  var response = await DB.getDB().collection('messages').findOne({'_id': idComment});
+  var nl = response['nl'];
+  nl = nl - 1;
+  await DB.getDB().collection('messages').update(
+      {'_id': idComment}, {"\$set": {"nl": nl}});
+}
+
+plusOne2 (idComment) async {
+  var response = await DB.getDB().collection('messages').findOne({'_id': idComment});
+  var nu = response['nu'];
+  nu = nu + 1;
+  await DB.getDB().collection('messages').update(
+      {'_id': idComment}, {"\$set": {"nu": nu}});
+}
+
+minusOne2 (idComment) async {
+  var response = await DB.getDB().collection('messages').findOne({'_id': idComment});
+  var nu = response['nu'];
+  nu = nu  - 1;
+  await DB.getDB().collection('messages').update(
+      {'_id': idComment}, {"\$set": {"nu": nu}});
 }

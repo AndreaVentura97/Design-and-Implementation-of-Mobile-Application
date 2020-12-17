@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_app/redux/model/AppState.dart';
 import 'package:flutter_app/redux/model/customer.dart';
+import 'package:flutter_app/src/view/viewModel.dart';
 import 'package:flutter_redux/flutter_redux.dart';
 import 'map.dart';
 import '../checkLogin.dart';
@@ -213,14 +214,6 @@ class _ProfileState extends State<Profile> {
   }
 }
 
-class ViewModel {
-  Customer c;
-  ViewModel({this.c});
-}
-
-createViewModel(Store<AppState> store){
-  return ViewModel(c: store.state.customer);
-}
 
 
 
