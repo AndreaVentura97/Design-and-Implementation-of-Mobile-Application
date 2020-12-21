@@ -1,13 +1,16 @@
+import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_app/redux/model/AppState.dart';
 import 'package:flutter_app/redux/model/customer.dart';
+import 'package:flutter_app/src/services/sendNotification.dart';
 import 'package:flutter_app/src/view/viewModel.dart';
 import 'package:flutter_redux/flutter_redux.dart';
 import 'map.dart';
 import '../checkLogin.dart';
 import 'login.dart';
+import 'myCommentsScreen.dart';
 import 'myStations.dart';
-import 'package:redux/redux.dart';
+import 'notificationScreen.dart' as not;
 
 
 class Profile<State> extends StatefulWidget {
@@ -20,11 +23,18 @@ class Profile<State> extends StatefulWidget {
 class _ProfileState extends State<Profile> {
   String name;
   bool status;
+  bool notifications;
+  final FirebaseMessaging _firebaseMessaging = FirebaseMessaging();
+
+
 
   @override
   void initState() {
     super.initState();
+
   }
+
+
 
 
   @override
@@ -79,7 +89,13 @@ class _ProfileState extends State<Profile> {
                         new ListTile(
                             title: Text("See my comments"),
                             onTap: () {
-                              //TODO
+                              Navigator.push(context, MaterialPageRoute(builder:(context)=> MyComments ()));
+                            }
+                        ),
+                        new ListTile(
+                            title: Text("Notification"),
+                            onTap: () {
+                              Navigator.push(context, MaterialPageRoute(builder:(context)=>not.Notification()));
                             }
                         ),
                         new ListTile(

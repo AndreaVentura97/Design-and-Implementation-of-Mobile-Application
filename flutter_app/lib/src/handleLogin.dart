@@ -1,3 +1,4 @@
+import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter_facebook_login/flutter_facebook_login.dart';
 import 'checkLogin.dart';
 import 'package:flutter_redux/flutter_redux.dart';
@@ -20,6 +21,8 @@ GoogleSignIn _googleSignIn = GoogleSignIn(scopes: ['email']);
 
 FirebaseAuth _auth = FirebaseAuth.instance;
 
+final FirebaseMessaging _firebaseMessaging = FirebaseMessaging();
+
 loginWithFB(context) async {
   final result = await facebookLogin.logIn(['email']);
   switch (result.status) {
@@ -29,7 +32,8 @@ loginWithFB(context) async {
           'https://graph.facebook.com/v2.12/me?fields=name,picture,email&access_token=${token}');
       final profile = JSON.jsonDecode(graphResponse.body);
       StoreProvider.of<AppState>(context).dispatch(updateCustomer(name:profile['name'],email:profile['email'],photo:profile["picture"]["data"]["url"]));
-      insertUser(profile['email'], profile['name']);
+      String tk = await _firebaseMessaging.getToken();
+      insertUser(profile['email'], profile['name'],tk);
       checkSession(profile['name'], profile['email'],
           profile["picture"]["data"]["url"]);
       return true;
@@ -46,8 +50,9 @@ loginWithFB(context) async {
 loginWithGoogle(context) async {
   try {
     await _googleSignIn.signIn();
+    String tk = await _firebaseMessaging.getToken();
     insertUser(_googleSignIn.currentUser.email,
-        _googleSignIn.currentUser.displayName);
+        _googleSignIn.currentUser.displayName,tk);
     checkSession(_googleSignIn.currentUser.displayName,
         _googleSignIn.currentUser.email, _googleSignIn.currentUser.photoUrl);
     StoreProvider.of<AppState>(context).dispatch(updateCustomer(name:_googleSignIn.currentUser.displayName, email:_googleSignIn.currentUser.email,photo:_googleSignIn.currentUser.photoUrl));
@@ -75,7 +80,8 @@ loginWithGoogle(context) async {
       }));
     } else {
       checkSession(user.displayName, user.email, null);
-      insertUser(user.email, user.displayName);
+      String tk = await _firebaseMessaging.getToken();
+      insertUser(user.email, user.displayName,tk);
       StoreProvider.of<AppState>(context).dispatch(updateCustomer(name:user.displayName, email:user.email,photo:null));
       Navigator.of(context).pushReplacement(MaterialPageRoute(builder: (_) {
         return Profile();

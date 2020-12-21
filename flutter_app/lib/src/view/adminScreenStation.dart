@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_app/src/services/sendNotification.dart';
 import '../services/service.dart';
 import '../checkLogin.dart';
 import 'messages.dart';
@@ -62,8 +63,13 @@ class AdminScreenStationState extends State<AdminScreenStation> {
                     child: Text("Submit"),
                     onPressed: () {
                       setStatus(widget.name,_value);
-
-                    },
+                      if (_value == true){
+                        sendNotification2(widget.name, "ok");
+                      }
+                      else {
+                        sendNotification2(widget.name, "late");
+                      }
+                      },
                   ),
                 ]
             )

@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_app/src/services/sendNotification.dart';
 import 'package:flutter_app/src/view/viewModel.dart';
 import '../services/service.dart';
 import '../services/messagesService.dart';
@@ -80,9 +81,15 @@ class MessagesState extends State<Messages> {
                     contentPadding: EdgeInsets.all(10.0),
                     title: Row(
                       children: [
-                        Text(messages[index]['text'],
+                        Text(messages[index]['name'],
                             style: TextStyle(
                                 fontSize: 20,
+                                fontWeight: FontWeight.w500,
+                                color: Colors.black)),
+                        Text(":  "),
+                        Text(messages[index]['text'],
+                            style: TextStyle(
+                                fontSize: 15,
                                 fontWeight: FontWeight.w500,
                                 color: Colors.black)),
                         IconButton(
@@ -93,9 +100,11 @@ class MessagesState extends State<Messages> {
                             if ((!checkLike(messages[index]['_id']))){
                               if(checkUnlike(messages[index]['_id'])){
                                 removeUnlike(_viewModel.c.email, messages[index]['_id']);
+                                messages[index]['nu'] = messages[index]['nu'] - 1;
                                 minusOne2(messages[index]['_id']);
                               }
                               insertLike(_viewModel.c.email, messages[index]['_id']);
+                              sendNotification(messages[index]['email'], "like");
                               plusOne(messages[index]['_id']);
                               messages[index]['nl'] = messages[index]['nl'] + 1;
                             }
@@ -115,9 +124,11 @@ class MessagesState extends State<Messages> {
                               if ((!checkUnlike(messages[index]['_id']))){
                                 if (checkLike((messages[index]['_id']))){
                                   removeLike(_viewModel.c.email, messages[index]['_id']);
+                                  messages[index]['nl'] = messages[index]['nl'] - 1;
                                   minusOne(messages[index]['_id']);
                                 }
                                 insertUnlike(_viewModel.c.email, messages[index]['_id']);
+                                sendNotification(messages[index]['email'], "unlike");
                                 plusOne2(messages[index]['_id']);
                                 messages[index]['nu'] = messages[index]['nu'] + 1;
                               }

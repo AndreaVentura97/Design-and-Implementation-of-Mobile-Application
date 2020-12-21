@@ -4,6 +4,7 @@ import 'profile.dart';
 import '../checkLogin.dart';
 import 'package:auto_size_text/auto_size_text.dart';
 import '../services/userService.dart';
+import 'package:firebase_messaging/firebase_messaging.dart';
 
 class Register extends StatefulWidget {
   @override
@@ -16,6 +17,7 @@ class _RegisterState extends State<Register> {
   final TextEditingController _displayName = TextEditingController();
   final TextEditingController _emailController = TextEditingController();
   final TextEditingController _passwordController = TextEditingController();
+  final FirebaseMessaging _firebaseMessaging = FirebaseMessaging();
   var _error;
   bool _isSuccess;
   bool _secText = true;
@@ -281,7 +283,8 @@ class _RegisterState extends State<Register> {
         await user.updateProfile(displayName: _displayName.text);
         final user1 = _auth.currentUser;
         checkSession(user1.displayName, user1.email, null);
-        insertUser(user1.email, user1.displayName);
+        String tk = await _firebaseMessaging.getToken();
+        insertUser(user1.email, user1.displayName,tk);
         Navigator.of(context).pushReplacement(
             MaterialPageRoute(builder: (context) => Profile()));
       } else {

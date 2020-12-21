@@ -42,6 +42,8 @@ dependencies:
   auto_size_text: ^2.1.0
   get: ^3.22.2
   flutter_redux: ^0.7.0
+  firebase_messaging: ^7.0.3
+  dio: ^3.0.10
 
 
 
