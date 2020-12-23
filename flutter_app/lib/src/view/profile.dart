@@ -3,6 +3,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_app/redux/model/AppState.dart';
 import 'package:flutter_app/redux/model/customer.dart';
 import 'package:flutter_app/src/services/sendNotification.dart';
+import 'package:carousel_slider/carousel_slider.dart';
+import 'package:carousel_pro/carousel_pro.dart';
 import 'package:flutter_app/src/view/viewModel.dart';
 import 'package:flutter_redux/flutter_redux.dart';
 import 'map.dart';
@@ -44,19 +46,23 @@ class _ProfileState extends State<Profile> {
         builder : (context, _viewModel) {
           return Scaffold(
               appBar: AppBar(
-                title: Center(
-                  child: Text(
+                title: Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  crossAxisAlignment: CrossAxisAlignment.center,
+                  children: [
+                    Text(
                     'Welcome back',
                     style: TextStyle(
-                      color: Colors.black,
+                      color: Colors.white,
                       letterSpacing: 1.5,
                       fontFamily: 'FredokaOne',
                     ),
-                    textAlign: TextAlign.center,
+                    textAlign: TextAlign.left,
                   ),
+                ]
                 ),
                 centerTitle: true,
-                backgroundColor: Colors.amber[400],
+                backgroundColor: Colors.blue[900],
               ),
               drawer: new Drawer(
                   child: ListView(
@@ -123,7 +129,49 @@ class _ProfileState extends State<Profile> {
                   )
               ),
               body: Column(
+                  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                   children: [
+                    SizedBox(
+                      height: 10.0,
+                      // width: 300.0,
+                      // child: Carousel(
+                      //
+                      // ),
+                    ),
+
+                    CarouselSlider(
+                      options: CarouselOptions(
+                        height: 250.0,
+                        enlargeCenterPage: true,
+                        autoPlay: true,
+                        autoPlayCurve: Curves.fastOutSlowIn,
+                        autoPlayInterval: Duration(seconds: 5),
+                      ),
+                      items: [
+                        Container(
+                          decoration: BoxDecoration(
+                            borderRadius: BorderRadius.circular(10.0),
+                            color: Colors.grey,
+                          ),
+                        ),
+                        Container(
+                          decoration: BoxDecoration(
+                            borderRadius: BorderRadius.circular(10.0),
+                            color: Colors.green,
+                          ),
+                        ),
+                        Container(
+                          decoration: BoxDecoration(
+                            borderRadius: BorderRadius.circular(10.0),
+                            color: Colors.blue,
+                          ),
+                        )
+                      ],
+                    ),
+
+                    SizedBox(height: 15.0,),
+
+
                     /*
                 Row(
                   children: [

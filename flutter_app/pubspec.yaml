@@ -44,7 +44,8 @@ dependencies:
   flutter_redux: ^0.7.0
   firebase_messaging: ^7.0.3
   dio: ^3.0.10
-
+  carousel_slider: ^2.3.1
+  carousel_pro: ^1.0.0
 
 
 

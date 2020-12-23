@@ -60,14 +60,16 @@ class _LoginState extends State<Login> {
     var _blankFocusNode = new FocusNode();
     return MaterialApp(
       key: _scaffoldKey,
-      home: Scaffold(
+      home: (!isLogged)
+          ? Scaffold(
         resizeToAvoidBottomPadding: false,
         resizeToAvoidBottomInset: false,
         //backgroundColor: Colors.green,
         body: Container(
           decoration: BoxDecoration(
             image: DecorationImage(
-              image: AssetImage("assets/background.jpg")
+              image: AssetImage("assets/background.jpg"),
+              fit: BoxFit.cover,
             )
           ),
           child: GestureDetector(
@@ -80,8 +82,7 @@ class _LoginState extends State<Login> {
                 margin: EdgeInsets.symmetric(horizontal: 25.0),
                 //color: Colors.red,
                 child: Center(
-                    child: (!isLogged)
-                        ? Column(
+                    child: Column(
                             crossAxisAlignment: CrossAxisAlignment.center,
                             mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                             mainAxisSize: MainAxisSize.max,
@@ -241,12 +242,12 @@ class _LoginState extends State<Login> {
                                   ),
                                 )
                               ])
-                        : Profile()),
+                        ),
               ),
             ),
           ),
         ),
-      ),
+      ): Profile(),
     );
   }
 
