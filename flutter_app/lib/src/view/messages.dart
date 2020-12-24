@@ -70,9 +70,9 @@ class MessagesState extends State<Messages> {
         builder: (context,_viewModel) {
         retrieveMyPreference(_viewModel.c.email);
         return Scaffold(
-            appBar: AppBar(
-              title: Text("Comments"),
-            ),
+            // appBar: AppBar(
+            //   title: Text("Comments"),
+            // ),
             body: ListView.builder(
               //shrinkWrap: true,
               itemCount: messages.length,

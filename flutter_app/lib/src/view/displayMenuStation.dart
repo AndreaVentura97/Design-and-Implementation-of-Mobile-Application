@@ -21,15 +21,21 @@ class MenuStation extends StatefulWidget {
 
 class _MenuStationState extends State<MenuStation> {
   int _currentIndex = 0;
-
+  //Color StationColor;
 
   @override
   void initState() {
     super.initState();
   }
 
+
   @override
   Widget build(BuildContext context) {
+
+    // switch(widget.line){
+    //   case
+    // }
+
     return new StoreConnector<AppState, ViewModel>(
       converter: (store) => createViewModel(store),
       builder: (context,_viewModel){
@@ -43,7 +49,8 @@ class _MenuStationState extends State<MenuStation> {
           appBar: AppBar(
               title: Center(
                   child: Text("${widget.name}")
-              )
+              ),
+            backgroundColor: Colors.red,
           ),
           body: tabs[_currentIndex],
 
@@ -71,7 +78,7 @@ class _MenuStationState extends State<MenuStation> {
               BottomNavigationBarItem(
                   icon: Icon(Icons.person),
                   title: Text("Something else"),
-                  backgroundColor: Colors.blue
+                  backgroundColor: Colors.blue,
               )
             ],
             onTap: (index){
