@@ -53,9 +53,10 @@ class MessagesState extends State<Messages> {
       myLikes = netLikes;
     }));
     retrieveMyUnlikes(email).then((netUnlikes) => setState(() {
-      myUnlikes = netUnlikes;
-    }));
+        myUnlikes = netUnlikes;
+      }));
   }
+
 
   @override
   void initState() {
@@ -67,11 +68,11 @@ class MessagesState extends State<Messages> {
   Widget build(BuildContext context) {
     return new StoreConnector <AppState,ViewModel>(
       converter : (store) => createViewModel(store),
+        onInit: (store) => retrieveMyPreference(store.state.customer.email),
         builder: (context,_viewModel) {
-        retrieveMyPreference(_viewModel.c.email);
         return Scaffold(
             appBar: AppBar(
-              title: Text("Comments"),
+              title: Text("${widget.station}"),
             ),
             body: ListView.builder(
               //shrinkWrap: true,
@@ -100,16 +101,26 @@ class MessagesState extends State<Messages> {
                             if ((!checkLike(messages[index]['_id']))){
                               if(checkUnlike(messages[index]['_id'])){
                                 removeUnlike(_viewModel.c.email, messages[index]['_id']);
+                                setState(() {
+                                  myUnlikes.remove(messages[index]['_id']);
+                                });
                                 messages[index]['nu'] = messages[index]['nu'] - 1;
                                 minusOne2(messages[index]['_id']);
                               }
                               insertLike(_viewModel.c.email, messages[index]['_id']);
+                              setState(() {
+                                myLikes.add(messages[index]['_id']);
+                              });
                               sendNotification(messages[index]['email'], "like");
                               plusOne(messages[index]['_id']);
                               messages[index]['nl'] = messages[index]['nl'] + 1;
+
                             }
                             else {
                               removeLike(_viewModel.c.email, messages[index]['_id']);
+                              setState(() {
+                                myLikes.remove(messages[index]['_id']);
+                              });
                               minusOne(messages[index]['_id']);
                               messages[index]['nl'] = messages[index]['nl'] - 1;
                             }
@@ -124,16 +135,25 @@ class MessagesState extends State<Messages> {
                               if ((!checkUnlike(messages[index]['_id']))){
                                 if (checkLike((messages[index]['_id']))){
                                   removeLike(_viewModel.c.email, messages[index]['_id']);
+                                  setState(() {
+                                    myLikes.remove(messages[index]['_id']);
+                                  });
                                   messages[index]['nl'] = messages[index]['nl'] - 1;
                                   minusOne(messages[index]['_id']);
                                 }
                                 insertUnlike(_viewModel.c.email, messages[index]['_id']);
+                                setState(() {
+                                  myUnlikes.add(messages[index]['_id']);
+                                });
                                 sendNotification(messages[index]['email'], "unlike");
                                 plusOne2(messages[index]['_id']);
                                 messages[index]['nu'] = messages[index]['nu'] + 1;
                               }
                               else {
                                 removeUnlike(_viewModel.c.email, messages[index]['_id']);
+                                setState(() {
+                                  myUnlikes.remove(messages[index]['_id']);
+                                });
                                 minusOne2(messages[index]['_id']);
                                 messages[index]['nu'] = messages[index]['nu'] - 1;
                               }

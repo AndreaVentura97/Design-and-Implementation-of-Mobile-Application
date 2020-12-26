@@ -13,6 +13,7 @@ import 'login.dart';
 import 'myCommentsScreen.dart';
 import 'myStations.dart';
 import 'notificationScreen.dart' as not;
+import 'notificationWidget.dart';
 
 
 class Profile<State> extends StatefulWidget {
@@ -99,7 +100,9 @@ class _ProfileState extends State<Profile> {
                             }
                         ),
                         new ListTile(
-                            title: Text("Notification"),
+                            title: Row(
+                              children: [Text("Notification"),NotificationWidget()]
+                            ),
                             onTap: () {
                               Navigator.push(context, MaterialPageRoute(builder:(context)=>not.Notification()));
                             }

@@ -25,7 +25,7 @@ class NotificationState extends State<Notification> {
   void getMessage() {
     _firebaseMessaging.configure(
         onMessage: (Map<String, dynamic> message) async {
-          print('received message');
+          print('received message1');
           setState(() => _message = message["notification"]["body"]);
         }, onResume: (Map<String, dynamic> message) async {
       print('on resume $message');

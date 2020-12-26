@@ -23,9 +23,9 @@ class MyCommentsState extends State<MyComments> {
 
 
   void retrieveMyComments(email) {
-    getMyComments(email).then((netComments) => setState(() {
-      myComments = netComments;
-    }));
+    getMyComments(email).then((mounted) ? ((netComments) => setState(() {
+        myComments = netComments;
+    })): null);
   }
 
 
@@ -33,12 +33,16 @@ class MyCommentsState extends State<MyComments> {
   void initState() {
     super.initState();
   }
+  @override
+  void dispose() {
+    super.dispose();
+  }
 
   Widget build(BuildContext context) {
     return new StoreConnector <AppState,ViewModel>(
         converter : (store) => createViewModel(store),
+        onInit: (store) => retrieveMyComments(store.state.customer.email),
         builder: (context,_viewModel) {
-          retrieveMyComments(_viewModel.c.email);
           return Scaffold(
               appBar: AppBar(
                 title: Text("Comments"),

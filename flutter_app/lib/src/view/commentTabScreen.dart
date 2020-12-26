@@ -44,7 +44,10 @@ class CommentState extends State<Comment> {
           onPressed: () {
             var name = _viewModel.c.name;
             var email = _viewModel.c.email;
-            saveMessage(email, name, myController.text, widget.station);
+            var photo = _viewModel.c.photo;
+            saveMessage(email, name, myController.text,photo, widget.station);
+            myController.clear();
+
           },
         ),
           /*

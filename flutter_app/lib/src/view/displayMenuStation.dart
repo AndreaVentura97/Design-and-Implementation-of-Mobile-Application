@@ -5,12 +5,7 @@ import 'package:flutter_app/src/view/infoTabScreen.dart';
 import 'package:flutter_app/src/view/viewModel.dart';
 import 'package:flutter_app/src/view/votingTabScreen.dart';
 import 'package:flutter_redux/flutter_redux.dart';
-import '../services/service.dart';
-import '../checkLogin.dart';
-import 'messages.dart';
-import '../services/userService.dart';
-import 'messagesByDate.dart';
-import '../services/stationServices.dart';
+import 'commentsTabScreen.dart';
 
 
 class MenuStation extends StatefulWidget {
@@ -35,8 +30,7 @@ class _MenuStationState extends State<MenuStation> {
       builder: (context,_viewModel){
         final tabs =[
           InfoStation(station: widget.name),
-          Messages(station: widget.name),
-          Comment(station: widget.name),
+          Comments(station: widget.name),
           Voting(station:widget.name),
         ];
         return Scaffold(
@@ -68,11 +62,6 @@ class _MenuStationState extends State<MenuStation> {
                   title: Text("Voting"),
                   backgroundColor: Colors.blue
               ),
-              BottomNavigationBarItem(
-                  icon: Icon(Icons.person),
-                  title: Text("Something else"),
-                  backgroundColor: Colors.blue
-              )
             ],
             onTap: (index){
               setState(() {

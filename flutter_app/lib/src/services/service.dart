@@ -39,8 +39,8 @@ buildMarkers (response, context){
   return _markers;
 }
 
-saveMessage (myEmail, myName, myText, myStation) async {
-  await DB.getDB().collection('messages').insertOne({'email': myEmail, 'name': myName, 'text': myText,
+saveMessage (myEmail, myName, myText, myPhoto, myStation) async {
+  await DB.getDB().collection('messages').insertOne({'email': myEmail, 'name': myName, 'photo':myPhoto, 'text': myText,
     'station': myStation, 'nl':0, 'nu':0});
 }
 

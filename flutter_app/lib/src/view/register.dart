@@ -1,10 +1,10 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'profile.dart';
-import '../checkLogin.dart';
 import 'package:auto_size_text/auto_size_text.dart';
 import '../services/userService.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
+import '../controllerRegistration.dart' as ControllerRegistration;
 
 class Register extends StatefulWidget {
   @override
@@ -249,9 +249,12 @@ class _RegisterState extends State<Register> {
                                   child: Text("Register"),
                                   onPressed: () async {
                                     // if (_formKey.currentState.validate()) {
-                                       _registerAccount();
-                                    //}
-                                  },
+                                    ControllerRegistration.registerAccount(_displayName.text,_emailController.text,_passwordController.text,context)
+                                            .then((result) => setState(() {
+                                                _error=result;
+                                        }));
+                                    showAlert();
+                                        },
                                 ),
                               ),
                             ],
@@ -269,34 +272,7 @@ class _RegisterState extends State<Register> {
     );
   }
 
-  void _registerAccount() async {
-    try {
-      final User user = (await _auth.createUserWithEmailAndPassword(
-        email: _emailController.text,
-        password: _passwordController.text,
-      ))
-          .user;
-      if (user != null) {
-        //if (!user.emailVerified) {
-        //await user.sendEmailVerification();
-        //}
-        await user.updateProfile(displayName: _displayName.text);
-        final user1 = _auth.currentUser;
-        checkSession(user1.displayName, user1.email, null);
-        String tk = await _firebaseMessaging.getToken();
-        insertUser(user1.email, user1.displayName,tk);
-        Navigator.of(context).pushReplacement(
-            MaterialPageRoute(builder: (context) => Profile()));
-      } else {
-        _isSuccess = false;
-      }
-    } catch (e) {
-      setState(() {
-        _error = e.message;
-      });
-      showAlert();
-    }
-  }
+
 
   Widget showAlert() {
     if (_error != null)
