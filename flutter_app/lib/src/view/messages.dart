@@ -71,9 +71,15 @@ class MessagesState extends State<Messages> {
         onInit: (store) => retrieveMyPreference(store.state.customer.email),
         builder: (context,_viewModel) {
         return Scaffold(
+
             appBar: AppBar(
               title: Text("${widget.station}"),
             ),
+
+            // appBar: AppBar(
+            //   title: Text("Comments"),
+            // ),
+
             body: ListView.builder(
               //shrinkWrap: true,
               itemCount: messages.length,
