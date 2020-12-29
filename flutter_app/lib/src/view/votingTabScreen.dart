@@ -1,3 +1,4 @@
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_app/redux/model/AppState.dart';
 import 'package:flutter_app/src/view/viewModel.dart';
@@ -83,8 +84,8 @@ class VotingState extends State<Voting> {
                       shape: RoundedRectangleBorder(
                         borderRadius: BorderRadius.circular(10.0),
                         side: BorderSide(
-                          color: Colors.grey,
-                          width: 1.0,
+                          color: Colors.blue[900],
+                          width: 2.0,
                         ),
                       ),
                       child: Container(
@@ -101,6 +102,54 @@ class VotingState extends State<Voting> {
                             ),
                             SizedBox(height: 15.0,),
 
+                            Container(
+                              color: Colors.blue,
+                              child: Row(
+                                children: [
+                                  Text('Kind of user:',
+                                    style: TextStyle(
+                                      fontSize: 16.0,
+                                    ),
+                                  ),
+                                  Spacer(),
+                                  Container(
+                                    color: Colors.purple,
+                                    child: Row(
+                                      children: [
+                                        Container(
+                                          color: Colors.orange,
+                                          margin: EdgeInsets.symmetric(horizontal: 5.0),
+                                          child: Column(
+                                            children: [
+                                              Text('Citizen'),
+                                              IconButton(
+                                                icon: Icon(
+                                                  Icons.brightness_1_outlined, //:Icons.brightness_1,
+                                                ),
+                                              )
+                                            ],
+                                          ),
+                                        ),
+                                        Container(
+                                          color: Colors.orange,
+                                          margin: EdgeInsets.symmetric(horizontal: 5.0),
+                                          child: Column(
+                                            children: [
+                                              Text('Visitor'),
+                                              IconButton(
+                                                icon: Icon(
+                                                  Icons.brightness_1_outlined, //:Icons.brightness_1,
+                                                ),
+                                              )
+                                            ],
+                                          ),
+                                        ),
+                                      ],
+                                    ),
+                                  )
+                                ],
+                              ),
+                            ),
                             Container(
                               //color: Colors.purple,
                               margin: EdgeInsets.symmetric(horizontal: 5.0),
@@ -234,7 +283,30 @@ class VotingState extends State<Voting> {
                             SizedBox(height: 10.0,),
                             Container(
                               child: Text('Surrounding area:'),
-                            )
+                            ),
+                            SizedBox(height: 10.0,),
+
+                            FlatButton(
+                              shape: RoundedRectangleBorder(
+                                borderRadius: BorderRadius.circular(15.0),
+                              ),
+                              color: Colors.blue[900],
+                              child: Text("Submit",
+                                style: TextStyle(
+                                  color: Colors.white,
+                                  fontSize: 15.0,
+                                ),
+                              ),
+                              onPressed: () {
+                                // var name = _viewModel.c.name;
+                                // var email = _viewModel.c.email;
+                                // var photo = _viewModel.c.photo;
+                                // saveMessage(email, name, myController.text, photo,
+                                //     widget.station);
+                                // myController.clear();
+                              },
+                            ),
+
 
                           ],
                         ),
@@ -247,8 +319,8 @@ class VotingState extends State<Voting> {
                       shape: RoundedRectangleBorder(
                         borderRadius: BorderRadius.circular(10.0),
                         side: BorderSide(
-                          color: Colors.grey,
-                          width: 1.0,
+                          color: Colors.blue[900],
+                          width: 2.0,
                         ),
                       ),
                       child: Container(

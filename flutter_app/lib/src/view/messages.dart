@@ -81,8 +81,8 @@ class MessagesState extends State<Messages> {
                     shape: RoundedRectangleBorder(
                       borderRadius: BorderRadius.circular(10.0),
                       side: BorderSide(
-                        color: Colors.grey,
-                        width: 1.0,
+                        color: Colors.blue[900],
+                        width: 2.0,
                       ),
                     ),
                     child: Container(
@@ -104,21 +104,41 @@ class MessagesState extends State<Messages> {
                                         radius: 15.0,
                                       ),
                                       SizedBox(width: 10.0,),
-                                      Column(
-                                        crossAxisAlignment: CrossAxisAlignment.start,
-                                        children: [
-                                          Text(messages[index]['name'],
-                                              style: TextStyle(
-                                                  fontSize: 18.0,
-                                                  fontWeight: FontWeight.w500,
-                                                  color: Colors.black)),
-                                          Text('date',
-                                            style: TextStyle(
-                                              fontSize: 15.0,
-                                              color: Colors.grey,
+                                      IntrinsicWidth(
+                                        child: Column(
+                                          crossAxisAlignment: CrossAxisAlignment.start,
+                                          children: [
+                                            Text(messages[index]['name'],
+                                                style: TextStyle(
+                                                    fontSize: 18.0,
+                                                    fontWeight: FontWeight.w500,
+                                                    color: Colors.black)),
+                                            Container(
+                                              color: Colors.black,
+                                              child: Row(
+                                                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                                children: [
+                                                  Text('date',
+                                                    style: TextStyle(
+                                                      fontSize: 15.0,
+                                                      color: Colors.grey,
+                                                    ),
+                                                  ),
+
+                                                  //
+                                                  // Da cambiare in base se cittadino o visitatiore
+                                                  Text('Citizen',
+                                                    style: TextStyle(
+                                                      fontSize: 15.0,
+                                                      color: Colors.grey,
+                                                    ),
+                                                  ),
+                                                ],
+                                              ),
                                             ),
-                                          ),
-                                        ],
+
+                                          ],
+                                        ),
                                       ),
                                     ],
                                   ),

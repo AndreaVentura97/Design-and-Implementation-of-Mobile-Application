@@ -48,8 +48,8 @@ class InfoStationState extends State<InfoStation> {
                       shape: RoundedRectangleBorder(
                           borderRadius: BorderRadius.circular(10.0),
                         side: BorderSide(
-                          color: Colors.grey,
-                          width: 1.0,
+                          color: Colors.blue[900],
+                          width: 2.0,
                         ),
                       ),
                       //color: Colors.grey[400],
@@ -123,8 +123,8 @@ class InfoStationState extends State<InfoStation> {
                       shape: RoundedRectangleBorder(
                         borderRadius: BorderRadius.circular(10.0),
                         side: BorderSide(
-                          color: Colors.grey,
-                          width: 1.0,
+                          color: Colors.blue[900],
+                          width: 2.0,
                         ),
                       ),
                       child: Container(
@@ -158,8 +158,8 @@ class InfoStationState extends State<InfoStation> {
                       shape: RoundedRectangleBorder(
                         borderRadius: BorderRadius.circular(10.0),
                         side: BorderSide(
-                          color: Colors.grey,
-                          width: 1.0,
+                          color: Colors.blue[900],
+                          width: 2.0,
                         ),
                       ),
                       child: Container(
@@ -185,8 +185,8 @@ class InfoStationState extends State<InfoStation> {
                       shape: RoundedRectangleBorder(
                         borderRadius: BorderRadius.circular(10.0),
                         side: BorderSide(
-                          color: Colors.grey,
-                          width: 1.0,
+                          color: Colors.blue[900],
+                          width: 2.0,
                         ),
                       ),
                       child: Container(
@@ -203,11 +203,159 @@ class InfoStationState extends State<InfoStation> {
                               color: Colors.black,
                               thickness: 1.0,
                             ),
+
+
                             Container(
-                              height: 150.0,
+                              //height: 150.0,
                               margin: EdgeInsets.symmetric(vertical: 5.0),
-                              color: Colors.blue,
+                              color: Colors.grey,
+                              child: IntrinsicHeight(
+                                    child: Row(
+                                      crossAxisAlignment: CrossAxisAlignment.center,
+                                      children: [
+                                        Container(
+                                          margin: EdgeInsets.fromLTRB(0.0, 0.0, 5.0, 0.0),
+                                          color: Colors.blue,
+                                          child: Center(child: Text('Immagine')),
+                                          height: 100.0,
+                                          width: 100.0,
+                                        ),
+                                        Expanded(
+                                          child: Container(
+                                            color: Colors.red,
+                                            child: Column(
+                                              //mainAxisSize: MainAxisSize.max,
+                                              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                                              crossAxisAlignment: CrossAxisAlignment.start,
+                                              children: [
+                                                Container(
+                                                  color: Colors.orange,
+                                                  child: Row(
+                                                    children: [
+                                                      Icon(Icons.restaurant),
+                                                      Text('Nome punto di interesse',
+                                                        style: TextStyle(
+                                                          decoration: TextDecoration.underline,
+                                                          color: Colors.blue,
+                                                          fontSize: 16.0,
+                                                          fontWeight: FontWeight.bold,
+                                                        ),
+                                                      ),
+                                                    ],
+                                                  ),
+                                                ),
+                                                Container(
+                                                  color: Colors.green[200],
+                                                  child: Text('indirizzo'),
+                                                ),
+                                                Align(
+                                                  alignment: Alignment.bottomRight,
+                                                  child: Container(
+                                                    child: Row(
+                                                      mainAxisAlignment: MainAxisAlignment.end,
+                                                      children: [
+                                                        IconButton(
+                                                            icon: Icon(Icons.thumb_up,
+                                                                size: 25.0,
+                                                                // color: ((checkLike(messages[index]['_id'])))
+                                                                //     ? Colors.green
+                                                                //     : Colors.grey
+                                                               ),
+                                                            onPressed: () {
+                                                              // if ((!checkLike(messages[index]['_id']))) {
+                                                              //   if (checkUnlike(messages[index]['_id'])) {
+                                                              //     removeUnlike(_viewModel.c.email,
+                                                              //         messages[index]['_id']);
+                                                              //     setState(() {
+                                                              //       myUnlikes.remove(messages[index]['_id']);
+                                                              //     });
+                                                              //     messages[index]['nu'] =
+                                                              //         messages[index]['nu'] - 1;
+                                                              //     minusOne2(messages[index]['_id']);
+                                                                }
+                                                                // insertLike(_viewModel.c.email,
+                                                                //     messages[index]['_id']);
+                                                                // setState(() {
+                                                                //   myLikes.add(messages[index]['_id']);
+                                                                // });
+                                                            //     sendNotification(
+                                                            //         messages[index]['email'], "like");
+                                                            //     plusOne(messages[index]['_id']);
+                                                            //     messages[index]['nl'] =
+                                                            //         messages[index]['nl'] + 1;
+                                                            //   } else {
+                                                            //     removeLike(_viewModel.c.email,
+                                                            //         messages[index]['_id']);
+                                                            //     setState(() {
+                                                            //       myLikes.remove(messages[index]['_id']);
+                                                            //     });
+                                                            //     minusOne(messages[index]['_id']);
+                                                            //     messages[index]['nl'] =
+                                                            //         messages[index]['nl'] - 1;
+                                                            //   }
+                                                            // }
+                                                            ),
+                                                        Text("0"), //${messages[index]['nl']}"),
+                                                        IconButton(
+                                                            icon: Icon(Icons.thumb_down,
+                                                                size: 25.0,
+                                                                // color: ((checkUnlike(messages[index]['_id'])))
+                                                                //     ? Colors.red
+                                                                //     : Colors.grey
+                                                                     ),
+                                                            onPressed: () {
+                                                              // if ((!checkUnlike(messages[index]['_id']))) {
+                                                              //   if (checkLike((messages[index]['_id']))) {
+                                                              //     removeLike(_viewModel.c.email,
+                                                              //         messages[index]['_id']);
+                                                              //     setState(() {
+                                                              //       myLikes.remove(messages[index]['_id']);
+                                                              //     });
+                                                              //     messages[index]['nl'] =
+                                                              //         messages[index]['nl'] - 1;
+                                                              //     minusOne(messages[index]['_id']);
+                                                                }
+                                                            //     insertUnlike(_viewModel.c.email,
+                                                            //         messages[index]['_id']);
+                                                            //     setState(() {
+                                                            //       myUnlikes.add(messages[index]['_id']);
+                                                            //     });
+                                                            //     sendNotification(
+                                                            //         messages[index]['email'], "unlike");
+                                                            //     plusOne2(messages[index]['_id']);
+                                                            //     messages[index]['nu'] =
+                                                            //         messages[index]['nu'] + 1;
+                                                            //   } else {
+                                                            //     removeUnlike(_viewModel.c.email,
+                                                            //         messages[index]['_id']);
+                                                            //     setState(() {
+                                                            //       myUnlikes.remove(messages[index]['_id']);
+                                                            //     });
+                                                            //     minusOne2(messages[index]['_id']);
+                                                            //     messages[index]['nu'] =
+                                                            //         messages[index]['nu'] - 1;
+                                                            //   }
+                                                            // }
+                                                            ),
+                                                        Text("0"), //${messages[index]['nu']}"),
+                                                      ],
+
+                                                  ),
+                                                )
+                                                )
+                                              ],
+                                            ),
+                                          ),
+                                        )
+                                      ],
+                                    ),
+                                  ),
+
+                              //   ],
+                              // ),
                             ),
+
+
                             Container(
                               height: 150.0,
                               margin: EdgeInsets.symmetric(vertical: 5.0),
