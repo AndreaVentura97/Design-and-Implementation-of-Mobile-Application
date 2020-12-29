@@ -7,20 +7,19 @@ import '../services/stationServices.dart';
 
 class Comment extends StatefulWidget {
   String station;
+
   Comment({Key key, this.station}) : super(key: key);
+
   CommentState createState() => CommentState();
 }
 
-
 class CommentState extends State<Comment> {
   final myController = TextEditingController();
-
 
   @override
   void initState() {
     super.initState();
   }
-
 
   @override
   void dispose() {
@@ -33,23 +32,26 @@ class CommentState extends State<Comment> {
   Widget build(BuildContext context) {
     return new StoreConnector<AppState, ViewModel>(
       converter: (store) => createViewModel(store),
-      builder: (context,_viewModel){
-        return Column(children: [TextField(
-            decoration: InputDecoration(
-              border: InputBorder.none,
-              hintText: 'Enter a comment', ),
-            controller: myController
-        ),OutlineButton(
-          child: Text("Send comment"),
-          onPressed: () {
-            var name = _viewModel.c.name;
-            var email = _viewModel.c.email;
-            var photo = _viewModel.c.photo;
-            saveMessage(email, name, myController.text,photo, widget.station);
-            myController.clear();
-
-          },
-        ),
+      builder: (context, _viewModel) {
+        return
+          Column(children: [
+          TextField(
+              decoration: InputDecoration(
+                border: InputBorder.none,
+                hintText: 'Enter a comment',
+              ),
+              controller: myController),
+          OutlineButton(
+            child: Text("Send comment"),
+            onPressed: () {
+              var name = _viewModel.c.name;
+              var email = _viewModel.c.email;
+              var photo = _viewModel.c.photo;
+              saveMessage(
+                  email, name, myController.text, photo, widget.station);
+              myController.clear();
+            },
+          ),
           /*
           OutlineButton(
             child: Text("Retrieve the most recent comments about this station "),
@@ -70,10 +72,8 @@ class CommentState extends State<Comment> {
           ),
 
            */
-
         ]);
-        },
-
+      },
     );
   }
 }

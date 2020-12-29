@@ -43,8 +43,8 @@ class InfoStationState extends State<InfoStation> {
                 mainAxisAlignment: MainAxisAlignment.center,
                   children:[
                     Card(
-                      margin: EdgeInsets.all(10.0),
-                      elevation: 5.0,
+                      margin: EdgeInsets.fromLTRB(10.0, 10.0, 10.0, 0.0),
+                      elevation: 3.0,
                       shape: RoundedRectangleBorder(
                           borderRadius: BorderRadius.circular(10.0),
                         side: BorderSide(
@@ -118,8 +118,8 @@ class InfoStationState extends State<InfoStation> {
                       ),
                     ),
                     Card(
-                      elevation: 5.0,
-                      margin: EdgeInsets.all(10.0),
+                      elevation: 3.0,
+                      margin: EdgeInsets.fromLTRB(10.0, 10.0, 10.0, 0.0),
                       shape: RoundedRectangleBorder(
                         borderRadius: BorderRadius.circular(10.0),
                         side: BorderSide(
@@ -153,8 +153,8 @@ class InfoStationState extends State<InfoStation> {
                       ),
                     ),
                     Card(
-                      elevation: 5.0,
-                      margin: EdgeInsets.all(10.0),
+                      elevation: 3.0,
+                      margin: EdgeInsets.fromLTRB(10.0, 10.0, 10.0, 0.0),
                       shape: RoundedRectangleBorder(
                         borderRadius: BorderRadius.circular(10.0),
                         side: BorderSide(
@@ -180,8 +180,8 @@ class InfoStationState extends State<InfoStation> {
                       ),
                     ),
                     Card(
-                      elevation: 5.0,
-                      margin: EdgeInsets.all(10.0),
+                      elevation: 3.0,
+                      margin: EdgeInsets.fromLTRB(10.0, 10.0, 10.0, 0.0),
                       shape: RoundedRectangleBorder(
                         borderRadius: BorderRadius.circular(10.0),
                         side: BorderSide(
