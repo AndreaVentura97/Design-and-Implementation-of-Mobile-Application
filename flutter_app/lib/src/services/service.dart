@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import '../db.dart' as DB;
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import '../view/displayMenuStation.dart';
+import 'package:intl/intl.dart';
 
 
 retrieveMessages(station) async {
@@ -40,7 +41,9 @@ buildMarkers (response, context){
 }
 
 saveMessage (myEmail, myName, myText, myPhoto, myStation) async {
-  await DB.getDB().collection('messages').insertOne({'email': myEmail, 'name': myName, 'photo':myPhoto, 'text': myText,
+  DateTime now = new DateTime.now();
+  String formattedDate = "${now.year.toString()}-${now.month.toString().padLeft(2,'0')}-${now.day.toString().padLeft(2,'0')}";
+  await DB.getDB().collection('messages').insertOne({'email': myEmail, 'date':formattedDate, 'name': myName, 'photo':myPhoto, 'text': myText,
     'station': myStation, 'nl':0, 'nu':0});
 }
 

@@ -13,10 +13,5 @@ class AppState {
   AppState.copyWith({AppState prev, Customer customer}) {
     //this.isLoading = isLoading ?? prev.isLoading;
     this.customer = customer ?? prev.customer;
-
   }
-
-
-
-
 }

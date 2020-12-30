@@ -118,7 +118,7 @@ class MessagesState extends State<Messages> {
                                               child: Row(
                                                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                                                 children: [
-                                                  Text('date',
+                                                  Text(messages[index]['date'],
                                                     style: TextStyle(
                                                       fontSize: 15.0,
                                                       color: Colors.grey,

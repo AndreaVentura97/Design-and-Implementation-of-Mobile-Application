@@ -11,15 +11,21 @@ insertUser (email, name,tk) async {
   for (int i =0; i < listUser.length; i++){
     if (listUser[i]['email']==email){
       flag = true;
+      await DB.getDB().collection('users').update({'email': email}, {"\$set": {"token":tk}});
     }
   }
+
   List <String> myStations = [];
   List <String> myComments = [];
   List <String> myLiked = [];
   List <String> myUnliked = [];
+  List <String> myLikedPoints = [];
+  List <String> myUnlikedPoints = [];
   if (!flag){
     await DB.getDB().collection('users').insertOne({'email': email, 'name': name,
-      'myStations': myStations, 'myComments': myComments, 'myLiked':myLiked, 'myUnliked':myUnliked, 'token':tk
+      'myStations': myStations, 'myComments': myComments,
+      'myLiked':myLiked, 'myUnliked':myUnliked,
+      'myLikedPoints':myLikedPoints, 'myUnlikedPoints':myUnlikedPoints, 'token':tk
     });
   }
 }
@@ -40,6 +46,23 @@ addMyStations (email, station) async {
     await DB.getDB().collection('users').update({'email': email}, {"\$set": {"myStations":list}});
   }
 }
+
+deleteMyStations (email, station) async {
+  var user = await DB.getDB().collection('users').findOne({'email': email});
+  var list = user['myStations'].toList();
+  list.remove(station);
+    await DB.getDB().collection('users').update({'email': email}, {"\$set": {"myStations":list}});
+}
+
+isMyStation (email,station) async {
+  var user = await DB.getDB().collection('users').findOne({'email': email});
+  var list = user['myStations'].toList();
+  if (list.contains(station)) return true;
+  return false;
+}
+
+
+
 
 retrieveMyStations(email) async{
   var user = await DB.getDB().collection('users').findOne({'email': email});
@@ -64,3 +87,14 @@ getMyComments(email) async {
   return listUser;
 }
 
+retrieveMyLikedPoints(email) async {
+  var user = await DB.getDB().collection('users').findOne({'email': email});
+  var myLiked = user['myLikedPoints'].toList();
+  return myLiked;
+}
+
+retrieveMyUnLikedPoints(email) async {
+  var user = await DB.getDB().collection('users').findOne({'email': email});
+  var myLiked = user['myUnlikedPoints'].toList();
+  return myLiked;
+}

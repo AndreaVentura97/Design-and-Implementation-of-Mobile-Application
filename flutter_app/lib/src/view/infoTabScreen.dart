@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_app/redux/model/AppState.dart';
 import 'package:flutter_app/src/services/userService.dart';
+import 'package:flutter_app/src/view/pointWidget.dart';
 import 'package:flutter_app/src/view/viewModel.dart';
 import 'package:flutter_redux/flutter_redux.dart';
 import '../services/stationServices.dart';
@@ -16,27 +17,45 @@ class InfoStationState extends State<InfoStation> {
   bool _favStation = false;
   String line;
   String address;
+  List points = [];
 
   void takeStationInformation (){
     informationStation(widget.station).then((information) => setState(() {
       line = information['line'];
       address = information['address'];
     }));
+    pointsStation(widget.station).then((result) => setState(() {
+      points = result;
+    }));
   }
+
+  updateFav(email,station){
+    isMyStation(email,station).then((result) => setState(() {
+      _favStation = result;
+    }));
+  }
+
 
 
   @override
   void initState() {
-    super.initState();
     takeStationInformation();
-
+    super.initState();
   }
 
   @override
   Widget build(BuildContext context) {
     return new StoreConnector <AppState,ViewModel>(
       converter: (store) => createViewModel(store),
+      onInit: (store) => updateFav(store.state.customer.email, widget.station),
       builder: (context,_viewModel){
+        List<Widget> buildPoints (){
+            List<Widget> list = new List();
+            for (int i=0; i< points.length;i++){
+              list.add(PointWidget(point:points[i]));
+            }
+            return list;
+        }
         return Scaffold(
             body: SingleChildScrollView(
               child: Column (
@@ -101,15 +120,20 @@ class InfoStationState extends State<InfoStation> {
                                 ),
                               ),
                               IconButton(
-                                icon: Icon(_favStation ? Icons.favorite_outline : Icons.favorite,
+                                icon: Icon(!_favStation ? Icons.favorite_outline : Icons.favorite,
                                   size: 20.0,
                                 ),
-                                onPressed: () {
+                                  onPressed: (!_favStation) ?  () {
                                   addMyStations(_viewModel.c.email, widget.station);
                                   setState(() {
-                                    _favStation = !_favStation;
+                                    _favStation = true;
                                   });
-                                },
+                                } : () {
+                                    deleteMyStations(_viewModel.c.email, widget.station);
+                                    setState(() {
+                                      _favStation = false;
+                                    });
+                                  },
                               ),
                             ],
                           )
@@ -203,176 +227,14 @@ class InfoStationState extends State<InfoStation> {
                               color: Colors.black,
                               thickness: 1.0,
                             ),
-
-
-                            Container(
-                              //height: 150.0,
-                              margin: EdgeInsets.symmetric(vertical: 5.0),
-                              color: Colors.grey,
-                              child: IntrinsicHeight(
-                                    child: Row(
-                                      crossAxisAlignment: CrossAxisAlignment.center,
-                                      children: [
-                                        Container(
-                                          margin: EdgeInsets.fromLTRB(0.0, 0.0, 5.0, 0.0),
-                                          color: Colors.blue,
-                                          child: Center(child: Text('Immagine')),
-                                          height: 100.0,
-                                          width: 100.0,
-                                        ),
-                                        Expanded(
-                                          child: Container(
-                                            color: Colors.red,
-                                            child: Column(
-                                              //mainAxisSize: MainAxisSize.max,
-                                              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                                              crossAxisAlignment: CrossAxisAlignment.start,
-                                              children: [
-                                                Container(
-                                                  color: Colors.orange,
-                                                  child: Row(
-                                                    children: [
-                                                      Icon(Icons.restaurant),
-                                                      Text('Nome punto di interesse',
-                                                        style: TextStyle(
-                                                          decoration: TextDecoration.underline,
-                                                          color: Colors.blue,
-                                                          fontSize: 16.0,
-                                                          fontWeight: FontWeight.bold,
-                                                        ),
-                                                      ),
-                                                    ],
-                                                  ),
-                                                ),
-                                                Container(
-                                                  color: Colors.green[200],
-                                                  child: Text('indirizzo'),
-                                                ),
-                                                Align(
-                                                  alignment: Alignment.bottomRight,
-                                                  child: Container(
-                                                    child: Row(
-                                                      mainAxisAlignment: MainAxisAlignment.end,
-                                                      children: [
-                                                        IconButton(
-                                                            icon: Icon(Icons.thumb_up,
-                                                                size: 25.0,
-                                                                // color: ((checkLike(messages[index]['_id'])))
-                                                                //     ? Colors.green
-                                                                //     : Colors.grey
-                                                               ),
-                                                            onPressed: () {
-                                                              // if ((!checkLike(messages[index]['_id']))) {
-                                                              //   if (checkUnlike(messages[index]['_id'])) {
-                                                              //     removeUnlike(_viewModel.c.email,
-                                                              //         messages[index]['_id']);
-                                                              //     setState(() {
-                                                              //       myUnlikes.remove(messages[index]['_id']);
-                                                              //     });
-                                                              //     messages[index]['nu'] =
-                                                              //         messages[index]['nu'] - 1;
-                                                              //     minusOne2(messages[index]['_id']);
-                                                                }
-                                                                // insertLike(_viewModel.c.email,
-                                                                //     messages[index]['_id']);
-                                                                // setState(() {
-                                                                //   myLikes.add(messages[index]['_id']);
-                                                                // });
-                                                            //     sendNotification(
-                                                            //         messages[index]['email'], "like");
-                                                            //     plusOne(messages[index]['_id']);
-                                                            //     messages[index]['nl'] =
-                                                            //         messages[index]['nl'] + 1;
-                                                            //   } else {
-                                                            //     removeLike(_viewModel.c.email,
-                                                            //         messages[index]['_id']);
-                                                            //     setState(() {
-                                                            //       myLikes.remove(messages[index]['_id']);
-                                                            //     });
-                                                            //     minusOne(messages[index]['_id']);
-                                                            //     messages[index]['nl'] =
-                                                            //         messages[index]['nl'] - 1;
-                                                            //   }
-                                                            // }
-                                                            ),
-                                                        Text("0"), //${messages[index]['nl']}"),
-                                                        IconButton(
-                                                            icon: Icon(Icons.thumb_down,
-                                                                size: 25.0,
-                                                                // color: ((checkUnlike(messages[index]['_id'])))
-                                                                //     ? Colors.red
-                                                                //     : Colors.grey
-                                                                     ),
-                                                            onPressed: () {
-                                                              // if ((!checkUnlike(messages[index]['_id']))) {
-                                                              //   if (checkLike((messages[index]['_id']))) {
-                                                              //     removeLike(_viewModel.c.email,
-                                                              //         messages[index]['_id']);
-                                                              //     setState(() {
-                                                              //       myLikes.remove(messages[index]['_id']);
-                                                              //     });
-                                                              //     messages[index]['nl'] =
-                                                              //         messages[index]['nl'] - 1;
-                                                              //     minusOne(messages[index]['_id']);
-                                                                }
-                                                            //     insertUnlike(_viewModel.c.email,
-                                                            //         messages[index]['_id']);
-                                                            //     setState(() {
-                                                            //       myUnlikes.add(messages[index]['_id']);
-                                                            //     });
-                                                            //     sendNotification(
-                                                            //         messages[index]['email'], "unlike");
-                                                            //     plusOne2(messages[index]['_id']);
-                                                            //     messages[index]['nu'] =
-                                                            //         messages[index]['nu'] + 1;
-                                                            //   } else {
-                                                            //     removeUnlike(_viewModel.c.email,
-                                                            //         messages[index]['_id']);
-                                                            //     setState(() {
-                                                            //       myUnlikes.remove(messages[index]['_id']);
-                                                            //     });
-                                                            //     minusOne2(messages[index]['_id']);
-                                                            //     messages[index]['nu'] =
-                                                            //         messages[index]['nu'] - 1;
-                                                            //   }
-                                                            // }
-                                                            ),
-                                                        Text("0"), //${messages[index]['nu']}"),
-                                                      ],
-
-                                                  ),
-                                                )
-                                                )
-                                              ],
-                                            ),
-                                          ),
-                                        )
-                                      ],
-                                    ),
-                                  ),
-
-                              //   ],
-                              // ),
-                            ),
-
-
-                            Container(
-                              height: 150.0,
-                              margin: EdgeInsets.symmetric(vertical: 5.0),
-                              color: Colors.green,
-                            ),
-                            Container(
-                              height: 150.0,
-                              margin: EdgeInsets.symmetric(vertical: 5.0),
-                              color: Colors.yellow,
-                            ),
-                            Container(
-                              height: 150.0,
-                              margin: EdgeInsets.symmetric(vertical: 5.0),
-                              color: Colors.red,
-                            )
                           ],
                         ),
+                      ),
+                    ),
+                    Card(
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: buildPoints(),
                       ),
                     )
 

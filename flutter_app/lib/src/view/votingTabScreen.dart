@@ -20,7 +20,11 @@ class VotingState extends State<Voting> {
   double valueMeanClean;
   double valueDis;
   double valueMeanDis;
-  List<bool> voting = [false, false];
+  double valueSafety;
+  double valueMeanSafety;
+  double valueArea;
+  double valueMeanArea;
+  List<bool> voting = [false, false, false, false];
 
   //bool voting = false;
   final myController = TextEditingController();
@@ -38,6 +42,16 @@ class VotingState extends State<Voting> {
           } else {
             valueMeanDis = 50.0;
           }
+          if (information['avgSafety'] != null) {
+            valueMeanSafety = information['avgSafety'];
+          } else {
+            valueMeanSafety = 50.0;
+          }
+          if (information['avgArea'] != null) {
+            valueMeanArea = information['avgArea'];
+          } else {
+            valueMeanArea = 50.0;
+          }
         }));
   }
 
@@ -48,6 +62,12 @@ class VotingState extends State<Voting> {
     retrieveMyVoteDis(email, widget.station).then((vote2) => setState(() {
           valueDis = vote2;
         }));
+    retrieveMyVoteSafety(email, widget.station).then((vote3) => setState((){
+        valueSafety = vote3;
+    }));
+    retrieveMyVoteArea(email, widget.station).then((vote4) => setState((){
+      valueArea = vote4;
+    }));
   }
 
   @override
@@ -56,12 +76,6 @@ class VotingState extends State<Voting> {
     takeStationInformation();
   }
 
-  @override
-  void dispose() {
-    // Clean up the controller when the widget is disposed.
-    myController.dispose();
-    super.dispose();
-  }
 
   @override
   Widget build(BuildContext context) {
@@ -278,11 +292,105 @@ class VotingState extends State<Voting> {
                             //       )
                             //     : Text("Loading"),
                             Container(
-                              child: Text('Safety:'),
+                              //color: Colors.purple,
+                              margin: EdgeInsets.symmetric(horizontal: 5.0),
+                              child: Column(
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                                children: [
+                                  Text(
+                                    "Safety:",
+                                    style: TextStyle(
+                                      fontSize: 16.0,
+                                    ),
+                                  ),
+                                  (valueSafety != null)
+                                      ? Slider(
+                                      value: valueSafety,
+                                      min: 0,
+                                      max: 100,
+                                      divisions: 100,
+                                      label: valueSafety.round().toString(),
+                                      activeColor:
+                                      (valueSafety == 50.0 || voting[2])
+                                          ? Colors.black
+                                          : Colors.black.withOpacity(0.2),
+                                      onChangeEnd: (double value) {
+                                        setState(() {
+                                          color =
+                                              Colors.black.withOpacity(0.2);
+                                          sendSafety(value, _viewModel.c.email,
+                                              widget.station)
+                                              .then((result) => setState(() {
+                                            valueMeanSafety = result;
+                                          }));
+                                          voting[2] = false;
+                                        });
+                                      },
+                                      onChangeStart: (double value) {
+                                        setState(() {
+                                          color = Colors.black;
+                                          voting[2] = true;
+                                        });
+                                      },
+                                      onChanged: (double value) {
+                                        setState(() {
+                                          valueSafety = value;
+                                        });
+                                      })
+                                      : Text("Loading"),
+                                ],
+                              ),
                             ),
                             SizedBox(height: 10.0,),
                             Container(
-                              child: Text('Surrounding area:'),
+                              //color: Colors.purple,
+                              margin: EdgeInsets.symmetric(horizontal: 5.0),
+                              child: Column(
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                                children: [
+                                  Text(
+                                    "Safety:",
+                                    style: TextStyle(
+                                      fontSize: 16.0,
+                                    ),
+                                  ),
+                                  (valueArea != null)
+                                      ? Slider(
+                                      value: valueArea,
+                                      min: 0,
+                                      max: 100,
+                                      divisions: 100,
+                                      label: valueArea.round().toString(),
+                                      activeColor:
+                                      (valueArea == 50.0 || voting[3])
+                                          ? Colors.black
+                                          : Colors.black.withOpacity(0.2),
+                                      onChangeEnd: (double value) {
+                                        setState(() {
+                                          color =
+                                              Colors.black.withOpacity(0.2);
+                                          sendArea(value, _viewModel.c.email,
+                                              widget.station)
+                                              .then((result) => setState(() {
+                                            valueMeanArea = result;
+                                          }));
+                                          voting[3] = false;
+                                        });
+                                      },
+                                      onChangeStart: (double value) {
+                                        setState(() {
+                                          color = Colors.black;
+                                          voting[3] = true;
+                                        });
+                                      },
+                                      onChanged: (double value) {
+                                        setState(() {
+                                          valueArea = value;
+                                        });
+                                      })
+                                      : Text("Loading"),
+                                ],
+                              ),
                             ),
                             SizedBox(height: 10.0,),
 
