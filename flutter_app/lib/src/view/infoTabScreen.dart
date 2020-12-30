@@ -227,16 +227,16 @@ class InfoStationState extends State<InfoStation> {
                               color: Colors.black,
                               thickness: 1.0,
                             ),
+                            Column(
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                                children: buildPoints(),
+                            ),
+
                           ],
                         ),
                       ),
                     ),
-                    Card(
-                      child: Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: buildPoints(),
-                      ),
-                    )
+
 
                   ]
               ),

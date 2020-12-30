@@ -56,7 +56,7 @@ class PointWidgetState extends State<PointWidget>{
            return Container(
         //height: 150.0,
         margin: EdgeInsets.symmetric(vertical: 5.0),
-        color: Colors.grey,
+        //color: Colors.grey,
             child: IntrinsicHeight(
             child: Row(
             crossAxisAlignment: CrossAxisAlignment.center,
@@ -73,14 +73,14 @@ class PointWidgetState extends State<PointWidget>{
               ),
               Expanded(
                 child: Container(
-                  color: Colors.red,
+                  //color: Colors.red,
                   child: Column(
                     //mainAxisSize: MainAxisSize.max,
                     mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       Container(
-                        color: Colors.orange,
+                        //color: Colors.orange,
                         child: Row(
                           children: [
                             Icon(Icons.restaurant),
@@ -95,7 +95,7 @@ class PointWidgetState extends State<PointWidget>{
                         ),
                       ),
                       Container(
-                        color: Colors.green[200],
+                        //color: Colors.green[200],
                         child: InkWell(
                             child: Text('Link', style:TextStyle(color: Colors.blue,)),
                             onTap: () => {
