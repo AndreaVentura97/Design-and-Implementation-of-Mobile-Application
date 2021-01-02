@@ -31,7 +31,7 @@ loginWithFB(context) async {
       final graphResponse = await http.get(
           'https://graph.facebook.com/v2.12/me?fields=name,picture,email&access_token=${token}');
       final profile = JSON.jsonDecode(graphResponse.body);
-      StoreProvider.of<AppState>(context).dispatch(updateCustomer(name:profile['name'],email:profile['email'],photo:profile["picture"]["data"]["url"]));
+      StoreProvider.of<AppState>(context).dispatch(updateCustomer(name:profile['name'],email:profile['email'],photo:profile["picture"]["data"]["url"],notification: false));
       String tk = await _firebaseMessaging.getToken();
       insertUser(profile['email'], profile['name'],tk);
       checkSession(profile['name'], profile['email'],
@@ -55,7 +55,7 @@ loginWithGoogle(context) async {
         _googleSignIn.currentUser.displayName,tk);
     checkSession(_googleSignIn.currentUser.displayName,
         _googleSignIn.currentUser.email, _googleSignIn.currentUser.photoUrl);
-    StoreProvider.of<AppState>(context).dispatch(updateCustomer(name:_googleSignIn.currentUser.displayName, email:_googleSignIn.currentUser.email,photo:_googleSignIn.currentUser.photoUrl));
+    StoreProvider.of<AppState>(context).dispatch(updateCustomer(name:_googleSignIn.currentUser.displayName, email:_googleSignIn.currentUser.email,photo:_googleSignIn.currentUser.photoUrl,notification: false));
     return true;
   } catch (err) {
     print(err);
@@ -82,7 +82,7 @@ loginWithGoogle(context) async {
       checkSession(user.displayName, user.email, null);
       String tk = await _firebaseMessaging.getToken();
       insertUser(user.email, user.displayName,tk);
-      StoreProvider.of<AppState>(context).dispatch(updateCustomer(name:user.displayName, email:user.email,photo:null));
+      StoreProvider.of<AppState>(context).dispatch(updateCustomer(name:user.displayName, email:user.email,photo:null,notification: false));
       Navigator.of(context).pushReplacement(MaterialPageRoute(builder: (_) {
         return Profile();
       }));

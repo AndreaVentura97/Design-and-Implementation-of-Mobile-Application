@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_app/redux/model/AppState.dart';
 import 'package:flutter_app/src/services/userService.dart';
+import 'package:flutter_app/src/view/pointWidget.dart';
 import 'package:flutter_app/src/view/viewModel.dart';
 import 'package:flutter_redux/flutter_redux.dart';
 import '../services/stationServices.dart';
@@ -16,40 +17,58 @@ class InfoStationState extends State<InfoStation> {
   bool _favStation = false;
   String line;
   String address;
+  List points = [];
 
   void takeStationInformation (){
     informationStation(widget.station).then((information) => setState(() {
       line = information['line'];
       address = information['address'];
     }));
+    pointsStation(widget.station).then((result) => setState(() {
+      points = result;
+    }));
   }
+
+  updateFav(email,station){
+    isMyStation(email,station).then((result) => setState(() {
+      _favStation = result;
+    }));
+  }
+
 
 
   @override
   void initState() {
-    super.initState();
     takeStationInformation();
-
+    super.initState();
   }
 
   @override
   Widget build(BuildContext context) {
     return new StoreConnector <AppState,ViewModel>(
       converter: (store) => createViewModel(store),
+      onInit: (store) => updateFav(store.state.customer.email, widget.station),
       builder: (context,_viewModel){
+        List<Widget> buildPoints (){
+            List<Widget> list = new List();
+            for (int i=0; i< points.length;i++){
+              list.add(PointWidget(point:points[i]));
+            }
+            return list;
+        }
         return Scaffold(
             body: SingleChildScrollView(
               child: Column (
                 mainAxisAlignment: MainAxisAlignment.center,
                   children:[
                     Card(
-                      margin: EdgeInsets.all(10.0),
-                      elevation: 5.0,
+                      margin: EdgeInsets.fromLTRB(10.0, 10.0, 10.0, 0.0),
+                      elevation: 3.0,
                       shape: RoundedRectangleBorder(
                           borderRadius: BorderRadius.circular(10.0),
                         side: BorderSide(
-                          color: Colors.grey,
-                          width: 1.0,
+                          color: Colors.blue[900],
+                          width: 2.0,
                         ),
                       ),
                       //color: Colors.grey[400],
@@ -101,15 +120,20 @@ class InfoStationState extends State<InfoStation> {
                                 ),
                               ),
                               IconButton(
-                                icon: Icon(_favStation ? Icons.favorite_outline : Icons.favorite,
+                                icon: Icon(!_favStation ? Icons.favorite_outline : Icons.favorite,
                                   size: 20.0,
                                 ),
-                                onPressed: () {
+                                  onPressed: (!_favStation) ?  () {
                                   addMyStations(_viewModel.c.email, widget.station);
                                   setState(() {
-                                    _favStation = !_favStation;
+                                    _favStation = true;
                                   });
-                                },
+                                } : () {
+                                    deleteMyStations(_viewModel.c.email, widget.station);
+                                    setState(() {
+                                      _favStation = false;
+                                    });
+                                  },
                               ),
                             ],
                           )
@@ -118,13 +142,13 @@ class InfoStationState extends State<InfoStation> {
                       ),
                     ),
                     Card(
-                      elevation: 5.0,
-                      margin: EdgeInsets.all(10.0),
+                      elevation: 3.0,
+                      margin: EdgeInsets.fromLTRB(10.0, 10.0, 10.0, 0.0),
                       shape: RoundedRectangleBorder(
                         borderRadius: BorderRadius.circular(10.0),
                         side: BorderSide(
-                          color: Colors.grey,
-                          width: 1.0,
+                          color: Colors.blue[900],
+                          width: 2.0,
                         ),
                       ),
                       child: Container(
@@ -153,13 +177,13 @@ class InfoStationState extends State<InfoStation> {
                       ),
                     ),
                     Card(
-                      elevation: 5.0,
-                      margin: EdgeInsets.all(10.0),
+                      elevation: 3.0,
+                      margin: EdgeInsets.fromLTRB(10.0, 10.0, 10.0, 0.0),
                       shape: RoundedRectangleBorder(
                         borderRadius: BorderRadius.circular(10.0),
                         side: BorderSide(
-                          color: Colors.grey,
-                          width: 1.0,
+                          color: Colors.blue[900],
+                          width: 2.0,
                         ),
                       ),
                       child: Container(
@@ -180,13 +204,13 @@ class InfoStationState extends State<InfoStation> {
                       ),
                     ),
                     Card(
-                      elevation: 5.0,
-                      margin: EdgeInsets.all(10.0),
+                      elevation: 3.0,
+                      margin: EdgeInsets.fromLTRB(10.0, 10.0, 10.0, 0.0),
                       shape: RoundedRectangleBorder(
                         borderRadius: BorderRadius.circular(10.0),
                         side: BorderSide(
-                          color: Colors.grey,
-                          width: 1.0,
+                          color: Colors.blue[900],
+                          width: 2.0,
                         ),
                       ),
                       child: Container(
@@ -203,30 +227,16 @@ class InfoStationState extends State<InfoStation> {
                               color: Colors.black,
                               thickness: 1.0,
                             ),
-                            Container(
-                              height: 150.0,
-                              margin: EdgeInsets.symmetric(vertical: 5.0),
-                              color: Colors.blue,
+                            Column(
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                                children: buildPoints(),
                             ),
-                            Container(
-                              height: 150.0,
-                              margin: EdgeInsets.symmetric(vertical: 5.0),
-                              color: Colors.green,
-                            ),
-                            Container(
-                              height: 150.0,
-                              margin: EdgeInsets.symmetric(vertical: 5.0),
-                              color: Colors.yellow,
-                            ),
-                            Container(
-                              height: 150.0,
-                              margin: EdgeInsets.symmetric(vertical: 5.0),
-                              color: Colors.red,
-                            )
+
                           ],
                         ),
                       ),
-                    )
+                    ),
+
 
                   ]
               ),

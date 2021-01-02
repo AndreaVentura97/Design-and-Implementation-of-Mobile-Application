@@ -25,7 +25,11 @@ void main () async {
   if (await getLogged()==true){
     var user = await exportProfile();
     print("just logged");
+<<<<<<< HEAD
     final Customer customer = new Customer(name: user[0], email: user[1], photo: user[2],notification:false);
+=======
+    final Customer customer = new Customer(name: user[0], email: user[1], photo: user[2],notification: false);
+>>>>>>> 7544a1657651c3210c12bc374f5048aca8be625a
     store = new Store(appReducer, initialState: AppState(customer:customer));
   }
   else {

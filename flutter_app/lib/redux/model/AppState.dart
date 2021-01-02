@@ -14,8 +14,4 @@ class AppState {
     //this.isLoading = isLoading ?? prev.isLoading;
     this.customer = customer ?? prev.customer;
   }
-
-
-
-
 }

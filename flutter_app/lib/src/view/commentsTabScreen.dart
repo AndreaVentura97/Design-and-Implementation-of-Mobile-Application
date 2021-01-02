@@ -26,25 +26,28 @@ class _CommentsState extends State<Comments> {
     return new StoreConnector<AppState, ViewModel>(
         converter: (store) => createViewModel(store),
         builder: (context,_viewModel) {
-          return DefaultTabController(
-            length: 2,
-            child: Scaffold(
-              appBar: AppBar(
-                bottom: TabBar(
-                  tabs: [
-                    Tab(icon: Icon(Icons.email)),
-                    Tab(icon: Icon(Icons.assignment)),
-                  ],
-                ),
-              ),
-              body: TabBarView(
-                children: [
+          return
+            // DefaultTabController(
+            // //length: 2,
+            // child:
+            Scaffold(
+              // appBar: AppBar(
+              //   bottom: TabBar(
+              //     tabs: [
+              //       Tab(icon: Icon(Icons.email)),
+              //       Tab(icon: Icon(Icons.assignment)),
+              //     ],
+              //   ),
+              // ),
+              body:
+              // TabBarView(
+              //   children: [
                   Messages(station: widget.station),
-                  Comment(station: widget.station),
-                ],
-              ),
-            ),
-          );
+              //     Comment(station: widget.station),
+              //   ],
+              // ),
+            );
+          //);
         });
         }
       }
