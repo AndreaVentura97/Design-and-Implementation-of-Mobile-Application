@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_app/redux/model/AppState.dart';
 import 'package:flutter_app/src/view/commentTabScreen.dart';
 import 'package:flutter_app/src/view/infoTabScreen.dart';
+import 'package:flutter_app/src/view/userAccountWidget.dart';
 import 'package:flutter_app/src/view/viewModel.dart';
 import 'package:flutter_app/src/view/votingTabScreen.dart';
 import 'package:flutter_redux/flutter_redux.dart';
@@ -46,6 +47,7 @@ class _MenuStationState extends State<MenuStation> {
               ),
             backgroundColor: Colors.red,
           ),
+          drawer: UserAccount(),
           body: tabs[_currentIndex],
 
 

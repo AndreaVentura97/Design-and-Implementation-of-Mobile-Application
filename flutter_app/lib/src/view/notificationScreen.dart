@@ -1,52 +1,53 @@
 import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_app/src/view/notificationWidget.dart';
+import 'package:flutter_app/src/view/userAccountWidget.dart';
 
 class Notification extends StatefulWidget {
-
+  List <String> notifications;
+  Notification({Key key, this.notifications}) : super(key: key);
   @override
   NotificationState createState() => NotificationState();
 }
 
 class NotificationState extends State<Notification> {
-  final FirebaseMessaging _firebaseMessaging = FirebaseMessaging();
-  String _message = '';
-
-  _registerOnFirebase() {
-    _firebaseMessaging.getToken().then((token) => print(token));
-  }
 
   @override
   void initState() {
-    _registerOnFirebase();
-    getMessage();
     super.initState();
   }
 
-  void getMessage() {
-    _firebaseMessaging.configure(
-        onMessage: (Map<String, dynamic> message) async {
-          print('received message1');
-          setState(() => _message = message["notification"]["body"]);
-        }, onResume: (Map<String, dynamic> message) async {
-      print('on resume $message');
-      setState(() => _message = message["notification"]["body"]);
-    }, onLaunch: (Map<String, dynamic> message) async {
-      print('on launch $message');
-      setState(() => _message = message["notification"]["body"]);
-    },
-    );
+  Widget build(BuildContext context) {
+    return MaterialApp(
+
+        home: Scaffold(
+            appBar: AppBar(
+              title: Row(
+                children: [
+                  Text("My Notification"),
+                  NotificationWidget(),
+                ],
+              ),
+            ),
+            drawer: UserAccount(),
+            body: ListView.builder(
+              //shrinkWrap: true,
+              itemCount: widget.notifications.length,
+              itemBuilder: (BuildContext context, int index) {
+                return ListTile(
+                  contentPadding: EdgeInsets.all(10.0),
+                  title: Text(widget.notifications[index],
+                      style: TextStyle(
+                          fontSize: 10,
+                          fontWeight: FontWeight.w500,
+                          color: Colors.black)),
+                );
+              },
+            )
+
+
+
+        ));
   }
 
-  @override
-  Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        title: Text('Push Notifications Test'),
-      ),
-      body: Container(
-          child: Center(
-            child: Text("Message: $_message"),
-          )),
-    );
-  }
 }

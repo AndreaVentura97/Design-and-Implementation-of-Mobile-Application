@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_app/src/view/userAccountWidget.dart';
 import '../services/userService.dart';
 import 'displayMenuStation.dart';
+import 'notificationWidget.dart';
 
 class MyStations extends StatefulWidget {
   var email;
@@ -32,12 +34,16 @@ class MyStationsState extends State<MyStations> {
 
 
   Widget build(BuildContext context) {
-    return MaterialApp(
-
-        home: Scaffold(
+    return Scaffold(
             appBar: AppBar(
-              title: Text("My Stations"),
+              title: Row(
+                children: [
+                  Text("My Stations"),
+                  NotificationWidget(),
+                ],
+              ),
             ),
+            drawer: UserAccount(),
             body: ListView.builder(
               //shrinkWrap: true,
               itemCount: myStations.length,
@@ -59,7 +65,7 @@ class MyStationsState extends State<MyStations> {
 
 
 
-        ));
+        );
   }
 
 

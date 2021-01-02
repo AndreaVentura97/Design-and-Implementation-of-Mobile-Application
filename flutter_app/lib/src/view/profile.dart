@@ -5,6 +5,7 @@ import 'package:flutter_app/redux/model/customer.dart';
 import 'package:flutter_app/src/services/sendNotification.dart';
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:carousel_pro/carousel_pro.dart';
+import 'package:flutter_app/src/view/userAccountWidget.dart';
 import 'package:flutter_app/src/view/viewModel.dart';
 import 'package:flutter_redux/flutter_redux.dart';
 import 'map.dart';
@@ -60,77 +61,13 @@ class _ProfileState extends State<Profile> {
                     ),
                     textAlign: TextAlign.left,
                   ),
+                    NotificationWidget(),
                 ]
                 ),
                 centerTitle: true,
                 backgroundColor: Colors.blue[900],
               ),
-              drawer: new Drawer(
-                  child: ListView(
-                      children: <Widget>[
-                        new UserAccountsDrawerHeader(
-                          accountName: Row(children: [Icon(
-                            Icons.account_box_outlined,
-                            color: Colors.black,
-                          ),
-                            Text("${_viewModel.c.name}"),
-                          ]),
-                          accountEmail: Row(children: [Icon(
-                            Icons.email,
-                            color: Colors.black,
-                          ),
-                            Text("${_viewModel.c.email}"),
-                          ]),
-                          currentAccountPicture: new CircleAvatar(
-                            backgroundImage: (_viewModel.c.photo == null)
-                                ? null
-                                : new NetworkImage(_viewModel.c.photo),
-                          ),
-                        ),
-                        new ListTile(
-                            title: Text("See my stations"),
-                            onTap: () {
-                              Navigator.push(context, MaterialPageRoute(builder:(context)=> MyStations (email: _viewModel.c.email)));
-                            }
-                        ),
-                        new ListTile(
-                            title: Text("See my comments"),
-                            onTap: () {
-                              Navigator.push(context, MaterialPageRoute(builder:(context)=> MyComments ()));
-                            }
-                        ),
-                        new ListTile(
-                            title: Row(
-                              children: [Text("Notification"),NotificationWidget()]
-                            ),
-                            onTap: () {
-                              Navigator.push(context, MaterialPageRoute(builder:(context)=>not.Notification()));
-                            }
-                        ),
-                        new ListTile(
-                            title: Text("Contact us"),
-                            onTap: () {
-                              //TODO
-                            }
-                        ),
-                        new ListTile(
-                            title: Text("About us"),
-                            onTap: () {
-                              //TODO
-                            }
-                        ),
-
-                        new ListTile(
-                          title: Text("Logout"),
-                          onTap: () {
-                            setLogged(false);
-                            Navigator.pushReplacement(context, MaterialPageRoute(
-                                builder: (BuildContext context) => Login()));
-                          },
-                        ),
-                      ]
-                  )
-              ),
+              drawer: UserAccount(),
               body: Column(
                   mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                   children: [

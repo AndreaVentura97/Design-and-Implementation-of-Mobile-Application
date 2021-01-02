@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_app/src/services/sendNotification.dart';
+import 'package:flutter_app/src/view/userAccountWidget.dart';
 import 'package:flutter_app/src/view/viewModel.dart';
 import '../services/service.dart';
 import '../services/messagesService.dart';
@@ -47,6 +48,7 @@ class MyCommentsState extends State<MyComments> {
               appBar: AppBar(
                 title: Text("Comments"),
               ),
+              drawer: UserAccount(),
               body: ListView.builder(
                 //shrinkWrap: true,
                 itemCount: myComments.length,

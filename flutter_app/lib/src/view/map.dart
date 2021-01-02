@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_app/src/view/userAccountWidget.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import '../services/service.dart';
 import 'package:location/location.dart';
@@ -53,6 +54,7 @@ class _MapState extends State<Map> {
           title: Text('Map'),
           backgroundColor: Colors.green[700],
         ),
+        drawer: UserAccount(),
         body: GoogleMap(
           onMapCreated: _onMapCreated,
           initialCameraPosition: CameraPosition(

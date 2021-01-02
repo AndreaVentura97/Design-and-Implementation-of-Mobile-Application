@@ -11,6 +11,7 @@ import 'package:shared_preferences/shared_preferences.dart';
 import 'src/checkLogin.dart';
 import 'redux/model/customer.dart';
 
+
 final server = new Sevr();
 const port = 8081;
 SharedPreferences prefs;
@@ -24,7 +25,7 @@ void main () async {
   if (await getLogged()==true){
     var user = await exportProfile();
     print("just logged");
-    final Customer customer = new Customer(name: user[0], email: user[1], photo: user[2]);
+    final Customer customer = new Customer(name: user[0], email: user[1], photo: user[2],notification:false);
     store = new Store(appReducer, initialState: AppState(customer:customer));
   }
   else {
