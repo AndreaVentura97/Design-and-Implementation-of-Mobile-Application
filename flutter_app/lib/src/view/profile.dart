@@ -49,6 +49,22 @@ class _ProfileState extends State<Profile> {
           return Scaffold(
               appBar: AppBar(
                 title: Row(
+<<<<<<< HEAD
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  crossAxisAlignment: CrossAxisAlignment.center,
+                  children: [
+                    Text(
+                    'Welcome back',
+                    style: TextStyle(
+                      color: Colors.white,
+                      letterSpacing: 1.5,
+                      fontFamily: 'FredokaOne',
+                    ),
+                    textAlign: TextAlign.left,
+                  ),
+                    NotificationWidget(),
+                ]
+=======
                     mainAxisAlignment: MainAxisAlignment.center,
                     crossAxisAlignment: CrossAxisAlignment.center,
                     children: [
@@ -63,6 +79,7 @@ class _ProfileState extends State<Profile> {
                       ),
                       NotificationWidget(),
                     ]
+>>>>>>> 7544a1657651c3210c12bc374f5048aca8be625a
                 ),
                 centerTitle: true,
                 backgroundColor: Colors.blue[900],

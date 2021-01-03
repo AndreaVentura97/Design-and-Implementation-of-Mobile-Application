@@ -29,6 +29,10 @@ class NotificationState extends State<Notification> {
                 ],
               ),
             ),
+<<<<<<< HEAD
+            drawer: UserAccount(),
+=======
+>>>>>>> 7544a1657651c3210c12bc374f5048aca8be625a
             body: ListView.builder(
               //shrinkWrap: true,
               itemCount: widget.notifications.length,
