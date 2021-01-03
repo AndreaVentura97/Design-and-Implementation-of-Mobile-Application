@@ -1,13 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_app/src/view/userAccountWidget.dart';
-<<<<<<< HEAD
-=======
-import 'package:flutter_app/redux/model/AppState.dart';
-import 'package:flutter_app/src/view/pointWidget.dart';
-import 'package:flutter_app/src/view/viewModel.dart';
-import 'package:flutter_redux/flutter_redux.dart';
-import '../services/stationServices.dart';
->>>>>>> 7544a1657651c3210c12bc374f5048aca8be625a
 import '../services/userService.dart';
 import 'displayMenuStation.dart';
 import 'notificationWidget.dart';
@@ -60,11 +52,10 @@ class MyStationsState extends State<MyStations> {
                 ],
               ),
             ),
-<<<<<<< HEAD
-            drawer: UserAccount(),
-=======
 
->>>>>>> 7544a1657651c3210c12bc374f5048aca8be625a
+            drawer: UserAccount(),
+
+
             body: ListView.builder(
               //shrinkWrap: true,
               itemCount: myStations.length,

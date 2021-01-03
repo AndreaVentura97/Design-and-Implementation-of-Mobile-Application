@@ -25,35 +25,10 @@ class _NotificationWidgetState extends State<NotificationWidget> {
 
   @override
   void initState() {
-<<<<<<< HEAD
+
     super.initState();
   }
 
-  getMessage(store) {
-    print('i am in get message');
-    _firebaseMessaging.configure(
-      onMessage: (Map<String, dynamic> message) async {
-        print('received message2');
-        //setState(() => messages.add(message["notification"]["body"]));
-        //store.dispatch(updateCustomer(name:store.state.customer.name, email:store.state.customer.email, photo: store.state.customer.photo,notification: true));
-        setState((){yes=true;});
-
-      }, onResume: (Map<String, dynamic> message) async {
-      print('on resume');
-      setState(() => messages.add(message["notification"]["body"]));
-      //store.dispatch(updateCustomer(name:store.state.customer.name, email:store.state.customer.email, photo: store.state.customer.photo,notification: true));
-      //setState((){yes=true;});
-
-    }, onLaunch: (Map<String, dynamic> message) async {
-      print('on launch');
-      setState(() => messages.add(message["notification"]["body"]));
-      //store.dispatch(updateCustomer(name:store.state.customer.name, email:store.state.customer.email, photo: store.state.customer.photo,notification: true));
-      //setState((){yes=true;});
-
-=======
-    _registerOnFirebase();
-    super.initState();
-  }
 
   void getMessage(store) {
     _firebaseMessaging.configure(
@@ -72,12 +47,11 @@ class _NotificationWidgetState extends State<NotificationWidget> {
       setState(() => messages.add(message["notification"]["body"]));
       store.dispatch(updateCustomer(name:store.state.customer.name, email:store.state.customer.email, photo: store.state.customer.photo,notification: true));
       setState(() => yes = true);
->>>>>>> 7544a1657651c3210c12bc374f5048aca8be625a
+
     },
     );
   }
 
-<<<<<<< HEAD
   @override
   Widget build(BuildContext context) {
     return new StoreConnector <AppState, ViewModel> (
@@ -92,33 +66,15 @@ class _NotificationWidgetState extends State<NotificationWidget> {
             onPressed: () {
               StoreProvider.of<AppState>(context).dispatch(updateCustomer(name:_viewModel.c.name, email:_viewModel.c.email, photo: _viewModel.c.photo,notification: false));
               setState((){yes=false;});
-              //Navigator.push(context, MaterialPageRoute(
-                //  builder: (context) => Not.Notification(notifications:messages)));
+              Navigator.of(context).pushReplacement(MaterialPageRoute(builder: (_) {
+                return Not.Notification(notifications: messages);
+              }));
             },
           );
         });
-=======
 
-    @override
-    Widget build(BuildContext context) {
-      return new StoreConnector <AppState, ViewModel> (
-          converter: (store) => createViewModel(store),
-          onInit: (store) => getMessage(store),
-          builder: (context, _viewModel) {
-            yes = _viewModel.c.notification;
-            return IconButton(
-              icon: Icon(Icons.notifications,
-                color: (yes) ? Colors.red : Colors.black,
-              ),
-              onPressed: () {
-                StoreProvider.of<AppState>(context).dispatch(updateCustomer(name:_viewModel.c.name, email:_viewModel.c.email, photo: _viewModel.c.photo,notification: false));
-                setState((){yes=false;});
-                Navigator.push(context, MaterialPageRoute(
-                 builder: (context) => Not.Notification(notifications:messages)));
-              },
-            );
-          });
->>>>>>> 7544a1657651c3210c12bc374f5048aca8be625a
+
+
   }
 }
 

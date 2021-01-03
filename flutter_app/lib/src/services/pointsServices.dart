@@ -1,4 +1,5 @@
 import '../db.dart' as DB;
+import 'dart:math' show cos, sqrt, asin;
 
 insertLikePoints (email, idPoints) async {
   var response = await DB.getDB().collection('users').findOne({'email': email});
@@ -129,3 +130,26 @@ minusOne2Points (id) async {
   await DB.getDB().collection('points').update(
       {'_id': id}, {"\$set": {"nu": nu}});
 }
+
+
+
+double _coordinateDistance(lat1, lon1, lat2, lon2) {
+  var p = 0.017453292519943295;
+  var c = cos;
+  var a = 0.5 -
+      c((lat2 - lat1) * p) / 2 +
+      c(lat1 * p) * c(lat2 * p) * (1 - c((lon2 - lon1) * p)) / 2;
+  return 12742 * asin(sqrt(a));
+}
+
+calculateDistance (idPoint) async {
+  var point = await DB.getDB().collection('points').findOne({'_id': idPoint});
+  var stat = await DB.getDB().collection('markers').findOne({'name': point['station']});
+  double lat1 = stat['latitude'];
+  double long1 = stat['longitude'];
+  double lat2 = point['latitude'];
+  double long2 = point['longitude'];
+  double result = _coordinateDistance(lat1, long1, lat2, long2);
+  return result;
+}
+

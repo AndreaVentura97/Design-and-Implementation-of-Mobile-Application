@@ -29,21 +29,21 @@ class NotificationState extends State<Notification> {
                 ],
               ),
             ),
-<<<<<<< HEAD
+
             drawer: UserAccount(),
-=======
->>>>>>> 7544a1657651c3210c12bc374f5048aca8be625a
+
+
             body: ListView.builder(
               //shrinkWrap: true,
               itemCount: widget.notifications.length,
               itemBuilder: (BuildContext context, int index) {
                 return ListTile(
                   contentPadding: EdgeInsets.all(10.0),
-                  title: Text(widget.notifications[index],
+                  title: (widget.notifications!=null) ? Text(widget.notifications[index],
                       style: TextStyle(
                           fontSize: 10,
                           fontWeight: FontWeight.w500,
-                          color: Colors.black)),
+                          color: Colors.black)) : null,
                 );
               },
             )

@@ -1,4 +1,3 @@
-<<<<<<< HEAD
 import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_app/redux/model/AppState.dart';
@@ -6,10 +5,8 @@ import 'package:flutter_app/redux/model/customer.dart';
 import 'package:flutter_app/src/services/sendNotification.dart';
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:carousel_pro/carousel_pro.dart';
-=======
 import 'package:flutter/material.dart';
 import 'package:flutter_app/redux/model/AppState.dart';
->>>>>>> 7544a1657651c3210c12bc374f5048aca8be625a
 import 'package:flutter_app/src/view/viewModel.dart';
 import 'package:flutter_redux/flutter_redux.dart';
 import 'profile.dart';
@@ -36,7 +33,7 @@ class _UserAccountState extends State<UserAccount> {
         converter : (store) => createViewModel(store),
         builder : (context, _viewModel) {
           return
-<<<<<<< HEAD
+
               new Drawer(
                   child: ListView(
                       children: <Widget>[
@@ -109,75 +106,6 @@ class _UserAccountState extends State<UserAccount> {
                       ]
                   )
               );
-=======
-            new Drawer(
-                child: ListView(
-                    children: <Widget>[
-                      new UserAccountsDrawerHeader(
-                        accountName: Row(children: [Icon(
-                          Icons.account_box_outlined,
-                          color: Colors.black,
-                        ),
-                          Text("${_viewModel.c.name}"),
-                        ]),
-                        accountEmail: Row(children: [Icon(
-                          Icons.email,
-                          color: Colors.black,
-                        ),
-                          Text("${_viewModel.c.email}"),
-                        ]),
-                        currentAccountPicture: new CircleAvatar(
-                          backgroundImage: (_viewModel.c.photo == null)
-                              ? null
-                              : new NetworkImage(_viewModel.c.photo),
-                        ),
-                      ),
-                      new ListTile(
-                          title: Text("Home"),
-                          onTap: () {
-                            Navigator.push(context, MaterialPageRoute(builder:(context)=> Profile()));
-                          }
-                      ),
-                      new ListTile(
-                          title: Text("See my stations"),
-                          onTap: () {
-                            Navigator.push(context, MaterialPageRoute(builder:(context)=> MyStations (email: _viewModel.c.email)));
-                          }
-                      ),
-                      new ListTile(
-                          title: Text("See my comments"),
-                          onTap: () {
-                            Navigator.push(context, MaterialPageRoute(builder:(context)=> MyComments ()));
-                          }
-                      ),
-                      new ListTile(
-                          title: Text("Contact us"),
-                          onTap: () {
-                            //TODO
-                          }
-                      ),
-                      new ListTile(
-                          title: Text("About us"),
-                          onTap: () {
-                            //TODO
-                          }
-                      ),
-
-                      new ListTile(
-                        title: Text("Logout"),
-                        onTap: () {
-                          setLogged(false);
-                          Navigator.pushReplacement(context, MaterialPageRoute(
-                              builder: (BuildContext context) => Login()));
-                        },
-                      ),
-                    ]
-                )
-            );
->>>>>>> 7544a1657651c3210c12bc374f5048aca8be625a
-
-
-
         });
 
   }
