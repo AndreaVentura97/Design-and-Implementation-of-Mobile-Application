@@ -1,11 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_app/redux/model/AppState.dart';
+import 'package:flutter_app/src/services/stationServices.dart';
 import 'package:flutter_app/src/services/userService.dart';
 import 'package:flutter_app/src/view/viewModel.dart';
 import 'package:flutter_redux/flutter_redux.dart';
 import 'package:url_launcher/url_launcher.dart';
 import '../services/pointsServices.dart';
 import '../services/userService.dart';
+
 
 class PointWidget extends StatefulWidget {
   var point;
@@ -16,15 +18,29 @@ class PointWidget extends StatefulWidget {
 class PointWidgetState extends State<PointWidget>{
   List myLikes = [];
   List myUnlikes = [];
+  var distance;
+  var latitudeStation;
+  var longitudeStation;
 
-  retrieveMyPoints(email) {
+
+
+  retrieveMyPoints(email,idPoint) {
     retrieveMyLikedPoints(email).then((netLikes) => setState(() {
       myLikes = netLikes;
     }));
     retrieveMyUnLikedPoints(email).then((netUnlikes) => setState(() {
       myUnlikes = netUnlikes;
     }));
+    calculateDistance(idPoint).then((netDistance) => setState(() {
+        distance = netDistance.toStringAsPrecision(2);
+    }));
+    informationStation(widget.point['station']).then((netStation) => setState ((){
+      latitudeStation=netStation['latitude'];
+      longitudeStation=netStation['longitude'];
+    }));
   }
+
+
 
   bool checkLike(id) {
     for (int i = 0; i < myLikes.length; i++) {
@@ -44,6 +60,14 @@ class PointWidgetState extends State<PointWidget>{
     return false;
   }
 
+  Future<void> _launchMapsUrl(double lat, double lon) async {
+    //final url1 = 'https://www.google.com/maps/dir/?api=1&origin=$latitudeStation,$longitudeStation&destination=$lat,$lon&travelmode=driving&dir_action=navigate';
+    final url2 = 'https://www.google.it/maps/dir/$latitudeStation,$longitudeStation/$lat,$lon/@45.4727846,9.1004871,13z/data=!3m1!4b1!4m7!4m6!1m3!2m2!1d9.138377!2d45.489536!1m0!3e2';
+    launch(url2);
+    }
+
+
+
 
 
 
@@ -51,14 +75,14 @@ class PointWidgetState extends State<PointWidget>{
   Widget build(BuildContext context) {
      return new StoreConnector<AppState,ViewModel>(
          converter: (store) => createViewModel(store),
-          onInit: (store) => retrieveMyPoints(store.state.customer.email),
+          onInit: (store) => retrieveMyPoints(store.state.customer.email,widget.point['_id']),
           builder: (context, _viewModel) {
            return Container(
         //height: 150.0,
         margin: EdgeInsets.symmetric(vertical: 5.0),
         //color: Colors.grey,
             child: IntrinsicHeight(
-            child: Row(
+              child: Row(
             crossAxisAlignment: CrossAxisAlignment.center,
             children: [
               Container(
@@ -102,6 +126,19 @@ class PointWidgetState extends State<PointWidget>{
                               launch(widget.point['webAddress']),
                             }
                       )),
+                      Container(
+                        //color: Colors.green[200],
+                          child: Text('Distance from the station: $distance km', style:TextStyle(color: Colors.black,)),
+                          ),
+                      Container(
+                        //color: Colors.green[200],
+                          child: InkWell(
+                              child: Text('Take me there', style:TextStyle(color: Colors.red,)),
+                              onTap: () => {
+                              //Navigator.push(context, MaterialPageRoute(builder:(context)=>PointToStation(point:widget.point,nameStation:widget.point['station'])))
+                                _launchMapsUrl(widget.point['latitude'], (widget.point['longitude']))
+                              }
+                          )),
                       Align(
                           alignment: Alignment.bottomRight,
                           child: Container(
