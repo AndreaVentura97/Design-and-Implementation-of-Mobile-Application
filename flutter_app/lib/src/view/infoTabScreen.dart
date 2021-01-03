@@ -74,71 +74,71 @@ class InfoStationState extends State<InfoStation> {
                       //color: Colors.grey[400],
                       child:Container(
                         margin: EdgeInsets.all(10.0),
-                        child: Column(
-                          crossAxisAlignment: CrossAxisAlignment.stretch,
-                            children: [
-                          Row(
-                            //mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            children: [
-                              Container(
-                                child: Image(
-                                  image: AssetImage("assets/M1.png"),
-                                  height: 50.0,
-                                  width: 75.0,
-                                ),
-                              ),
-                              SizedBox(width: 10.0,),
-                              Flexible(
-                                fit: FlexFit.loose,
-                                flex: 2,
-                                child: Container(
-                                  //color: Colors.green,
-                                  child: Column(
-                                    crossAxisAlignment: CrossAxisAlignment.start,
-                                    children: [
-                                      Text("${widget.station}",
-                                        style: TextStyle(
-                                          fontSize: 25.0,
-                                          color: Colors.black,
-                                        ),
-                                      ),
-                                      // Text("$line",
-                                      //   style: TextStyle(
-                                      //     fontSize: 16.0,
-                                      //     color: Colors.grey,
-                                      //   ),
-                                      // ),
-                                      Text("$address",
-                                        style: TextStyle(
-                                          fontSize: 16.0,
-                                          color: Colors.grey,
-                                        ),
-                                      ),
-                                    ],
+                        color: Colors.green,
+                        child:
+                          ListTile(
+                            contentPadding: EdgeInsets.zero,
+                            title: Row(
+                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: [
+                                Container(
+                                  child: Image(
+                                    image: AssetImage("assets/M1.png"),
+                                    height: 40.0,
+                                    width: 60.0,
                                   ),
                                 ),
-                              ),
-                              IconButton(
-                                icon: Icon(!_favStation ? Icons.favorite_outline : Icons.favorite,
-                                  size: 20.0,
+                                SizedBox(width: 10.0,),
+                                Flexible(
+                                  child: Container(
+                                    color: Colors.blue,
+                                    child: Column(
+                                      crossAxisAlignment: CrossAxisAlignment.start,
+                                      children: [
+                                        Text("${widget.station}",
+                                          style: TextStyle(
+                                            fontSize: 25.0,
+                                            color: Colors.black,
+                                          ),
+                                        ),
+                                        // Text("$line",
+                                        //   style: TextStyle(
+                                        //     fontSize: 16.0,
+                                        //     color: Colors.grey,
+                                        //   ),
+                                        // ),
+                                        Text("$address",
+                                          style: TextStyle(
+                                            fontSize: 16.0,
+                                            color: Colors.grey,
+                                          ),
+                                        ),
+                                      ],
+                                    ),
+                                  ),
                                 ),
-                                  onPressed: (!_favStation) ?  () {
-                                  addMyStations(_viewModel.c.email, widget.station);
-                                  setState(() {
-                                    _favStation = true;
-                                  });
-                                } : () {
-                                    deleteMyStations(_viewModel.c.email, widget.station);
-                                    setState(() {
-                                      _favStation = false;
-                                    });
-                                  },
+                              ],
+                            ),
+                            trailing: IconButton(
+                              icon: Icon(!_favStation ? Icons.favorite_outline : Icons.favorite,
+                                size: 20.0,
+                                color: Colors.black,
                               ),
-                            ],
+                              onPressed: (!_favStation) ?  () {
+                                addMyStations(_viewModel.c.email, widget.station);
+                                setState(() {
+                                  _favStation = true;
+                                });
+                              } : () {
+                                deleteMyStations(_viewModel.c.email, widget.station);
+                                setState(() {
+                                  _favStation = false;
+                                });
+                              },
+                            ),
                           )
-                        ]
-                        ),
+
                       ),
                     ),
                     Card(
