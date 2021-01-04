@@ -77,75 +77,80 @@ class MyStationsState extends State<MyStations> {
                       //color: Colors.grey[400],
                       child:Container(
                         margin: EdgeInsets.all(10.0),
+                        //color: Colors.blue,
                         child: Column(
-                            crossAxisAlignment: CrossAxisAlignment.stretch,
-                            children: [
-                              Row(
-                                //mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                                crossAxisAlignment: CrossAxisAlignment.center,
-                                children: [
-                                  Container(
-                                    child: Image(
-                                      image: AssetImage("assets/M1.png"),
-                                      height: 50.0,
-                                      width: 75.0,
-                                    ),
-                                  ),
-                                  SizedBox(width: 10.0,),
-                                  Container(
-                                      //color: Colors.green,
-                                      child: Column(
-                                        crossAxisAlignment: CrossAxisAlignment.start,
-                                        children: [
-                                          Text(myStations[index],
-                                              style: TextStyle(
-                                                  fontSize: 30,
-                                                  fontWeight: FontWeight.w500,
-                                                  color: Colors.black
-                                              )
+                          mainAxisSize: MainAxisSize.max,
+                          children: [
+                            ListTile(
+                              contentPadding: EdgeInsets.fromLTRB(10.0, 0.0, 0.0, 0.0),
+                              title: Row(
+                                      //mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                      crossAxisAlignment: CrossAxisAlignment.center,
+                                      children: [
+                                        Container(
+                                          child: Image(
+                                            image: AssetImage("assets/M1.png"),
+                                            height: 40.0,
+                                            width: 60.0,
                                           ),
-                                          // Text("${widget.station}",
-                                          //   style: TextStyle(
-                                          //     fontSize: 25.0,
-                                          //     color: Colors.black,
-                                          //   ),
-                                          // ),
-                                          // Text("$line",
-                                          //   style: TextStyle(
-                                          //     fontSize: 16.0,
-                                          //     color: Colors.grey,
-                                          //   ),
-                                          // ),
-                                          // Text("$address",
-                                          //   style: TextStyle(
-                                          //     fontSize: 16.0,
-                                          //     color: Colors.grey,
-                                          //   ),
-                                          // ),
-                                        ],
-                                      ),
+                                        ),
+                                        SizedBox(width: 10.0,),
+                                        Flexible(
+                                          child: Container(
+                                              //color: Colors.green,
+                                              child: Column(
+                                                crossAxisAlignment: CrossAxisAlignment.start,
+                                                children: [
+                                                  Text(myStations[index],
+                                                      style: TextStyle(
+                                                          fontSize: 25.0,
+                                                          fontWeight: FontWeight.w500,
+                                                          color: Colors.black
+                                                      )
+                                                  ),
+                                                  // Text("${widget.station}",
+                                                  //   style: TextStyle(
+                                                  //     fontSize: 25.0,
+                                                  //     color: Colors.black,
+                                                  //   ),
+                                                  // ),
+                                                  // Text("$line",
+                                                  //   style: TextStyle(
+                                                  //     fontSize: 16.0,
+                                                  //     color: Colors.grey,
+                                                  //   ),
+                                                  // ),
+                                                  // Text("$address",
+                                                  //   style: TextStyle(
+                                                  //     fontSize: 16.0,
+                                                  //     color: Colors.grey,
+                                                  //   ),
+                                                  // ),
+                                                ],
+                                              ),
+                                            ),
+                                        ),
+                                      ],
                                     ),
-                                  Spacer(),
-                                  IconButton(
-                                    icon: Icon(!_favStation ? Icons.favorite_outline : Icons.favorite,
-                                      size: 20.0,
-                                    ),
-                                    // onPressed: (!_favStation) ?  () {
-                                    //   addMyStations(_viewModel.c.email, widget.station);
-                                    //   setState(() {
-                                    //     _favStation = true;
-                                    //   });
-                                    // } : () {
-                                    //   deleteMyStations(_viewModel.c.email, widget.station);
-                                    //   setState(() {
-                                    //     _favStation = false;
-                                    //   });
-                                    // },
-                                  ),
-                                ],
-                              )
-                            ]
-                        ),
+                              trailing: IconButton(
+                                icon: Icon(!_favStation ? Icons.favorite_outline : Icons.favorite,
+                                  size: 20.0,
+                                ),
+                                // onPressed: (!_favStation) ?  () {
+                                //   addMyStations(_viewModel.c.email, widget.station);
+                                //   setState(() {
+                                //     _favStation = true;
+                                //   });
+                                // } : () {
+                                //   deleteMyStations(_viewModel.c.email, widget.station);
+                                //   setState(() {
+                                //     _favStation = false;
+                                //   });
+                                // },
+                              ),
+                            ),
+                          ],
+                        )
                       ),
                     ),
                   );
