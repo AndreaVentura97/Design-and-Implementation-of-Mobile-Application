@@ -165,3 +165,32 @@ updateMeanArea (station) async {
   await DB.getDB().collection('markers').update({'name': station}, {"\$set": {"avgArea":avg}});
   return avg;
 }
+
+searchStationByName(String name) async {
+  if (name == "") return [];
+  var response = await DB.getDB().collection('markers').find({'name':name}).toList();
+  if(response.length==0) {
+    String Name = name[0].toUpperCase() + name.substring(1);
+    var response2 = await DB.getDB().collection('markers')
+        .find({'name': Name})
+        .toList();
+    if (response2.length != 0) {
+      return response2;
+    }
+    else {
+      String Name2 = name[0].toUpperCase()+ name[1].toUpperCase() + name.substring(2);
+      var response3 = await DB.getDB().collection('markers')
+          .find({'name': Name2})
+          .toList();
+      if (response3.length!=0){
+        return response3;
+      }
+    }
+  }
+  return response;
+}
+
+searchStationByLine(String line) async {
+  var response = await DB.getDB().collection('markers').find({'line':line}).toList();
+  return response;
+}

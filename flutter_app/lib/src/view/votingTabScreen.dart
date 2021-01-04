@@ -4,6 +4,7 @@ import 'package:flutter_app/redux/model/AppState.dart';
 import 'package:flutter_app/src/view/viewModel.dart';
 import 'package:flutter_redux/flutter_redux.dart';
 import '../services/stationServices.dart';
+import '../services/userService.dart';
 import 'package:flutter_app/src/services/service.dart';
 
 class Voting extends StatefulWidget {
@@ -24,6 +25,7 @@ class VotingState extends State<Voting> {
   double valueMeanSafety;
   double valueArea;
   double valueMeanArea;
+  bool citizen = false;
   List<bool> voting = [false, false, false, false];
 
   //bool voting = false;
@@ -67,6 +69,9 @@ class VotingState extends State<Voting> {
     }));
     retrieveMyVoteArea(email, widget.station).then((vote4) => setState((){
       valueArea = vote4;
+    }));
+    retrieveMyState(email).then((result) => setState ((){
+      citizen = result;
     }));
   }
 
@@ -137,9 +142,16 @@ class VotingState extends State<Voting> {
                                             children: [
                                               Text('Citizen'),
                                               IconButton(
-                                                icon: Icon(
+                                                icon: (!citizen) ? Icon(
                                                   Icons.brightness_1_outlined, //:Icons.brightness_1,
+                                                ): Icon(
+                                                    Icons.brightness_1,
                                                 ),
+                                                onPressed: () => {
+                                                  updateState(_viewModel.c.email,true).then((value)=>setState((){
+                                                    citizen = value;
+                                                  }))
+                                                },
                                               )
                                             ],
                                           ),
@@ -151,9 +163,14 @@ class VotingState extends State<Voting> {
                                             children: [
                                               Text('Visitor'),
                                               IconButton(
-                                                icon: Icon(
-                                                  Icons.brightness_1_outlined, //:Icons.brightness_1,
-                                                ),
+                                                icon: (!citizen) ? Icon(
+                                                   Icons.brightness_1,) :
+                                                Icon(Icons.brightness_1_outlined),
+                                                onPressed: () => {
+                                                  updateState(_viewModel.c.email,false).then((value)=>setState((){
+                                                    citizen = value;
+                                                }))
+                                                },
                                               )
                                             ],
                                           ),

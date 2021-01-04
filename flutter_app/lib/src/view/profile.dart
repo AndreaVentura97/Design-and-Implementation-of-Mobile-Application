@@ -5,6 +5,7 @@ import 'package:flutter_app/redux/model/customer.dart';
 import 'package:flutter_app/src/services/sendNotification.dart';
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:carousel_pro/carousel_pro.dart';
+import 'package:flutter_app/src/view/searchScreen.dart';
 import 'package:flutter_app/src/view/userAccountWidget.dart';
 import 'package:flutter_app/src/view/viewModel.dart';
 import 'package:flutter_redux/flutter_redux.dart';
@@ -112,6 +113,11 @@ class _ProfileState extends State<Profile> {
                     ),
 
                     SizedBox(height: 15.0,),
+                    OutlineButton(
+                        child: Text("Search station "),
+                       onPressed: () {
+                           Navigator.push(context, MaterialPageRoute(builder:(context)=> Search()));
+                           }, ),
 
 
                     /*

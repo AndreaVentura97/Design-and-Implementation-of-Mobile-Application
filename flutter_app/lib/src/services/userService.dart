@@ -25,7 +25,7 @@ insertUser (email, name,tk) async {
     await DB.getDB().collection('users').insertOne({'email': email, 'name': name,
       'myStations': myStations, 'myComments': myComments,
       'myLiked':myLiked, 'myUnliked':myUnliked,
-      'myLikedPoints':myLikedPoints, 'myUnlikedPoints':myUnlikedPoints, 'token':tk
+      'myLikedPoints':myLikedPoints, 'myUnlikedPoints':myUnlikedPoints, 'token':tk, 'state':true
     });
   }
 }
@@ -97,4 +97,15 @@ retrieveMyUnLikedPoints(email) async {
   var user = await DB.getDB().collection('users').findOne({'email': email});
   var myLiked = user['myUnlikedPoints'].toList();
   return myLiked;
+}
+
+retrieveMyState(email) async {
+  var user = await DB.getDB().collection('users').findOne({'email': email});
+  var state = user['state'];
+  return state;
+}
+
+updateState(email,value) async {
+  await DB.getDB().collection('users').update({'email': email}, {"\$set": {"state":value}});
+  return value;
 }
