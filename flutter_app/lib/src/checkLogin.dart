@@ -50,6 +50,8 @@ getPhoto (){
 setLogged(flag) async {
   SharedPreferences prefs = await SharedPreferences.getInstance();
   prefs.setBool("log", flag);
+  //ToCheck
+  prefs.setString("photo", null);
 }
 
 

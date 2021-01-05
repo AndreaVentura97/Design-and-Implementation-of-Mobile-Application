@@ -26,11 +26,6 @@ class MyStationsState extends State<MyStations> {
     }));
   }
 
-  updateFav(email,station){
-    isMyStation(email,station).then((result) => setState(() {
-      _favStation = result;
-    }));
-  }
 
   @override
   void initState() {
@@ -48,7 +43,7 @@ class MyStationsState extends State<MyStations> {
               title: Row(
                 children: [
                   Text("My Stations"),
-                  NotificationWidget(),
+
                 ],
               ),
             ),
@@ -133,20 +128,15 @@ class MyStationsState extends State<MyStations> {
                                       ],
                                     ),
                               trailing: IconButton(
-                                icon: Icon(!_favStation ? Icons.favorite_outline : Icons.favorite,
+                                icon: Icon(Icons.favorite,
                                   size: 20.0,
                                 ),
-                                // onPressed: (!_favStation) ?  () {
-                                //   addMyStations(_viewModel.c.email, widget.station);
-                                //   setState(() {
-                                //     _favStation = true;
-                                //   });
-                                // } : () {
-                                //   deleteMyStations(_viewModel.c.email, widget.station);
-                                //   setState(() {
-                                //     _favStation = false;
-                                //   });
-                                // },
+                                onPressed: () {
+                                  deleteMyStations(widget.email, myStations[index]);
+                                  setState(() {
+                                    myStations.remove(myStations[index]);
+                                  });
+                                   },
                               ),
                             ),
                           ],
@@ -157,10 +147,7 @@ class MyStationsState extends State<MyStations> {
 
               },
             )
-
-
-
-        );
+    );
   }
 
 

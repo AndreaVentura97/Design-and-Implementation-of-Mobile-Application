@@ -33,7 +33,7 @@ class NotificationState extends State<Notification> {
             drawer: UserAccount(),
 
 
-            body: ListView.builder(
+            body: (widget.notifications.length!=0) ? ListView.builder(
               //shrinkWrap: true,
               itemCount: widget.notifications.length,
               itemBuilder: (BuildContext context, int index) {
@@ -46,10 +46,7 @@ class NotificationState extends State<Notification> {
                           color: Colors.black)) : null,
                 );
               },
-            )
-
-
-
+            ) : Text("You don't have new notifications")
         ));
   }
 

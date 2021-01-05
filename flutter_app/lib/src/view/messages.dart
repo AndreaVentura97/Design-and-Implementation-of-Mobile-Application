@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_app/src/services/sendNotification.dart';
+import 'package:flutter_app/src/view/popupVoteScreen.dart';
 import 'package:flutter_app/src/view/viewModel.dart';
 import '../services/service.dart';
 import '../services/messagesService.dart';
@@ -57,6 +58,7 @@ class MessagesState extends State<Messages> {
         }));
   }
 
+
   @override
   void initState() {
     super.initState();
@@ -107,14 +109,23 @@ class MessagesState extends State<Messages> {
                                           child: Column(
                                             crossAxisAlignment: CrossAxisAlignment.start,
                                             children: [
-                                              Text(messages[index]['name'],
-                                                  style: TextStyle(
-                                                      fontSize: 18.0,
-                                                      fontWeight: FontWeight.w500,
-                                                      color: Colors.black)),
-                                              Container(
+                                              InkWell(
+                                                child: Text(messages[index]['name'],
+                                                    style: TextStyle(
+                                                        fontSize: 18.0,
+                                                        fontWeight: FontWeight.w500,
+                                                        color: Colors.black)),
+                                                onTap: (){
+                                                    showDialog(
+                                                          context: context,
+                                                          builder: (BuildContext context) {
+                                                    return PopupVote(email: messages[index]['email'], station: widget.station);
+                                                });
+                                                }
+                                              ),
+                                                Container(
                                                 color: Colors.black,
-                                                child: Row(
+                                                  child: Row(
                                                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                                                   children: [
                                                     Text(messages[index]['date'],
@@ -126,12 +137,17 @@ class MessagesState extends State<Messages> {
 
                                                     //
                                                     // Da cambiare in base se cittadino o visitatiore
-                                                    Text('Citizen',
+                                                    (messages[index]['state']) ? Text('Citizen',
                                                       style: TextStyle(
                                                         fontSize: 15.0,
                                                         color: Colors.grey,
                                                       ),
-                                                    ),
+                                                    ) : Text('Visitor',
+                                                      style: TextStyle(
+                                                        fontSize: 15.0,
+                                                        color: Colors.grey,
+                                                      ),
+                                                    )
                                                   ],
                                                 ),
                                               ),
@@ -151,11 +167,17 @@ class MessagesState extends State<Messages> {
                               ),
                               Container(
                                 color: Colors.green[100],
-                                child: Text(messages[index]['text'],
-                                    style: TextStyle(
-                                        fontSize: 15,
-                                        fontWeight: FontWeight.w500,
-                                        color: Colors.black)),
+                                child: InkWell(
+                                  child: Text(messages[index]['text'],
+                                      style: TextStyle(
+                                          fontSize: 15,
+                                          fontWeight: FontWeight.w500,
+                                          color: Colors.black)),
+                                  onTap: () {
+
+                                  },
+                                ),
+
                               ),
                               Container(
                                 color: Colors.blue[100],
@@ -254,6 +276,8 @@ class MessagesState extends State<Messages> {
               );
             },
           ));
+
         });
+
   }
 }

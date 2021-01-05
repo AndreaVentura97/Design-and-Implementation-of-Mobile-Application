@@ -503,8 +503,9 @@ class VotingState extends State<Voting> {
                               var name = _viewModel.c.name;
                               var email = _viewModel.c.email;
                               var photo = _viewModel.c.photo;
+
                               saveMessage(email, name, myController.text, photo,
-                                  widget.station);
+                                  widget.station,citizen);
                               myController.clear();
                             },
                           ),

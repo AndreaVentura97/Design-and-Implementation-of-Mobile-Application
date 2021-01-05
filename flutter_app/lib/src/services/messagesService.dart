@@ -138,3 +138,22 @@ minusOne2 (idComment) async {
   await DB.getDB().collection('messages').update(
       {'_id': idComment}, {"\$set": {"nu": nu}});
 }
+
+sortListByUp(list){
+  var a=0;
+  var b=0;
+  List returnList = [];
+  if(list.length<3) return list;
+  for(int i=0;i<list.length;i++){
+    a = list[i]['nl'];
+    if(a>=b){
+      returnList.add(list[i]);
+      b = a;
+      if(returnList.length==3) return returnList;
+    }
+  }
+}
+
+deleteMyComment(index) async {
+  await DB.getDB().collection('messages').remove({'_id': index});
+}

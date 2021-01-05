@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_app/redux/model/AppState.dart';
 import 'package:flutter_app/src/services/service.dart';
+import 'package:flutter_app/src/services/userService.dart';
 import 'package:flutter_app/src/view/viewModel.dart';
 import 'package:flutter_redux/flutter_redux.dart';
 import '../services/stationServices.dart';
@@ -47,8 +48,10 @@ class CommentState extends State<Comment> {
               var name = _viewModel.c.name;
               var email = _viewModel.c.email;
               var photo = _viewModel.c.photo;
+              var state;
+              retrieveMyState(email).then((value)=>state =value);
               saveMessage(
-                  email, name, myController.text, photo, widget.station);
+                  email, name, myController.text, photo, widget.station,state);
               myController.clear();
             },
           ),
