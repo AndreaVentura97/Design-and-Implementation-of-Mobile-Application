@@ -3,10 +3,10 @@ import '../db.dart' as DB;
 
 var postUrl = "https://fcm.googleapis.com/fcm/send";
 
-Future <void> sendNotification(receiver,ul) async {
+Future <void> sendNotification(receiver,ul,nameSender,textMessage,station) async {
   var token = await getToken(receiver);
   final data = {
-  "notification": {"body": "You have received a $ul to your comment", "title": "New $ul"},
+  "notification": {"body": "You have received a $ul by $nameSender to your comment '$textMessage' on station $station", "title": "New notification"},
   "priority": "high",
   "data": {
     "click_action": "FLUTTER_NOTIFICATION_CLICK",

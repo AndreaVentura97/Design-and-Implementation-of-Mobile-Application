@@ -211,7 +211,7 @@ class VotingState extends State<Voting> {
                                               sendCleaning(
                                                       value,
                                                       _viewModel.c.email,
-                                                      widget.station)
+                                                      widget.station,citizen)
                                                   .then((result) => setState(() {
                                                         valueMeanClean = result;
                                                       }));
@@ -274,7 +274,7 @@ class VotingState extends State<Voting> {
                                               color =
                                                   Colors.black.withOpacity(0.2);
                                               sendDis(value, _viewModel.c.email,
-                                                      widget.station)
+                                                      widget.station,citizen)
                                                   .then((result) => setState(() {
                                                         valueMeanDis = result;
                                                       }));
@@ -336,7 +336,7 @@ class VotingState extends State<Voting> {
                                           color =
                                               Colors.black.withOpacity(0.2);
                                           sendSafety(value, _viewModel.c.email,
-                                              widget.station)
+                                              widget.station,citizen)
                                               .then((result) => setState(() {
                                             valueMeanSafety = result;
                                           }));
@@ -387,7 +387,7 @@ class VotingState extends State<Voting> {
                                           color =
                                               Colors.black.withOpacity(0.2);
                                           sendArea(value, _viewModel.c.email,
-                                              widget.station)
+                                              widget.station,citizen)
                                               .then((result) => setState(() {
                                             valueMeanArea = result;
                                           }));

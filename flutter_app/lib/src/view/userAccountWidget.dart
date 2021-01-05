@@ -1,14 +1,12 @@
+import 'package:android_intent/android_intent.dart';
+import 'package:device_apps/device_apps.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_app/redux/model/AppState.dart';
-import 'package:flutter_app/redux/model/customer.dart';
-import 'package:flutter_app/src/services/sendNotification.dart';
-import 'package:carousel_slider/carousel_slider.dart';
-import 'package:carousel_pro/carousel_pro.dart';
-import 'package:flutter/material.dart';
-import 'package:flutter_app/redux/model/AppState.dart';
+import '../db.dart' as DB;
 import 'package:flutter_app/src/view/viewModel.dart';
 import 'package:flutter_redux/flutter_redux.dart';
+import 'package:url_launcher/url_launcher.dart';
 import 'profile.dart';
 import '../checkLogin.dart';
 import 'login.dart';
@@ -26,7 +24,8 @@ class UserAccount <State> extends StatefulWidget {
 }
 
 class _UserAccountState extends State<UserAccount> {
-
+  var flag=false;
+  var package;
   @override
   Widget build(BuildContext context) {
     return new StoreConnector <AppState,ViewModel>(
@@ -83,15 +82,17 @@ class _UserAccountState extends State<UserAccount> {
                             }
                         ),
                         new ListTile(
-                            title: Text("Contact us"),
+                            title: Text("Reconnect"),
                             onTap: () {
-                              //TODO
+                              DB.start().then((result) => setState(() {
+                                print("reconnected to mongoDb");
+                              }));
                             }
                         ),
                         new ListTile(
-                            title: Text("About us"),
+                            title: Text("Buy a ticket"),
                             onTap: () {
-                              //TODO
+                              openApp();
                             }
                         ),
 
@@ -108,5 +109,32 @@ class _UserAccountState extends State<UserAccount> {
               );
         });
 
+  }
+openApp () async {
+  String dt = "https://www.atm.it/it/AtmNews/AtmInforma/Pagine/accedi_metro_smartphone.aspx";
+
+  DeviceApps.getInstalledApplications(
+      includeAppIcons: true,
+      includeSystemApps: false,
+      onlyAppsWithLaunchIntent: false).
+  then((result)=>setState((){
+    for(int i=0;i<result.length;i++){
+      if(result[i].appName=="ATM Milano"){
+        package = result[i].packageName;
+        flag = true;
+        //print(" $flag + $package");
+      }
+    }
+  }));
+  if (flag == true) {
+      DeviceApps.openApp(package);
+    }
+    else
+    {
+      if (await canLaunch(dt))
+        await launch(dt);
+      else
+        throw 'Could not launch $dt';
+    }
   }
 }

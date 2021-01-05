@@ -1,3 +1,4 @@
+import 'package:device_apps/device_apps.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_app/src/view/userAccountWidget.dart';
 import '../services/userService.dart';
@@ -20,10 +21,15 @@ class MyStationsState extends State<MyStations> {
 
 
 
+
   void takeMyStations (){
     retrieveMyStations(widget.email).then((stations)=> setState((){
       myStations = stations;
     }));
+
+
+
+
   }
 
 

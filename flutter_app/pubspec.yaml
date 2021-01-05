@@ -49,6 +49,8 @@ dependencies:
   smooth_star_rating: ^1.1.1
   url_launcher: ^5.7.10
   intl: ^0.16.1
+  device_apps: ^1.2.0
+  android_intent: ^0.3.7+7
 
 
 

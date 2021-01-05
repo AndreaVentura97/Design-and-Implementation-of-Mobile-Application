@@ -137,7 +137,7 @@ class MessagesState extends State<Messages> {
 
                                                     //
                                                     // Da cambiare in base se cittadino o visitatiore
-                                                    (messages[index]['state']) ? Text('Citizen',
+                                                    (messages[index]['citizen']) ? Text('Citizen',
                                                       style: TextStyle(
                                                         fontSize: 15.0,
                                                         color: Colors.grey,
@@ -208,7 +208,7 @@ class MessagesState extends State<Messages> {
                                               myLikes.add(messages[index]['_id']);
                                             });
                                             sendNotification(
-                                                messages[index]['email'], "like");
+                                                messages[index]['email'], "like",_viewModel.c.name,messages[index]['text'],messages[index]['station']);
                                             plusOne(messages[index]['_id']);
                                             messages[index]['nl'] =
                                                 messages[index]['nl'] + 1;
@@ -248,7 +248,7 @@ class MessagesState extends State<Messages> {
                                               myUnlikes.add(messages[index]['_id']);
                                             });
                                             sendNotification(
-                                                messages[index]['email'], "unlike");
+                                                messages[index]['email'], "unlike",_viewModel.c.name,messages[index]['text'],messages[index]['station']);
                                             plusOne2(messages[index]['_id']);
                                             messages[index]['nu'] =
                                                 messages[index]['nu'] + 1;

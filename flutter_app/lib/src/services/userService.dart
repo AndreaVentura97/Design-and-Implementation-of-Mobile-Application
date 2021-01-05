@@ -25,7 +25,7 @@ insertUser (email, name,tk) async {
     await DB.getDB().collection('users').insertOne({'email': email, 'name': name,
       'myStations': myStations, 'myComments': myComments,
       'myLiked':myLiked, 'myUnliked':myUnliked,
-      'myLikedPoints':myLikedPoints, 'myUnlikedPoints':myUnlikedPoints, 'token':tk, 'state':true
+      'myLikedPoints':myLikedPoints, 'myUnlikedPoints':myUnlikedPoints, 'token':tk, 'citizen':true
     });
   }
 }
@@ -101,7 +101,7 @@ retrieveMyUnLikedPoints(email) async {
 
 retrieveMyState(email) async {
   var user = await DB.getDB().collection('users').findOne({'email': email});
-  var state = user['state'];
+  var state = user['citizen'];
   return state;
 }
 
