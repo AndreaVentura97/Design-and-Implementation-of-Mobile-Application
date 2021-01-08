@@ -4,6 +4,7 @@ import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:intl/intl.dart';
 import '../services/service.dart';
 import 'package:location/location.dart';
+import 'package:flutter/services.dart' show rootBundle;
 import 'displayMenuStation.dart';
 import '../services/stationServices.dart';
 
@@ -17,17 +18,36 @@ class _MapState extends State<Map> {
   GoogleMapController mapController;
   final TextEditingController _controller= TextEditingController();
   List stations = [];
-  final LatLng _center = const LatLng(45.456532, 9.125001);
+  String mapStyle;
+  var cameraPosition = CameraPosition(
+    target:  LatLng(45.456532, 9.125001),
+    zoom: 12.0,
+  );
+  var targetPosition;
+  
 
   void _onMapCreated(GoogleMapController controller) {
     mapController = controller;
+    mapController.setMapStyle(mapStyle);
   }
 
   void setMarkers() async {
     var response = await retrieveMarkers();
-    setState(() {
-      _markers = buildMarkers(response, context);
-    });
+    buildMarkers(response, context).then((result) => setState((){
+      _markers = result;
+    }));
+  }
+  
+  String checkLine(station){
+    if (station['line']=="Metro M1"){
+      return "assets/M1.png";
+    }
+    if (station['line']=="Metro M2"){
+      return "assets/M2.png";
+    }
+    if (station['line']=="Metro M3"){
+      return "assets/M3.png";
+    }
   }
 
   void _getLocationPermission() async {
@@ -48,6 +68,9 @@ class _MapState extends State<Map> {
   void initState() {
     super.initState();
     setMarkers();
+    rootBundle.loadString('assets/mapStyle.txt').then((string) {
+      mapStyle = string;
+    });
     _getLocationPermission();
   }
 
@@ -68,10 +91,7 @@ class _MapState extends State<Map> {
 
             GoogleMap(
               onMapCreated: _onMapCreated,
-              initialCameraPosition: CameraPosition(
-                target: _center,
-                zoom: 12.0,
-              ),
+              initialCameraPosition: cameraPosition,
               markers: _markers,
               myLocationEnabled: true,
               myLocationButtonEnabled: true,
@@ -148,7 +168,7 @@ class _MapState extends State<Map> {
                         ],
                       ),
 
-
+                    
                     ConstrainedBox(
                       constraints: BoxConstraints(
                         maxHeight: 200,
@@ -163,7 +183,7 @@ class _MapState extends State<Map> {
                                 EdgeInsets.symmetric(horizontal: 5.0),
                             leading: Container(
                               child: Image(
-                                image: AssetImage("assets/M1.png"),
+                                image: AssetImage(checkLine(stations[index])),
                                 height: 30.0,
                                 width: 45.0,
                               ),
@@ -174,12 +194,25 @@ class _MapState extends State<Map> {
                                     fontWeight: FontWeight.w500,
                                     color: Colors.black)),
                             onTap: () => {
-                              Navigator.push(
+                              setState((){
+                                targetPosition = CameraPosition(
+                                target: LatLng(stations[index]['latitude'],stations[index]['longitude']),
+                                zoom: 16.5);
+                                CameraUpdate update =CameraUpdate.newCameraPosition(targetPosition);
+                                //mapController.moveCamera(update);
+                                mapController.animateCamera(update);
+                                //_controller.clear();
+                                stations.clear();
+                              })},
+                              onLongPress: () => {
+                                Navigator.push(
                                   context,
-                                  MaterialPageRoute(
-                                      builder: (context) => MenuStation(
-                                          name: stations[index]['name'])))
-                            },
+                                MaterialPageRoute(
+                                  builder: (context) => MenuStation(
+                                    name: stations[index]['name'])))
+                              },
+
+
                             dense: true,
                           );
                         },
@@ -196,6 +229,3 @@ class _MapState extends State<Map> {
   }
 }
 
-// Widget searchBar(){
-//   return
-// }

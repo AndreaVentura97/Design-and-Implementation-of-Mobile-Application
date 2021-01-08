@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import '../db.dart' as DB;
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import '../view/displayMenuStation.dart';
-import 'package:intl/intl.dart';
+
 
 
 retrieveMessages(station) async {
@@ -15,7 +15,7 @@ retrieveMarkers () async {
   return response;
 }
 
-buildMarkers (response, context){
+buildMarkers (response, context) async {
   Set<Marker> _markers = Set <Marker>();
   for (int i=0; i<response.length; i++){
     String id = i.toString();
@@ -23,9 +23,19 @@ buildMarkers (response, context){
     var long = response[i]['longitude'];
     String name = response[i]['name'];
     String line = response[i]['line'];
-
+    String image;
+    if(line=="Metro M1") {
+      image = "assets/M1.png";
+    }
+    if (line == "Metro M2"){
+      image = "assets/M2.png";
+    }
+    if (line == "Metro M3"){
+      image = "assets/M3.png";
+    }
     _markers.add(Marker(
         markerId: MarkerId(id),
+        icon: BitmapDescriptor.fromAsset(image),
         position: LatLng(lat, long),
         infoWindow: InfoWindow (
           title: name,
@@ -46,5 +56,7 @@ saveMessage (myEmail, myName, myText, myPhoto, myStation,state) async {
   await DB.getDB().collection('messages').insertOne({'email': myEmail, 'date':formattedDate, 'name': myName, 'photo':myPhoto, 'text': myText,
     'station': myStation, 'nl':0, 'nu':0, 'citizen': state});
 }
+
+
 
 

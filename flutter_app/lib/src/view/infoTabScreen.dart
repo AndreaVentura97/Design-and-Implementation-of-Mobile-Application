@@ -18,21 +18,41 @@ class InfoStationState extends State<InfoStation> {
   String line;
   String address;
   List points = [];
-
+  String image = "";
   void takeStationInformation (){
     informationStation(widget.station).then((information) => setState(() {
       line = information['line'];
       address = information['address'];
+      checkLine(line);
     }));
     pointsStation(widget.station).then((result) => setState(() {
       points = result;
     }));
+  }
+  
+  String checkLine(line){
+    if (line=="Metro M1"){
+      setState(() {
+        image = "assets/M1.png";
+      });
+    }
+    if (line=="Metro M2"){
+      setState(() {
+        image = "assets/M2.png";
+      });
+    }
+    if (line=="Metro M3"){
+      setState(() {
+        image = "assets/M3.png";
+      });
+    }
   }
 
   updateFav(email,station){
     isMyStation(email,station).then((result) => setState(() {
       _favStation = result;
     }));
+
   }
 
 
@@ -84,7 +104,7 @@ class InfoStationState extends State<InfoStation> {
                               children: [
                                 Container(
                                   child: Image(
-                                    image: AssetImage("assets/M1.png"),
+                                    image: (image!="") ? AssetImage(image) : AssetImage("assets/loading.jpg"),
                                     height: 40.0,
                                     width: 60.0,
                                   ),
