@@ -90,7 +90,7 @@ class MyStationsState extends State<MyStations> {
                                       children: [
                                         Container(
                                           child: Image(
-                                            image: AssetImage("assets/M1.png"),
+                                            image: AssetImage("assets/M1.jpeg"),
                                             height: 40.0,
                                             width: 60.0,
                                           ),

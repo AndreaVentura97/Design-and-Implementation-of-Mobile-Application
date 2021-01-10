@@ -40,13 +40,13 @@ class _MapState extends State<Map> {
   
   String checkLine(station){
     if (station['line']=="Metro M1"){
-      return "assets/M1.png";
+      return "assets/M1.jpeg";
     }
     if (station['line']=="Metro M2"){
-      return "assets/M2.png";
+      return "assets/M2.jpeg";
     }
     if (station['line']=="Metro M3"){
-      return "assets/M3.png";
+      return "assets/M3.jpeg";
     }
   }
 
@@ -100,7 +100,7 @@ class _MapState extends State<Map> {
             Positioned(
               top: 10.0,
               left: 15.0,
-              right: 15.0,
+              right: 60.0,
               child: Container(
                 padding: EdgeInsets.all(5),
                 decoration: BoxDecoration(

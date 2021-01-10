@@ -180,13 +180,13 @@ class MessagesState extends State<Messages> {
 
                               ),
                               Container(
-                                color: Colors.blue[100],
+                                color: Colors.blue[900],
                                 child: Row(
                                   mainAxisAlignment: MainAxisAlignment.end,
                                   children: [
                                     IconButton(
                                         icon: Icon(Icons.thumb_up,
-                                            size: 25.0,
+                                            size: 20.0,
                                             color: ((checkLike(messages[index]['_id'])))
                                                 ? Colors.green
                                                 : Colors.grey),

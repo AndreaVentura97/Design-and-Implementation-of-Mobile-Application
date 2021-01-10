@@ -33,17 +33,22 @@ class InfoStationState extends State<InfoStation> {
   String checkLine(line){
     if (line=="Metro M1"){
       setState(() {
-        image = "assets/M1.png";
+        image = "assets/M1.jpeg";
       });
     }
     if (line=="Metro M2"){
       setState(() {
-        image = "assets/M2.png";
+        image = "assets/M2.jpeg";
       });
     }
     if (line=="Metro M3"){
       setState(() {
-        image = "assets/M3.png";
+        image = "assets/M3.jpeg";
+      });
+    }
+    if (line=="Metro M5"){
+      setState(() {
+        image = "assets/M5.jpeg";
       });
     }
   }
@@ -54,7 +59,6 @@ class InfoStationState extends State<InfoStation> {
     }));
 
   }
-
 
 
   @override
@@ -94,71 +98,141 @@ class InfoStationState extends State<InfoStation> {
                       //color: Colors.grey[400],
                       child:Container(
                         margin: EdgeInsets.all(10.0),
-                        color: Colors.green,
-                        child:
-                          ListTile(
-                            contentPadding: EdgeInsets.zero,
-                            title: Row(
-                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                              crossAxisAlignment: CrossAxisAlignment.start,
-                              children: [
-                                Container(
-                                  child: Image(
-                                    image: (image!="") ? AssetImage(image) : AssetImage("assets/loading.jpg"),
-                                    height: 40.0,
-                                    width: 60.0,
-                                  ),
-                                ),
-                                SizedBox(width: 10.0,),
-                                Flexible(
-                                  child: Container(
-                                    color: Colors.blue,
-                                    child: Column(
-                                      crossAxisAlignment: CrossAxisAlignment.start,
-                                      children: [
-                                        Text("${widget.station}",
-                                          style: TextStyle(
-                                            fontSize: 25.0,
-                                            color: Colors.black,
-                                          ),
-                                        ),
-                                        // Text("$line",
-                                        //   style: TextStyle(
-                                        //     fontSize: 16.0,
-                                        //     color: Colors.grey,
-                                        //   ),
-                                        // ),
-                                        Text("$address",
-                                          style: TextStyle(
-                                            fontSize: 16.0,
-                                            color: Colors.grey,
-                                          ),
-                                        ),
-                                      ],
+                        //color: Colors.green,
+                        child: ListTile(
+                                contentPadding: EdgeInsets.zero,
+                                title: Row(
+                                  //mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                  crossAxisAlignment: CrossAxisAlignment.start,
+                                  children: [
+                                    Container(
+                                      child: Image(
+                                        image: (image!="") ? AssetImage(image) : AssetImage("assets/loading.jpg"),
+                                        height: 40.0,
+                                        width: 60.0,
+                                      ),
                                     ),
+                                    SizedBox(width: 10.0,),
+                                    Flexible(
+                                      child: Container(
+                                        //color: Colors.blue,
+                                        child: Column(
+                                          crossAxisAlignment: CrossAxisAlignment.start,
+                                          children: [
+                                            Row(
+                                              children: [
+                                                Text("${widget.station}",
+                                                  style: TextStyle(
+                                                    fontSize: 25.0,
+                                                    color: Colors.black,
+                                                  ),
+                                                ),
+                                                SizedBox(width: 5.0,),
+                                                Icon(Icons.circle,
+                                                  color: Colors.green,
+                                                  size: 15,
+                                                ),
+                                                Spacer(),
+                                                Container(
+                                                  width: 25,
+                                                  height: 25,
+                                                  padding: EdgeInsets.zero,
+                                                  //color: Colors.blue,
+                                                  child: IconButton(
+                                                    padding: EdgeInsets.zero,
+                                                    icon: Icon(!_favStation ? Icons.favorite_outline : Icons.favorite,
+                                                      size: 20.0,
+                                                      color: Colors.black,
+                                                    ),
+                                                    onPressed: (!_favStation) ?  () {
+                                                      addMyStations(_viewModel.c.email, widget.station);
+                                                      setState(() {
+                                                        _favStation = true;
+                                                      });
+                                                    } : () {
+                                                      deleteMyStations(_viewModel.c.email, widget.station);
+                                                      setState(() {
+                                                        _favStation = false;
+                                                      });
+                                                    },
+                                                  ),
+                                                )
+
+
+                                              ],
+                                            ),
+                                            Text("$address",
+                                              style: TextStyle(
+                                                fontSize: 16.0,
+                                                color: Colors.grey,
+                                              ),
+                                            ),
+                                          ],
+                                        ),
+                                      ),
+                                    ),
+
+
+                                  ],
+                                ),
+
+                              ),
+
+
+                      ),
+                    ),
+                    Card(
+                      elevation: 3,
+                      margin: EdgeInsets.fromLTRB(10, 10, 10, 0),
+                      shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(10),
+                        side: BorderSide(
+                          color: Colors.blue[900],
+                          width: 2,
+                        )
+                      ),
+                      child: Container(
+                        padding: EdgeInsets.all(10),
+                        child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            Row(
+                              children: [
+                                Text('Ratings:',
+                                  style: TextStyle(
+                                    fontSize: 18.0,
+                                    color: Colors.black,
                                   ),
                                 ),
+                                Spacer(),
+                                Container(
+                                  child: Row(
+                                    children: [
+                                      Text('All users'),
+                                      Icon(Icons.arrow_drop_down_sharp)
+                                    ],
+                                  ),
+                                )
                               ],
                             ),
-                            trailing: IconButton(
-                              icon: Icon(!_favStation ? Icons.favorite_outline : Icons.favorite,
-                                size: 20.0,
-                                color: Colors.black,
-                              ),
-                              onPressed: (!_favStation) ?  () {
-                                addMyStations(_viewModel.c.email, widget.station);
-                                setState(() {
-                                  _favStation = true;
-                                });
-                              } : () {
-                                deleteMyStations(_viewModel.c.email, widget.station);
-                                setState(() {
-                                  _favStation = false;
-                                });
-                              },
+                            Divider(
+                              color: Colors.black,
+                              thickness: 2,
                             ),
-                          )
-
+                            Container(
+                              //color: Colors.orange,
+                              child: Row(
+                                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                                children: [
+                                  meanValues('Cleaniness', 25.0),
+                                  meanValues('Services', 12),
+                                  meanValues('Safety', 25),
+                                  meanValues('Overall', 32)
+                                ],
+                              ),
+                            )
+                          ],
+                        ),
                       ),
                     ),
                     Card(
@@ -263,6 +337,48 @@ class InfoStationState extends State<InfoStation> {
             )
         );
       },
+    );
+  }
+
+  Widget meanValues(String Title, double MeanValue){
+    return Expanded(
+      child: Container(
+        //color: Colors.grey,
+        child: Column(
+          children: [
+            Text(Title,
+              style: TextStyle(
+                fontWeight: FontWeight.bold
+              ),
+            ),
+            SizedBox(
+              height: 5,
+            ),
+            Container(
+              height: 50,
+              width: 50,
+              decoration:
+              BoxDecoration(
+                borderRadius: BorderRadius.circular(10),
+                border: Border.all(
+                  color: Colors.blue[900],
+                  width: 2,
+                ),
+                //boxShadow: [BoxShadow( blurRadius: 10, spreadRadius: 10)],
+              ),
+              child: Center(
+                child: Text( '${MeanValue.round()}', //(valueClean != null)? '${valueClean.round()}': '- -',
+                  style: TextStyle(
+                    color: Colors.black,
+                    fontSize: 20,
+                    fontWeight: FontWeight.bold,
+                  ),
+
+                ),
+              ),
+            )],
+        ),
+      ),
     );
   }
 }

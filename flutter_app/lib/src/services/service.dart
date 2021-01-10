@@ -25,13 +25,13 @@ buildMarkers (response, context) async {
     String line = response[i]['line'];
     String image;
     if(line=="Metro M1") {
-      image = "assets/M1.png";
+      image = "assets/M1.jpeg";
     }
     if (line == "Metro M2"){
-      image = "assets/M2.png";
+      image = "assets/M2.jpeg";
     }
     if (line == "Metro M3"){
-      image = "assets/M3.png";
+      image = "assets/M3.jpeg";
     }
     _markers.add(Marker(
         markerId: MarkerId(id),

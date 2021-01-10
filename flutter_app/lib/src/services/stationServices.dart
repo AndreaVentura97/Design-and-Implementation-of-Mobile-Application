@@ -1,6 +1,7 @@
 import '../db.dart' as DB;
 
 informationStation (name) async {
+  print("$name aaa");
   var response = await DB.getDB().collection('markers').findOne({'name': name});
   return response;
 }

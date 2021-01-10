@@ -64,15 +64,15 @@ class VotingState extends State<Voting> {
     retrieveMyVoteDis(email, widget.station).then((vote2) => setState(() {
           valueDis = vote2;
         }));
-    retrieveMyVoteSafety(email, widget.station).then((vote3) => setState((){
-        valueSafety = vote3;
-    }));
-    retrieveMyVoteArea(email, widget.station).then((vote4) => setState((){
-      valueArea = vote4;
-    }));
-    retrieveMyState(email).then((result) => setState ((){
-      citizen = result;
-    }));
+    retrieveMyVoteSafety(email, widget.station).then((vote3) => setState(() {
+          valueSafety = vote3;
+        }));
+    retrieveMyVoteArea(email, widget.station).then((vote4) => setState(() {
+          valueArea = vote4;
+        }));
+    retrieveMyState(email).then((result) => setState(() {
+          citizen = result;
+        }));
   }
 
   @override
@@ -80,7 +80,6 @@ class VotingState extends State<Voting> {
     super.initState();
     takeStationInformation();
   }
-
 
   @override
   Widget build(BuildContext context) {
@@ -113,63 +112,90 @@ class VotingState extends State<Voting> {
                           crossAxisAlignment: CrossAxisAlignment.center,
                           children: [
                             Text(
-                              'Voting',
+                              'My votes',
                               style: TextStyle(
                                 fontSize: 25.0,
                                 fontWeight: FontWeight.bold,
                               ),
                             ),
-                            SizedBox(height: 15.0,),
+                            SizedBox(
+                              height: 15.0,
+                            ),
 
                             Container(
-                              color: Colors.blue,
+                              //color: Colors.blue,
+                              margin: EdgeInsets.symmetric(horizontal: 5.0),
                               child: Row(
+                                crossAxisAlignment: CrossAxisAlignment.center,
                                 children: [
-                                  Text('Kind of user:',
+                                  Text(
+                                    'Kind of user:',
                                     style: TextStyle(
-                                      fontSize: 16.0,
+                                      fontSize: 18.0,
+                                      fontWeight: FontWeight.bold
                                     ),
                                   ),
                                   Spacer(),
                                   Container(
-                                    color: Colors.purple,
+                                    //color: Colors.purple,
                                     child: Row(
                                       children: [
                                         Container(
-                                          color: Colors.orange,
-                                          margin: EdgeInsets.symmetric(horizontal: 5.0),
+                                          //color: Colors.orange,
+                                          margin: EdgeInsets.symmetric(
+                                              horizontal: 5.0),
                                           child: Column(
                                             children: [
-                                              Text('Citizen'),
+                                              Text('Citizen',
+                                                style: TextStyle(fontWeight: FontWeight.bold),
+                                              ),
                                               IconButton(
-                                                icon: (!citizen) ? Icon(
-                                                  Icons.brightness_1_outlined, //:Icons.brightness_1,
-                                                ): Icon(
-                                                    Icons.brightness_1,
-                                                ),
+                                                icon: (!citizen)
+                                                    ? Icon(
+                                                        Icons
+                                                            .brightness_1_outlined, //:Icons.brightness_1,
+                                                      )
+                                                    : Icon(
+                                                        Icons.brightness_1,
+                                                      ),
                                                 onPressed: () => {
-                                                  updateState(_viewModel.c.email,true).then((value)=>setState((){
-                                                    citizen = value;
-                                                  }))
+                                                  updateState(
+                                                          _viewModel.c.email,
+                                                          true)
+                                                      .then((value) =>
+                                                          setState(() {
+                                                            citizen = value;
+                                                          }))
                                                 },
                                               )
                                             ],
                                           ),
                                         ),
                                         Container(
-                                          color: Colors.orange,
-                                          margin: EdgeInsets.symmetric(horizontal: 5.0),
+                                          //color: Colors.orange,
+                                          margin: EdgeInsets.symmetric(
+                                              horizontal: 5.0),
                                           child: Column(
                                             children: [
-                                              Text('Visitor'),
+                                              Text('Visitor',
+                                                style: TextStyle(fontWeight: FontWeight.bold
+                                                ),
+                                              ),
                                               IconButton(
-                                                icon: (!citizen) ? Icon(
-                                                   Icons.brightness_1,) :
-                                                Icon(Icons.brightness_1_outlined),
+                                                icon: (!citizen)
+                                                    ? Icon(
+                                                        Icons.brightness_1,
+                                                      )
+                                                    : Icon(Icons
+                                                        .brightness_1_outlined),
                                                 onPressed: () => {
-                                                  updateState(_viewModel.c.email,false).then((value)=>setState((){
-                                                    citizen = value;
-                                                }))
+                                                  updateState(
+                                                          _viewModel.c.email,
+                                                          false)
+                                                      .then((value) =>
+                                                          setState(() {
+                                                            citizen = value;
+                                                          }))
                                                 },
                                               )
                                             ],
@@ -181,59 +207,96 @@ class VotingState extends State<Voting> {
                                 ],
                               ),
                             ),
+
                             Container(
                               //color: Colors.purple,
-                              margin: EdgeInsets.symmetric(horizontal: 5.0),
-                              child: Column(
-                                crossAxisAlignment: CrossAxisAlignment.start,
+                              margin: EdgeInsets.fromLTRB(5, 0, 5, 15),
+                              child: Row(
+                                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                crossAxisAlignment: CrossAxisAlignment.center,
                                 children: [
-                                  Text(
-                                    "Cleaniness:",
-                                    style: TextStyle(
-                                      fontSize: 16.0,
+                                  Flexible(
+                                    child: Column(
+                                      crossAxisAlignment:
+                                          CrossAxisAlignment.start,
+                                      children: [
+                                        Text(
+                                          "Cleaniness:",
+                                          style: TextStyle(
+                                            fontSize: 18.0,
+                                            fontWeight: FontWeight.bold,
+                                          ),
+                                        ),
+                                        (valueClean != null)
+                                            ? Slider(
+                                                value: valueClean,
+                                                min: 0,
+                                                max: 100,
+                                                divisions: 100,
+                                                //label: valueClean.round().toString(),
+                                                activeColor:
+                                                    (valueClean == 50.0 ||
+                                                            voting[0])
+                                                        ? Colors.blue[900]
+                                                        : Colors.blue[900].withOpacity(0.4),
+                                                onChangeEnd: (double value) {
+                                                  setState(() {
+                                                    color = Colors.blue[900].withOpacity(0.4);
+                                                    sendCleaning(
+                                                            value,
+                                                            _viewModel.c.email,
+                                                            widget.station,
+                                                            citizen)
+                                                        .then((result) =>
+                                                            setState(() {
+                                                              valueMeanClean =
+                                                                  result;
+                                                            }));
+                                                    voting[0] = false;
+                                                  });
+                                                },
+                                                onChangeStart: (double value) {
+                                                  setState(() {
+                                                    color = Colors.blue[900];
+                                                    voting[0] = true;
+                                                  });
+                                                },
+                                                onChanged: (double value) {
+                                                  setState(() {
+                                                    valueClean = value;
+                                                  });
+                                                },
+                                                )
+                                            : Text("Loading"),
+                                      ],
                                     ),
                                   ),
-                                  (valueClean != null)
-                                      ? Slider(
-                                          value: valueClean,
-                                          min: 0,
-                                          max: 100,
-                                          divisions: 100,
-                                          label: valueClean.round().toString(),
-                                          activeColor:
-                                              (valueClean == 50.0 || voting[0])
-                                                  ? Colors.black
-                                                  : Colors.black.withOpacity(0.2),
-                                          onChangeEnd: (double value) {
-                                            setState(() {
-                                              color =
-                                                  Colors.black.withOpacity(0.2);
-                                              sendCleaning(
-                                                      value,
-                                                      _viewModel.c.email,
-                                                      widget.station,citizen)
-                                                  .then((result) => setState(() {
-                                                        valueMeanClean = result;
-                                                      }));
-                                              voting[0] = false;
-                                            });
-                                          },
-                                          onChangeStart: (double value) {
-                                            setState(() {
-                                              color = Colors.black;
-                                              voting[0] = true;
-                                            });
-                                          },
-                                          onChanged: (double value) {
-                                            setState(() {
-                                              valueClean = value;
-                                            });
-                                          })
-                                      : Text("Loading"),
+                                  Container(
+                                    height: 50,
+                                    width: 50,
+                                    decoration:
+                                        BoxDecoration(
+                                          borderRadius: BorderRadius.circular(10),
+                                            border: Border.all(
+                                          color: Colors.blue[900],
+                                          width: 2,
+                                        ),
+                                        //boxShadow: [BoxShadow( blurRadius: 10, spreadRadius: 10)],
+                                        ),
+                                    child: Center(
+                                      child: Text((valueClean != null)? '${valueClean.round()}': '- -',
+                                        style: TextStyle(
+                                          color: Colors.black,
+                                          fontSize: 20,
+                                          fontWeight: FontWeight.bold,
+                                        ),
+
+                                      ),
+                                    ),
+                                  ),
                                 ],
                               ),
                             ),
-                            SizedBox(height: 10.0,),
                             // Text("Average cleaning voted by people"),
                             // (valueMeanClean != null)
                             //     ? Slider(
@@ -245,58 +308,88 @@ class VotingState extends State<Voting> {
                             //         activeColor: Colors.green,
                             //       )
                             //     : Text("Loading"),
-
                             Container(
                               //color: Colors.purple,
-                              margin: EdgeInsets.symmetric(horizontal: 5.0),
-                              child: Column(
-                                crossAxisAlignment: CrossAxisAlignment.start,
+                              margin: EdgeInsets.fromLTRB(5, 0, 5, 15),
+                              child: Row(
                                 children: [
-                                  Text(
-                                    "Services inside:",
-                                    style: TextStyle(
-                                      fontSize: 16.0,
+                                  Expanded(
+                                    child: Column(
+                                      crossAxisAlignment: CrossAxisAlignment.start,
+                                      children: [
+                                        Text(
+                                          "Services inside:",
+                                          style: TextStyle(
+                                            fontSize: 18.0,
+                                            fontWeight: FontWeight.bold
+                                          ),
+                                        ),
+                                        (valueDis != null)
+                                            ? Slider(
+                                                value: valueDis,
+                                                min: 0,
+                                                max: 100,
+                                                divisions: 100,
+                                                //label: valueDis.round().toString(),
+                                                activeColor: (valueDis == 50.0 ||
+                                                        voting[1])
+                                                    ? Colors.blue[900]
+                                                    : Colors.blue[900].withOpacity(0.4),
+                                                onChangeEnd: (double value) {
+                                                  setState(() {
+                                                    color =
+                                                        Colors.blue[900].withOpacity(0.4);
+                                                    sendDis(value, _viewModel.c.email,
+                                                            widget.station, citizen)
+                                                        .then(
+                                                            (result) => setState(() {
+                                                                  valueMeanDis =
+                                                                      result;
+                                                                }));
+                                                    voting[1] = false;
+                                                  });
+                                                },
+                                                onChangeStart: (double value) {
+                                                  setState(() {
+                                                    color = Colors.black;
+                                                    voting[1] = true;
+                                                  });
+                                                },
+                                                onChanged: (double value) {
+                                                  setState(() {
+                                                    valueDis = value;
+                                                  });
+                                                })
+                                            : Text("Loading"),
+                                      ],
                                     ),
                                   ),
-                                  (valueDis != null)
-                                      ? Slider(
-                                          value: valueDis,
-                                          min: 0,
-                                          max: 100,
-                                          divisions: 100,
-                                          label: valueDis.round().toString(),
-                                          activeColor:
-                                              (valueDis == 50.0 || voting[1])
-                                                  ? Colors.black
-                                                  : Colors.black.withOpacity(0.2),
-                                          onChangeEnd: (double value) {
-                                            setState(() {
-                                              color =
-                                                  Colors.black.withOpacity(0.2);
-                                              sendDis(value, _viewModel.c.email,
-                                                      widget.station,citizen)
-                                                  .then((result) => setState(() {
-                                                        valueMeanDis = result;
-                                                      }));
-                                              voting[1] = false;
-                                            });
-                                          },
-                                          onChangeStart: (double value) {
-                                            setState(() {
-                                              color = Colors.black;
-                                              voting[1] = true;
-                                            });
-                                          },
-                                          onChanged: (double value) {
-                                            setState(() {
-                                              valueDis = value;
-                                            });
-                                          })
-                                      : Text("Loading"),
+                                  Container(
+                                    height: 50,
+                                    width: 50,
+                                    decoration:
+                                    BoxDecoration(
+                                      borderRadius: BorderRadius.circular(10),
+                                      border: Border.all(
+                                        color: Colors.blue[900],
+                                        width: 2,
+                                      ),
+                                      //boxShadow: [BoxShadow( blurRadius: 10, spreadRadius: 10)],
+                                    ),
+                                    child: Center(
+                                      child: Text((valueDis != null)? '${valueDis.round()}': '- -',
+                                        style: TextStyle(
+                                          color: Colors.black,
+                                          fontSize: 20,
+                                          fontWeight: FontWeight.bold,
+                                        ),
+
+                                      ),
+                                    ),
+                                  ),
                                 ],
                               ),
                             ),
-
                             // Text("Average opinion about service for disabled"),
                             // (valueMeanDis != null)
                             //     ? Slider(
@@ -310,128 +403,196 @@ class VotingState extends State<Voting> {
                             //     : Text("Loading"),
                             Container(
                               //color: Colors.purple,
-                              margin: EdgeInsets.symmetric(horizontal: 5.0),
-                              child: Column(
-                                crossAxisAlignment: CrossAxisAlignment.start,
+                              margin: EdgeInsets.fromLTRB(5, 0, 5, 15),
+                              child: Row(
                                 children: [
-                                  Text(
-                                    "Safety:",
-                                    style: TextStyle(
-                                      fontSize: 16.0,
+                                  Expanded(
+                                    child: Column(
+                                      crossAxisAlignment: CrossAxisAlignment.start,
+                                      children: [
+                                        Text(
+                                          "Safety:",
+                                          style: TextStyle(
+                                            fontSize: 18.0,
+                                            fontWeight: FontWeight.bold
+                                          ),
+                                        ),
+                                        (valueSafety != null)
+                                            ? Slider(
+                                                value: valueSafety,
+                                                min: 0,
+                                                max: 100,
+                                                divisions: 100,
+                                                //label: valueSafety.round().toString(),
+                                                activeColor: (valueSafety == 50.0 ||
+                                                        voting[2])
+                                                    ? Colors.blue[900]
+                                                    : Colors.blue[900].withOpacity(0.4),
+                                                onChangeEnd: (double value) {
+                                                  setState(() {
+                                                    color =
+                                                        Colors.blue[900].withOpacity(0.4);
+                                                    sendSafety(
+                                                            value,
+                                                            _viewModel.c.email,
+                                                            widget.station,
+                                                            citizen)
+                                                        .then(
+                                                            (result) => setState(() {
+                                                                  valueMeanSafety =
+                                                                      result;
+                                                                }));
+                                                    voting[2] = false;
+                                                  });
+                                                },
+                                                onChangeStart: (double value) {
+                                                  setState(() {
+                                                    color = Colors.black;
+                                                    voting[2] = true;
+                                                  });
+                                                },
+                                                onChanged: (double value) {
+                                                  setState(() {
+                                                    valueSafety = value;
+                                                  });
+                                                })
+                                            : Text("Loading"),
+                                      ],
                                     ),
                                   ),
-                                  (valueSafety != null)
-                                      ? Slider(
-                                      value: valueSafety,
-                                      min: 0,
-                                      max: 100,
-                                      divisions: 100,
-                                      label: valueSafety.round().toString(),
-                                      activeColor:
-                                      (valueSafety == 50.0 || voting[2])
-                                          ? Colors.black
-                                          : Colors.black.withOpacity(0.2),
-                                      onChangeEnd: (double value) {
-                                        setState(() {
-                                          color =
-                                              Colors.black.withOpacity(0.2);
-                                          sendSafety(value, _viewModel.c.email,
-                                              widget.station,citizen)
-                                              .then((result) => setState(() {
-                                            valueMeanSafety = result;
-                                          }));
-                                          voting[2] = false;
-                                        });
-                                      },
-                                      onChangeStart: (double value) {
-                                        setState(() {
-                                          color = Colors.black;
-                                          voting[2] = true;
-                                        });
-                                      },
-                                      onChanged: (double value) {
-                                        setState(() {
-                                          valueSafety = value;
-                                        });
-                                      })
-                                      : Text("Loading"),
+                                  Container(
+                                    height: 50,
+                                    width: 50,
+                                    decoration:
+                                    BoxDecoration(
+                                      borderRadius: BorderRadius.circular(10),
+                                      border: Border.all(
+                                        color: Colors.blue[900],
+                                        width: 2,
+                                      ),
+                                      //boxShadow: [BoxShadow( blurRadius: 10, spreadRadius: 10)],
+                                    ),
+                                    child: Center(
+                                      child: Text((valueSafety != null)? '${valueSafety.round()}': '- -',
+                                        style: TextStyle(
+                                          color: Colors.black,
+                                          fontSize: 20,
+                                          fontWeight: FontWeight.bold,
+                                        ),
+
+                                      ),
+                                    ),
+                                  ),
                                 ],
                               ),
                             ),
-                            SizedBox(height: 10.0,),
                             Container(
                               //color: Colors.purple,
-                              margin: EdgeInsets.symmetric(horizontal: 5.0),
-                              child: Column(
-                                crossAxisAlignment: CrossAxisAlignment.start,
+                              margin: EdgeInsets.fromLTRB(5, 0, 5, 0),
+                              child: Row(
                                 children: [
-                                  Text(
-                                    "Safety:",
-                                    style: TextStyle(
-                                      fontSize: 16.0,
+                                  Expanded(
+                                    child: Column(
+                                      crossAxisAlignment: CrossAxisAlignment.start,
+                                      children: [
+                                        Text(
+                                          "Overall:",
+                                          style: TextStyle(
+                                            fontSize: 18.0,
+                                            fontWeight: FontWeight.bold
+                                          ),
+                                        ),
+                                        (valueArea != null)
+                                            ? Slider(
+                                                value: valueArea,
+                                                min: 0,
+                                                max: 100,
+                                                divisions: 100,
+                                                //label: valueArea.round().toString(),
+                                                activeColor: (valueArea == 50.0 ||
+                                                        voting[3])
+                                                    ? Colors.blue[900]
+                                                    : Colors.blue[900].withOpacity(0.4),
+                                                onChangeEnd: (double value) {
+                                                  setState(() {
+                                                    color =
+                                                        Colors.blue[900].withOpacity(0.4);
+                                                    sendArea(
+                                                            value,
+                                                            _viewModel.c.email,
+                                                            widget.station,
+                                                            citizen)
+                                                        .then(
+                                                            (result) => setState(() {
+                                                                  valueMeanArea =
+                                                                      result;
+                                                                }));
+                                                    voting[3] = false;
+                                                  });
+                                                },
+                                                onChangeStart: (double value) {
+                                                  setState(() {
+                                                    color = Colors.black;
+                                                    voting[3] = true;
+                                                  });
+                                                },
+                                                onChanged: (double value) {
+                                                  setState(() {
+                                                    valueArea = value;
+                                                  });
+                                                })
+                                            : Text("Loading"),
+                                      ],
                                     ),
                                   ),
-                                  (valueArea != null)
-                                      ? Slider(
-                                      value: valueArea,
-                                      min: 0,
-                                      max: 100,
-                                      divisions: 100,
-                                      label: valueArea.round().toString(),
-                                      activeColor:
-                                      (valueArea == 50.0 || voting[3])
-                                          ? Colors.black
-                                          : Colors.black.withOpacity(0.2),
-                                      onChangeEnd: (double value) {
-                                        setState(() {
-                                          color =
-                                              Colors.black.withOpacity(0.2);
-                                          sendArea(value, _viewModel.c.email,
-                                              widget.station,citizen)
-                                              .then((result) => setState(() {
-                                            valueMeanArea = result;
-                                          }));
-                                          voting[3] = false;
-                                        });
-                                      },
-                                      onChangeStart: (double value) {
-                                        setState(() {
-                                          color = Colors.black;
-                                          voting[3] = true;
-                                        });
-                                      },
-                                      onChanged: (double value) {
-                                        setState(() {
-                                          valueArea = value;
-                                        });
-                                      })
-                                      : Text("Loading"),
+                                  Container(
+                                    height: 50,
+                                    width: 50,
+                                    decoration:
+                                    BoxDecoration(
+                                      borderRadius: BorderRadius.circular(10),
+                                      border: Border.all(
+                                        color: Colors.blue[900],
+                                        width: 2,
+                                      ),
+                                      //boxShadow: [BoxShadow( blurRadius: 10, spreadRadius: 10)],
+                                    ),
+                                    child: Center(
+                                      child: Text((valueArea != null)? '${valueArea.round()}': '- -',
+                                        style: TextStyle(
+                                          color: Colors.black,
+                                          fontSize: 20,
+                                          fontWeight: FontWeight.bold,
+                                        ),
+
+                                      ),
+                                    ),
+                                  ),
                                 ],
                               ),
                             ),
-                            SizedBox(height: 10.0,),
 
-                            FlatButton(
-                              shape: RoundedRectangleBorder(
-                                borderRadius: BorderRadius.circular(15.0),
-                              ),
-                              color: Colors.blue[900],
-                              child: Text("Submit",
-                                style: TextStyle(
-                                  color: Colors.white,
-                                  fontSize: 15.0,
-                                ),
-                              ),
-                              onPressed: () {
-                                // var name = _viewModel.c.name;
-                                // var email = _viewModel.c.email;
-                                // var photo = _viewModel.c.photo;
-                                // saveMessage(email, name, myController.text, photo,
-                                //     widget.station);
-                                // myController.clear();
-                              },
-                            ),
-
+                            // FlatButton(
+                            //   shape: RoundedRectangleBorder(
+                            //     borderRadius: BorderRadius.circular(15.0),
+                            //   ),
+                            //   color: Colors.blue[900],
+                            //   child: Text(
+                            //     "Submit",
+                            //     style: TextStyle(
+                            //       color: Colors.white,
+                            //       fontSize: 15.0,
+                            //     ),
+                            //   ),
+                            //   onPressed: () {
+                            //     // var name = _viewModel.c.name;
+                            //     // var email = _viewModel.c.email;
+                            //     // var photo = _viewModel.c.photo;
+                            //     // saveMessage(email, name, myController.text, photo,
+                            //     //     widget.station);
+                            //     // myController.clear();
+                            //   },
+                            // ),
 
                           ],
                         ),
@@ -458,7 +619,9 @@ class VotingState extends State<Voting> {
                               fontWeight: FontWeight.bold,
                             ),
                           ),
-                          SizedBox(height: 15.0,),
+                          SizedBox(
+                            height: 15.0,
+                          ),
                           TextFormField(
                               decoration: InputDecoration(
                                 hintText: 'Enter a comment',
@@ -493,7 +656,8 @@ class VotingState extends State<Voting> {
                               borderRadius: BorderRadius.circular(15.0),
                             ),
                             color: Colors.blue[900],
-                            child: Text("Send comment",
+                            child: Text(
+                              "Send comment",
                               style: TextStyle(
                                 color: Colors.white,
                                 fontSize: 15.0,
@@ -505,7 +669,7 @@ class VotingState extends State<Voting> {
                               var photo = _viewModel.c.photo;
 
                               saveMessage(email, name, myController.text, photo,
-                                  widget.station,citizen);
+                                  widget.station, citizen);
                               myController.clear();
                             },
                           ),
