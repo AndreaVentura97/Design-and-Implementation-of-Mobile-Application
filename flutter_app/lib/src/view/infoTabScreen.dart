@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_app/redux/model/AppState.dart';
 import 'package:flutter_app/src/services/userService.dart';
+import 'package:flutter_app/src/view/dropdownWidget.dart';
 import 'package:flutter_app/src/view/pointWidget.dart';
 import 'package:flutter_app/src/view/viewModel.dart';
 import 'package:flutter_redux/flutter_redux.dart';
@@ -18,11 +19,40 @@ class InfoStationState extends State<InfoStation> {
   String line;
   String address;
   List points = [];
+  var avgClean;
+  var avgDis;
+  var avgSafety;
+  var avgArea;
   String image = "";
+  var valueDrop = "All";
   void takeStationInformation (){
     informationStation(widget.station).then((information) => setState(() {
       line = information['line'];
       address = information['address'];
+      if(information['avgClean']==null){
+        avgClean = double.tryParse("--");
+      }
+      else {
+        avgClean = information['avgClean'].toStringAsFixed(1);
+      }
+      if(information['avgSafety']==null){
+        avgSafety = double.tryParse("--");
+      }
+      else {
+        avgSafety = information['avgSafety'].toStringAsFixed(1);
+      }
+      if(information['avgDis']==null){
+        avgDis = double.tryParse("--");
+      }
+      else {
+        avgDis = information['avgDis'].toStringAsFixed(1);
+      }
+      if(information['avgArea']==null){
+        avgClean = double.tryParse("--");
+      }
+      else {
+        avgArea = information['avgArea'].toStringAsFixed(1);
+      }
       checkLine(line);
     }));
     pointsStation(widget.station).then((result) => setState(() {
@@ -181,60 +211,7 @@ class InfoStationState extends State<InfoStation> {
 
                       ),
                     ),
-                    Card(
-                      elevation: 3,
-                      margin: EdgeInsets.fromLTRB(10, 10, 10, 0),
-                      shape: RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(10),
-                        side: BorderSide(
-                          color: Colors.blue[900],
-                          width: 2,
-                        )
-                      ),
-                      child: Container(
-                        padding: EdgeInsets.all(10),
-                        child: Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
-                            Row(
-                              children: [
-                                Text('Ratings:',
-                                  style: TextStyle(
-                                    fontSize: 18.0,
-                                    color: Colors.black,
-                                  ),
-                                ),
-                                Spacer(),
-                                Container(
-                                  child: Row(
-                                    children: [
-                                      Text('All users'),
-                                      Icon(Icons.arrow_drop_down_sharp)
-                                    ],
-                                  ),
-                                )
-                              ],
-                            ),
-                            Divider(
-                              color: Colors.black,
-                              thickness: 2,
-                            ),
-                            Container(
-                              //color: Colors.orange,
-                              child: Row(
-                                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                                children: [
-                                  meanValues('Cleaniness', 25.0),
-                                  meanValues('Services', 12),
-                                  meanValues('Safety', 25),
-                                  meanValues('Overall', 32)
-                                ],
-                              ),
-                            )
-                          ],
-                        ),
-                      ),
-                    ),
+                    DropDownWidget(station: widget.station),
                     Card(
                       elevation: 3.0,
                       margin: EdgeInsets.fromLTRB(10.0, 10.0, 10.0, 0.0),
@@ -337,48 +314,6 @@ class InfoStationState extends State<InfoStation> {
             )
         );
       },
-    );
-  }
-
-  Widget meanValues(String Title, double MeanValue){
-    return Expanded(
-      child: Container(
-        //color: Colors.grey,
-        child: Column(
-          children: [
-            Text(Title,
-              style: TextStyle(
-                fontWeight: FontWeight.bold
-              ),
-            ),
-            SizedBox(
-              height: 5,
-            ),
-            Container(
-              height: 50,
-              width: 50,
-              decoration:
-              BoxDecoration(
-                borderRadius: BorderRadius.circular(10),
-                border: Border.all(
-                  color: Colors.blue[900],
-                  width: 2,
-                ),
-                //boxShadow: [BoxShadow( blurRadius: 10, spreadRadius: 10)],
-              ),
-              child: Center(
-                child: Text( '${MeanValue.round()}', //(valueClean != null)? '${valueClean.round()}': '- -',
-                  style: TextStyle(
-                    color: Colors.black,
-                    fontSize: 20,
-                    fontWeight: FontWeight.bold,
-                  ),
-
-                ),
-              ),
-            )],
-        ),
-      ),
     );
   }
 }

@@ -33,6 +33,9 @@ buildMarkers (response, context) async {
     if (line == "Metro M3"){
       image = "assets/M3.jpeg";
     }
+    if (line=="Metro M5"){
+      image = "assets/M5.jpeg";
+    }
     _markers.add(Marker(
         markerId: MarkerId(id),
         icon: BitmapDescriptor.fromAsset(image),

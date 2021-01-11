@@ -25,7 +25,7 @@ class VotingState extends State<Voting> {
   double valueMeanSafety;
   double valueArea;
   double valueMeanArea;
-  bool citizen = false;
+  bool citizen = true;
   List<bool> voting = [false, false, false, false];
 
   //bool voting = false;

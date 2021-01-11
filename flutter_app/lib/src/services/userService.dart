@@ -106,6 +106,6 @@ retrieveMyState(email) async {
 }
 
 updateState(email,value) async {
-  await DB.getDB().collection('users').update({'email': email}, {"\$set": {"state":value}});
+  await DB.getDB().collection('users').update({'email': email}, {"\$set": {"citizen":value}});
   return value;
 }

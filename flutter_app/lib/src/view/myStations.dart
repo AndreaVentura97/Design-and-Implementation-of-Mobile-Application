@@ -1,5 +1,6 @@
 import 'package:device_apps/device_apps.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_app/src/services/stationServices.dart';
 import 'package:flutter_app/src/view/userAccountWidget.dart';
 import '../services/userService.dart';
 import 'displayMenuStation.dart';
@@ -18,6 +19,7 @@ class MyStationsState extends State<MyStations> {
   bool _favStation = false;
   String line;
   String address;
+  String image;
 
 
 
@@ -26,18 +28,31 @@ class MyStationsState extends State<MyStations> {
     retrieveMyStations(widget.email).then((stations)=> setState((){
       myStations = stations;
     }));
+  }
 
-
-
-
+  String checkLine(station){
+    informationStation(station).then((result)=> setState((){
+      if (result['line']=="Metro M1"){
+        image =  "assets/M1.jpeg";
+      }
+      if (result['line']=="Metro M2"){
+        image=  "assets/M2.jpeg";
+      }
+      if (result['line']=="Metro M3"){
+        image =  "assets/M3.jpeg";
+      }
+      if (result['line']=="Metro M5"){
+        image = "assets/M5.jpeg";
+      }
+    }));
   }
 
 
   @override
   void initState() {
     super.initState();
-
     takeMyStations();
+
   }
 
 
@@ -90,7 +105,7 @@ class MyStationsState extends State<MyStations> {
                                       children: [
                                         Container(
                                           child: Image(
-                                            image: AssetImage("assets/M1.jpeg"),
+                                            image: (image!=null) ? AssetImage(checkLine(myStations[index])) : AssetImage("assets/loading.jpg"),
                                             height: 40.0,
                                             width: 60.0,
                                           ),
