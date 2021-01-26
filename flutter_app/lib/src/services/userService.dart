@@ -1,6 +1,8 @@
 import 'package:firebase_messaging/firebase_messaging.dart';
 
 import '../db.dart' as DB;
+import 'dart:io' as Io;
+
 
 
 
@@ -51,7 +53,7 @@ deleteMyStations (email, station) async {
   var user = await DB.getDB().collection('users').findOne({'email': email});
   var list = user['myStations'].toList();
   list.remove(station);
-    await DB.getDB().collection('users').update({'email': email}, {"\$set": {"myStations":list}});
+
 }
 
 isMyStation (email,station) async {
@@ -59,6 +61,26 @@ isMyStation (email,station) async {
   var list = user['myStations'].toList();
   if (list.contains(station)) return true;
   return false;
+}
+
+updatePhoto (email,photo) async {
+  var user = await DB.getDB().collection('users').findOne({'email': email});
+  print(user);
+  await DB.getDB().collection('users').update({'email': email}, {"\$set": {"photo":photo}});
+  var messages = await DB.getDB().collection('messages').find({'email':email}).toList();
+  for (int i=0; i<messages.length; i++){
+    await DB.getDB().collection('messages').update({'text': messages[i]['text']}, {"\$set": {"photo":photo}});
+  }
+
+}
+
+getPhoto (email) async {
+  var user = await DB.getDB().collection('users').findOne({'email': email});
+  if(user!=null){
+    print("presa");
+    return user['photo'];
+  }
+  return null;
 }
 
 
@@ -87,6 +109,57 @@ getMyComments(email) async {
   return listUser;
 }
 
+getNumberOfMyComments(email) async {
+  var listUser = await DB.getDB().collection('messages').find({'email':email}).toList();
+  return listUser.length;
+}
+
+getNumberOfLikes(email) async {
+  var total = 0;
+  var listUser = await DB.getDB().collection('messages').find({'email':email}).toList();
+  for (int i = 0; i < listUser.length; i++){
+    total = total + listUser[i]['nl'];
+  }
+  return total;
+}
+
+getNumberOfUnLikes(email) async {
+  var total = 0;
+  var listUser = await DB.getDB().collection('messages').find({'email':email}).toList();
+  for (int i = 0; i < listUser.length; i++){
+    total = total + listUser[i]['nu'];
+  }
+  return total;
+}
+
+getCommentWithMostLike(email) async {
+  var listUser = await DB.getDB().collection('messages').find({'email':email}).toList();
+  if (listUser.length==0){
+    return null;
+  }
+  var comment = listUser[0];
+  for (int i = 1; i < listUser.length; i++){
+    if (comment['nl'] < listUser[i]['nl']){
+      comment = listUser[i];
+    }
+  }
+  return comment;
+}
+
+getCommentWithMostUnLike(email) async {
+  var listUser = await DB.getDB().collection('messages').find({'email':email}).toList();
+  if (listUser.length==0){
+    return null;
+  }
+  var comment = listUser[0];
+  for (int i = 1; i < listUser.length; i++){
+    if (comment['nu'] < listUser[i]['nu']){
+      comment = listUser[i];
+    }
+  }
+  return comment;
+}
+
 retrieveMyLikedPoints(email) async {
   var user = await DB.getDB().collection('users').findOne({'email': email});
   var myLiked = user['myLikedPoints'].toList();
@@ -109,3 +182,5 @@ updateState(email,value) async {
   await DB.getDB().collection('users').update({'email': email}, {"\$set": {"citizen":value}});
   return value;
 }
+
+

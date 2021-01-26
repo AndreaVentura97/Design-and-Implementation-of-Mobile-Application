@@ -10,6 +10,12 @@ retrieveMessages(station) async {
   return response;
 }
 
+retrieveSuggestions(station) async {
+  var response = await DB.getDB().collection('suggestions').find({'station': station}).toList();
+  print("aaa $response");
+  return response;
+}
+
 retrieveMarkers () async {
   var response = await DB.getDB().collection('markers').find().toList();
   return response;
@@ -58,6 +64,13 @@ saveMessage (myEmail, myName, myText, myPhoto, myStation,state) async {
   String formattedDate = "${now.year.toString()}-${now.month.toString().padLeft(2,'0')}-${now.day.toString().padLeft(2,'0')}";
   await DB.getDB().collection('messages').insertOne({'email': myEmail, 'date':formattedDate, 'name': myName, 'photo':myPhoto, 'text': myText,
     'station': myStation, 'nl':0, 'nu':0, 'citizen': state});
+}
+
+saveSuggestion (myEmail, myName, myText, myPhoto, myStation) async {
+  DateTime now = new DateTime.now();
+  String formattedDate = "${now.year.toString()}-${now.month.toString().padLeft(2,'0')}-${now.day.toString().padLeft(2,'0')}";
+  await DB.getDB().collection('suggestions').insertOne({'email': myEmail, 'date':formattedDate, 'name': myName, 'photo':myPhoto, 'text': myText,
+    'station': myStation});
 }
 
 

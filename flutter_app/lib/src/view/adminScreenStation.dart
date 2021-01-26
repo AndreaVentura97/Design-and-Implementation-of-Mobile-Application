@@ -1,11 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_app/src/services/sendNotification.dart';
+import 'package:flutter_app/src/view/listViewAdminWidget.dart';
 import '../services/service.dart';
 import '../checkLogin.dart';
 import 'messages.dart';
 import '../services/userService.dart';
 import '../checkLogin.dart';
 import '../services/adminService.dart';
+import 'listViewAdminWidget.dart';
+
 
 class AdminScreenStation extends StatefulWidget {
   final String name;
@@ -16,8 +19,10 @@ class AdminScreenStation extends StatefulWidget {
 }
 
 class AdminScreenStationState extends State<AdminScreenStation> {
-
   bool _value;
+
+
+
 
   void updateValue(station) {
     retrieveStatus(widget.name).then((netStatus) => setState(() {
@@ -35,47 +40,61 @@ class AdminScreenStationState extends State<AdminScreenStation> {
   Widget build(BuildContext context) {
     return MaterialApp(
       home: Scaffold(
-        body: Center(
-            child: Column (
-                crossAxisAlignment: CrossAxisAlignment.start,
-                mainAxisSize: MainAxisSize.min,
-                children: [
-                  Text ("${widget.name}"),
-                  DropdownButton(
-                    value: _value,
-                    items: [
-                    DropdownMenuItem(
-                      child: Text("True"),
-                      value: true,
-                  ),
+          appBar: AppBar(
+            title: Text("Station"),
+          ),
+          body: Center(
+              child: Column (
+                  children: [ Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  mainAxisSize: MainAxisSize.min,
+                  children: [
+                    Text ("${widget.name}"),
+                    DropdownButton(
+                      value: _value,
+                      items: [
                       DropdownMenuItem(
-                        child: Text("False"),
-                        value: false,
-                      ),
-                  ],
-                    onChanged: (value) {
-                      setState(() {
-                        _value = value;
-                      });
+                        child: Text("True"),
+                        value: true,
+                    ),
+                        DropdownMenuItem(
+                          child: Text("False"),
+                          value: false,
+                        ),
+                    ],
+                      onChanged: (value) {
+                        setState(() {
+                          _value = value;
+                        });
 
-                    }),
-                  OutlineButton(
-                    child: Text("Submit"),
-                    onPressed: () {
-                      setStatus(widget.name,_value);
-                      if (_value == true){
-                        sendNotification2(widget.name, "ok");
-                      }
-                      else {
-                        sendNotification2(widget.name, "late");
-                      }
-                      },
-                  ),
-                ]
-            )
-        ),
+                      }),
+                    OutlineButton(
+                      child: Text("Submit"),
+                      onPressed: () {
+                        setStatus(widget.name,_value);
+                        if (_value == true){
+                          sendNotification2(widget.name, "ok");
+                        }
+                        else {
+                          sendNotification2(widget.name, "late");
+                        }
+                        },
+                    ),
+                  ]
+              ),
+               ListViewAd(name:widget.name),
+
+
+
+
+
+
+      ])
+        )
       ),
     );
+
   }
+
 
 }

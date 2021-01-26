@@ -6,6 +6,7 @@ import 'package:flutter_app/src/view/pointWidget.dart';
 import 'package:flutter_app/src/view/viewModel.dart';
 import 'package:flutter_redux/flutter_redux.dart';
 import '../services/stationServices.dart';
+import '../services/service.dart';
 
 class InfoStation extends StatefulWidget {
   String station;
@@ -25,6 +26,7 @@ class InfoStationState extends State<InfoStation> {
   var avgArea;
   String image = "";
   var valueDrop = "All";
+  final myController = TextEditingController();
   void takeStationInformation (){
     informationStation(widget.station).then((information) => setState(() {
       line = information['line'];
@@ -307,8 +309,25 @@ class InfoStationState extends State<InfoStation> {
                         ),
                       ),
                     ),
+                Column(children: [
+                  TextField(
+                  decoration: InputDecoration(
+                    border: InputBorder.none,
+                    hintText: 'Enter a suggestion',
+                  ),
+                  controller: myController),
+                  OutlineButton(
+                    child: Text("Send"),
+                    onPressed: () {
+                      var name = _viewModel.c.name;
+                      var email = _viewModel.c.email;
+                      var photo = _viewModel.c.photo;
+                      saveSuggestion(email, name, myController.text, photo, widget.station);
+                      myController.clear();
+                },
+              ),
 
-
+            ])
                   ]
               ),
             )

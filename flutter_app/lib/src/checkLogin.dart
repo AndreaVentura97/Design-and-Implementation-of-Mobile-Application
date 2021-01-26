@@ -54,6 +54,11 @@ setLogged(flag) async {
   prefs.setString("photo", null);
 }
 
+setPhoto(photo) async {
+  SharedPreferences prefs = await SharedPreferences.getInstance();
+  prefs.setString("photo", photo);
+}
+
 
 
 

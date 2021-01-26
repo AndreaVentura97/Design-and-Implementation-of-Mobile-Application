@@ -2,7 +2,7 @@ import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter_facebook_login/flutter_facebook_login.dart';
 import 'checkLogin.dart';
 import 'package:flutter_redux/flutter_redux.dart';
-import 'services/userService.dart';
+import 'services/userService.dart' as us;
 import 'dart:convert' as JSON;
 import 'package:flutter_app/redux/actions/actions.dart';
 import 'package:flutter_app/redux/model/AppState.dart';
@@ -31,11 +31,23 @@ loginWithFB(context) async {
       final graphResponse = await http.get(
           'https://graph.facebook.com/v2.12/me?fields=name,picture,email&access_token=${token}');
       final profile = JSON.jsonDecode(graphResponse.body);
-      StoreProvider.of<AppState>(context).dispatch(updateCustomer(name:profile['name'],email:profile['email'],photo:profile["picture"]["data"]["url"],notification: false));
+      if (await us.getPhoto(profile['email']) != null){
+        us.getPhoto(profile['email']).then((result) =>
+            StoreProvider.of<AppState>(context).dispatch(updateCustomer(name:profile['name'],email:profile['email'],photo: result ,notification: false)));
+        us.getPhoto(profile['email']).then((result2) => checkSession(profile['name'], profile['email'],
+            result2));
+        print("here1");
+      }
+      else {
+        StoreProvider.of<AppState>(context).dispatch(updateCustomer(name:profile['name'],email:profile['email'],photo:profile["picture"]["data"]["url"],notification: false));
+        checkSession(profile['name'], profile['email'],
+            profile["picture"]["data"]["url"]);
+        print("here2");
+
+      }
       String tk = await _firebaseMessaging.getToken();
-      insertUser(profile['email'], profile['name'],tk);
-      checkSession(profile['name'], profile['email'],
-          profile["picture"]["data"]["url"]);
+      us.insertUser(profile['email'], profile['name'],tk);
+
       return true;
       break;
     case FacebookLoginStatus.cancelledByUser:
@@ -51,11 +63,19 @@ loginWithGoogle(context) async {
   try {
     await _googleSignIn.signIn();
     String tk = await _firebaseMessaging.getToken();
-    insertUser(_googleSignIn.currentUser.email,
+    if (await us.getPhoto(_googleSignIn.currentUser.email) != null){
+      us.getPhoto(_googleSignIn.currentUser.email).then((result) =>
+          StoreProvider.of<AppState>(context).dispatch(updateCustomer(name:_googleSignIn.currentUser.displayName,email:_googleSignIn.currentUser.email,photo: result ,notification: false)));
+      us.getPhoto(_googleSignIn.currentUser.email).then((result2) => checkSession(_googleSignIn.currentUser.displayName, _googleSignIn.currentUser.email,
+          result2));
+    }
+    else {
+      checkSession(_googleSignIn.currentUser.displayName,
+          _googleSignIn.currentUser.email, _googleSignIn.currentUser.photoUrl);
+      StoreProvider.of<AppState>(context).dispatch(updateCustomer(name:_googleSignIn.currentUser.displayName, email:_googleSignIn.currentUser.email,photo:_googleSignIn.currentUser.photoUrl,notification: false));
+    }
+    us.insertUser(_googleSignIn.currentUser.email,
         _googleSignIn.currentUser.displayName,tk);
-    checkSession(_googleSignIn.currentUser.displayName,
-        _googleSignIn.currentUser.email, _googleSignIn.currentUser.photoUrl);
-    StoreProvider.of<AppState>(context).dispatch(updateCustomer(name:_googleSignIn.currentUser.displayName, email:_googleSignIn.currentUser.email,photo:_googleSignIn.currentUser.photoUrl,notification: false));
     return true;
   } catch (err) {
     print(err);
@@ -79,10 +99,19 @@ loginWithGoogle(context) async {
         return AdminScreen();
       }));
     } else {
-      checkSession(user.displayName, user.email, null);
+      if (await us.getPhoto(user.email) != null){
+        us.getPhoto(user.email).then((result) =>
+            StoreProvider.of<AppState>(context).dispatch(updateCustomer(name:user.displayName,email:user.email,photo: result ,notification: false)));
+        us.getPhoto(user.email).then((result2) => checkSession(user.displayName, user.email,
+            result2));
+      }
+      else {
+        checkSession(user.displayName, user.email, null);
+        StoreProvider.of<AppState>(context).dispatch(updateCustomer(name:user.displayName, email:user.email,photo:null,notification: false));
+      }
+
       String tk = await _firebaseMessaging.getToken();
-      insertUser(user.email, user.displayName,tk);
-      StoreProvider.of<AppState>(context).dispatch(updateCustomer(name:user.displayName, email:user.email,photo:null,notification: false));
+      us.insertUser(user.email, user.displayName,tk);
       Navigator.of(context).pushReplacement(MaterialPageRoute(builder: (_) {
         return Profile();
       }));
