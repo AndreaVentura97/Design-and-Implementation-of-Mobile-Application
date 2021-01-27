@@ -61,10 +61,10 @@ class MyStationsState extends State<MyStations> {
   Widget build(BuildContext context) {
     return Scaffold(
             appBar: AppBar(
+              backgroundColor: Colors.blue[900],
               title: Row(
                 children: [
                   Text("My Stations"),
-
                 ],
               ),
             ),
@@ -151,6 +151,7 @@ class MyStationsState extends State<MyStations> {
                               trailing: IconButton(
                                 icon: Icon(Icons.favorite,
                                   size: 20.0,
+                                  color: Colors.blue[900],
                                 ),
                                 onPressed: () {
                                   deleteMyStations(widget.email, myStations[index]);
@@ -171,6 +172,37 @@ class MyStationsState extends State<MyStations> {
     );
   }
 
-
+  Widget showAlert() {
+  //   if (_error != null)
+  //     return Container(
+  //       color: Colors.amber,
+  //       width: double.infinity,
+  //       padding: EdgeInsets.all(8.0),
+  //       child: Row(
+  //         children: [
+  //           Padding(
+  //             padding: const EdgeInsets.only(right: 8.0),
+  //             child: Icon(Icons.error_outline),
+  //           ),
+  //           Expanded(
+  //             child: AutoSizeText(
+  //               "$_error",
+  //               maxLines: 3,
+  //             ),
+  //           ),
+  //           IconButton(
+  //               icon: Icon(Icons.close),
+  //               onPressed: () {
+  //                 setState(() {
+  //                   _error = null;
+  //                 });
+  //               })
+  //         ],
+  //       ),
+  //     );
+  //   return SizedBox(
+  //     height: 0.0,
+  //   );
+   }
 
 }

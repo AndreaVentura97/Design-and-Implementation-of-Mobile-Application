@@ -33,46 +33,46 @@ class VotingState extends State<Voting> {
 
   void takeStationInformation() {
     informationStation(widget.station).then((information) => setState(() {
-          //line = information['line'];
-          if (information['avgClean'] != null) {
-            valueMeanClean = information['avgClean'];
-          } else {
-            valueMeanClean = 50.0;
-          }
-          if (information['avgDis'] != null) {
-            valueMeanDis = information['avgDis'];
-          } else {
-            valueMeanDis = 50.0;
-          }
-          if (information['avgSafety'] != null) {
-            valueMeanSafety = information['avgSafety'];
-          } else {
-            valueMeanSafety = 50.0;
-          }
-          if (information['avgArea'] != null) {
-            valueMeanArea = information['avgArea'];
-          } else {
-            valueMeanArea = 50.0;
-          }
-        }));
+      //line = information['line'];
+      if (information['avgClean'] != null) {
+        valueMeanClean = information['avgClean'];
+      } else {
+        valueMeanClean = 50.0;
+      }
+      if (information['avgDis'] != null) {
+        valueMeanDis = information['avgDis'];
+      } else {
+        valueMeanDis = 50.0;
+      }
+      if (information['avgSafety'] != null) {
+        valueMeanSafety = information['avgSafety'];
+      } else {
+        valueMeanSafety = 50.0;
+      }
+      if (information['avgArea'] != null) {
+        valueMeanArea = information['avgArea'];
+      } else {
+        valueMeanArea = 50.0;
+      }
+    }));
   }
 
   retrieveMyVotes(email) {
     retrieveMyVoteCleaning(email, widget.station).then((vote) => setState(() {
-          valueClean = vote;
-        }));
+      valueClean = vote;
+    }));
     retrieveMyVoteDis(email, widget.station).then((vote2) => setState(() {
-          valueDis = vote2;
-        }));
+      valueDis = vote2;
+    }));
     retrieveMyVoteSafety(email, widget.station).then((vote3) => setState(() {
-          valueSafety = vote3;
-        }));
+      valueSafety = vote3;
+    }));
     retrieveMyVoteArea(email, widget.station).then((vote4) => setState(() {
-          valueArea = vote4;
-        }));
+      valueArea = vote4;
+    }));
     retrieveMyState(email).then((result) => setState(() {
-          citizen = result;
-        }));
+      citizen = result;
+    }));
   }
 
   @override
@@ -93,7 +93,7 @@ class VotingState extends State<Voting> {
             //backgroundColor: Colors.green,
             body: SingleChildScrollView(
               child: Column(
-                  //mainAxisSize: MainAxisSize.min,
+                //mainAxisSize: MainAxisSize.min,
                   children: [
                     Card(
                       //color: Colors.blue,
@@ -131,8 +131,8 @@ class VotingState extends State<Voting> {
                                   Text(
                                     'Kind of user:',
                                     style: TextStyle(
-                                      fontSize: 18.0,
-                                      fontWeight: FontWeight.bold
+                                        fontSize: 18.0,
+                                        fontWeight: FontWeight.bold
                                     ),
                                   ),
                                   Spacer(),
@@ -152,20 +152,20 @@ class VotingState extends State<Voting> {
                                               IconButton(
                                                 icon: (!citizen)
                                                     ? Icon(
-                                                        Icons
-                                                            .brightness_1_outlined, //:Icons.brightness_1,
-                                                      )
+                                                  Icons
+                                                      .brightness_1_outlined, //:Icons.brightness_1,
+                                                )
                                                     : Icon(
-                                                        Icons.brightness_1,
-                                                      ),
+                                                  Icons.brightness_1,
+                                                ),
                                                 onPressed: () => {
                                                   updateState(
-                                                          _viewModel.c.email,
-                                                          true)
+                                                      _viewModel.c.email,
+                                                      true)
                                                       .then((value) =>
-                                                          setState(() {
-                                                            citizen = value;
-                                                          }))
+                                                      setState(() {
+                                                        citizen = value;
+                                                      }))
                                                 },
                                               )
                                             ],
@@ -184,18 +184,18 @@ class VotingState extends State<Voting> {
                                               IconButton(
                                                 icon: (!citizen)
                                                     ? Icon(
-                                                        Icons.brightness_1,
-                                                      )
+                                                  Icons.brightness_1,
+                                                )
                                                     : Icon(Icons
-                                                        .brightness_1_outlined),
+                                                    .brightness_1_outlined),
                                                 onPressed: () => {
                                                   updateState(
-                                                          _viewModel.c.email,
-                                                          false)
+                                                      _viewModel.c.email,
+                                                      false)
                                                       .then((value) =>
-                                                          setState(() {
-                                                            citizen = value;
-                                                          }))
+                                                      setState(() {
+                                                        citizen = value;
+                                                      }))
                                                 },
                                               )
                                             ],
@@ -218,7 +218,7 @@ class VotingState extends State<Voting> {
                                   Flexible(
                                     child: Column(
                                       crossAxisAlignment:
-                                          CrossAxisAlignment.start,
+                                      CrossAxisAlignment.start,
                                       children: [
                                         Text(
                                           "Cleaniness:",
@@ -229,44 +229,44 @@ class VotingState extends State<Voting> {
                                         ),
                                         (valueClean != null)
                                             ? Slider(
-                                                value: valueClean,
-                                                min: 0,
-                                                max: 100,
-                                                divisions: 100,
-                                                //label: valueClean.round().toString(),
-                                                activeColor:
-                                                    (valueClean == 50.0 ||
-                                                            voting[0])
-                                                        ? Colors.blue[900]
-                                                        : Colors.blue[900].withOpacity(0.4),
-                                                onChangeEnd: (double value) {
+                                          value: valueClean,
+                                          min: 0,
+                                          max: 100,
+                                          divisions: 100,
+                                          //label: valueClean.round().toString(),
+                                          activeColor:
+                                          (valueClean == 50.0 ||
+                                              voting[0])
+                                              ? Colors.blue[900]
+                                              : Colors.blue[900].withOpacity(0.4),
+                                          onChangeEnd: (double value) {
+                                            setState(() {
+                                              color = Colors.blue[900].withOpacity(0.4);
+                                              sendCleaning(
+                                                  value,
+                                                  _viewModel.c.email,
+                                                  widget.station,
+                                                  citizen)
+                                                  .then((result) =>
                                                   setState(() {
-                                                    color = Colors.blue[900].withOpacity(0.4);
-                                                    sendCleaning(
-                                                            value,
-                                                            _viewModel.c.email,
-                                                            widget.station,
-                                                            citizen)
-                                                        .then((result) =>
-                                                            setState(() {
-                                                              valueMeanClean =
-                                                                  result;
-                                                            }));
-                                                    voting[0] = false;
-                                                  });
-                                                },
-                                                onChangeStart: (double value) {
-                                                  setState(() {
-                                                    color = Colors.blue[900];
-                                                    voting[0] = true;
-                                                  });
-                                                },
-                                                onChanged: (double value) {
-                                                  setState(() {
-                                                    valueClean = value;
-                                                  });
-                                                },
-                                                )
+                                                    valueMeanClean =
+                                                        result;
+                                                  }));
+                                              voting[0] = false;
+                                            });
+                                          },
+                                          onChangeStart: (double value) {
+                                            setState(() {
+                                              color = Colors.blue[900];
+                                              voting[0] = true;
+                                            });
+                                          },
+                                          onChanged: (double value) {
+                                            setState(() {
+                                              valueClean = value;
+                                            });
+                                          },
+                                        )
                                             : Text("Loading"),
                                       ],
                                     ),
@@ -275,14 +275,14 @@ class VotingState extends State<Voting> {
                                     height: 50,
                                     width: 50,
                                     decoration:
-                                        BoxDecoration(
-                                          borderRadius: BorderRadius.circular(10),
-                                            border: Border.all(
-                                          color: Colors.blue[900],
-                                          width: 2,
-                                        ),
-                                        //boxShadow: [BoxShadow( blurRadius: 10, spreadRadius: 10)],
-                                        ),
+                                    BoxDecoration(
+                                      borderRadius: BorderRadius.circular(10),
+                                      border: Border.all(
+                                        color: Colors.blue[900],
+                                        width: 2,
+                                      ),
+                                      //boxShadow: [BoxShadow( blurRadius: 10, spreadRadius: 10)],
+                                    ),
                                     child: Center(
                                       child: Text((valueClean != null)? '${valueClean.round()}': '- -',
                                         style: TextStyle(
@@ -320,46 +320,46 @@ class VotingState extends State<Voting> {
                                         Text(
                                           "Services inside:",
                                           style: TextStyle(
-                                            fontSize: 18.0,
-                                            fontWeight: FontWeight.bold
+                                              fontSize: 18.0,
+                                              fontWeight: FontWeight.bold
                                           ),
                                         ),
                                         (valueDis != null)
                                             ? Slider(
-                                                value: valueDis,
-                                                min: 0,
-                                                max: 100,
-                                                divisions: 100,
-                                                //label: valueDis.round().toString(),
-                                                activeColor: (valueDis == 50.0 ||
-                                                        voting[1])
-                                                    ? Colors.blue[900]
-                                                    : Colors.blue[900].withOpacity(0.4),
-                                                onChangeEnd: (double value) {
-                                                  setState(() {
-                                                    color =
-                                                        Colors.blue[900].withOpacity(0.4);
-                                                    sendDis(value, _viewModel.c.email,
-                                                            widget.station, citizen)
-                                                        .then(
-                                                            (result) => setState(() {
-                                                                  valueMeanDis =
-                                                                      result;
-                                                                }));
-                                                    voting[1] = false;
-                                                  });
-                                                },
-                                                onChangeStart: (double value) {
-                                                  setState(() {
-                                                    color = Colors.black;
-                                                    voting[1] = true;
-                                                  });
-                                                },
-                                                onChanged: (double value) {
-                                                  setState(() {
-                                                    valueDis = value;
-                                                  });
-                                                })
+                                            value: valueDis,
+                                            min: 0,
+                                            max: 100,
+                                            divisions: 100,
+                                            //label: valueDis.round().toString(),
+                                            activeColor: (valueDis == 50.0 ||
+                                                voting[1])
+                                                ? Colors.blue[900]
+                                                : Colors.blue[900].withOpacity(0.4),
+                                            onChangeEnd: (double value) {
+                                              setState(() {
+                                                color =
+                                                    Colors.blue[900].withOpacity(0.4);
+                                                sendDis(value, _viewModel.c.email,
+                                                    widget.station, citizen)
+                                                    .then(
+                                                        (result) => setState(() {
+                                                      valueMeanDis =
+                                                          result;
+                                                    }));
+                                                voting[1] = false;
+                                              });
+                                            },
+                                            onChangeStart: (double value) {
+                                              setState(() {
+                                                color = Colors.black;
+                                                voting[1] = true;
+                                              });
+                                            },
+                                            onChanged: (double value) {
+                                              setState(() {
+                                                valueDis = value;
+                                              });
+                                            })
                                             : Text("Loading"),
                                       ],
                                     ),
@@ -413,49 +413,49 @@ class VotingState extends State<Voting> {
                                         Text(
                                           "Safety:",
                                           style: TextStyle(
-                                            fontSize: 18.0,
-                                            fontWeight: FontWeight.bold
+                                              fontSize: 18.0,
+                                              fontWeight: FontWeight.bold
                                           ),
                                         ),
                                         (valueSafety != null)
                                             ? Slider(
-                                                value: valueSafety,
-                                                min: 0,
-                                                max: 100,
-                                                divisions: 100,
-                                                //label: valueSafety.round().toString(),
-                                                activeColor: (valueSafety == 50.0 ||
-                                                        voting[2])
-                                                    ? Colors.blue[900]
-                                                    : Colors.blue[900].withOpacity(0.4),
-                                                onChangeEnd: (double value) {
-                                                  setState(() {
-                                                    color =
-                                                        Colors.blue[900].withOpacity(0.4);
-                                                    sendSafety(
-                                                            value,
-                                                            _viewModel.c.email,
-                                                            widget.station,
-                                                            citizen)
-                                                        .then(
-                                                            (result) => setState(() {
-                                                                  valueMeanSafety =
-                                                                      result;
-                                                                }));
-                                                    voting[2] = false;
-                                                  });
-                                                },
-                                                onChangeStart: (double value) {
-                                                  setState(() {
-                                                    color = Colors.black;
-                                                    voting[2] = true;
-                                                  });
-                                                },
-                                                onChanged: (double value) {
-                                                  setState(() {
-                                                    valueSafety = value;
-                                                  });
-                                                })
+                                            value: valueSafety,
+                                            min: 0,
+                                            max: 100,
+                                            divisions: 100,
+                                            //label: valueSafety.round().toString(),
+                                            activeColor: (valueSafety == 50.0 ||
+                                                voting[2])
+                                                ? Colors.blue[900]
+                                                : Colors.blue[900].withOpacity(0.4),
+                                            onChangeEnd: (double value) {
+                                              setState(() {
+                                                color =
+                                                    Colors.blue[900].withOpacity(0.4);
+                                                sendSafety(
+                                                    value,
+                                                    _viewModel.c.email,
+                                                    widget.station,
+                                                    citizen)
+                                                    .then(
+                                                        (result) => setState(() {
+                                                      valueMeanSafety =
+                                                          result;
+                                                    }));
+                                                voting[2] = false;
+                                              });
+                                            },
+                                            onChangeStart: (double value) {
+                                              setState(() {
+                                                color = Colors.black;
+                                                voting[2] = true;
+                                              });
+                                            },
+                                            onChanged: (double value) {
+                                              setState(() {
+                                                valueSafety = value;
+                                              });
+                                            })
                                             : Text("Loading"),
                                       ],
                                     ),
@@ -498,49 +498,49 @@ class VotingState extends State<Voting> {
                                         Text(
                                           "Overall:",
                                           style: TextStyle(
-                                            fontSize: 18.0,
-                                            fontWeight: FontWeight.bold
+                                              fontSize: 18.0,
+                                              fontWeight: FontWeight.bold
                                           ),
                                         ),
                                         (valueArea != null)
                                             ? Slider(
-                                                value: valueArea,
-                                                min: 0,
-                                                max: 100,
-                                                divisions: 100,
-                                                //label: valueArea.round().toString(),
-                                                activeColor: (valueArea == 50.0 ||
-                                                        voting[3])
-                                                    ? Colors.blue[900]
-                                                    : Colors.blue[900].withOpacity(0.4),
-                                                onChangeEnd: (double value) {
-                                                  setState(() {
-                                                    color =
-                                                        Colors.blue[900].withOpacity(0.4);
-                                                    sendArea(
-                                                            value,
-                                                            _viewModel.c.email,
-                                                            widget.station,
-                                                            citizen)
-                                                        .then(
-                                                            (result) => setState(() {
-                                                                  valueMeanArea =
-                                                                      result;
-                                                                }));
-                                                    voting[3] = false;
-                                                  });
-                                                },
-                                                onChangeStart: (double value) {
-                                                  setState(() {
-                                                    color = Colors.black;
-                                                    voting[3] = true;
-                                                  });
-                                                },
-                                                onChanged: (double value) {
-                                                  setState(() {
-                                                    valueArea = value;
-                                                  });
-                                                })
+                                            value: valueArea,
+                                            min: 0,
+                                            max: 100,
+                                            divisions: 100,
+                                            //label: valueArea.round().toString(),
+                                            activeColor: (valueArea == 50.0 ||
+                                                voting[3])
+                                                ? Colors.blue[900]
+                                                : Colors.blue[900].withOpacity(0.4),
+                                            onChangeEnd: (double value) {
+                                              setState(() {
+                                                color =
+                                                    Colors.blue[900].withOpacity(0.4);
+                                                sendArea(
+                                                    value,
+                                                    _viewModel.c.email,
+                                                    widget.station,
+                                                    citizen)
+                                                    .then(
+                                                        (result) => setState(() {
+                                                      valueMeanArea =
+                                                          result;
+                                                    }));
+                                                voting[3] = false;
+                                              });
+                                            },
+                                            onChangeStart: (double value) {
+                                              setState(() {
+                                                color = Colors.black;
+                                                voting[3] = true;
+                                              });
+                                            },
+                                            onChanged: (double value) {
+                                              setState(() {
+                                                valueArea = value;
+                                              });
+                                            })
                                             : Text("Loading"),
                                       ],
                                     ),

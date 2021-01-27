@@ -15,6 +15,7 @@ import 'package:flutter_redux/flutter_redux.dart';
 import 'package:url_launcher/url_launcher.dart';
 import 'profile.dart';
 import '../checkLogin.dart';
+import 'map.dart';
 import 'login.dart';
 import 'InfoProfileScreen.dart';
 import 'myCommentsScreen.dart';
@@ -44,37 +45,83 @@ class _UserAccountState extends State<UserAccount> {
             new Drawer(
                   child: ListView(
                       children: <Widget>[
+                        // DrawerHeader(child: Container(
+                        //   color: Colors.blue[900],
+                        //   padding: EdgeInsets.zero,
+                        // )
+                        // ),
                         new UserAccountsDrawerHeader(
-                          accountName: Row(children: [Icon(
+                          decoration: BoxDecoration(
+                            color: Colors.blue[900]
+                          ),
+                          accountName: Row(children: [
+                            Icon(
                             Icons.account_box_outlined,
-                            color: Colors.black,
+                            color: Colors.white,
                           ),
-                            Text("${_viewModel.c.name}"),
+                            SizedBox(width: 10,),
+                            Text("${_viewModel.c.name}",
+                              style: TextStyle(
+                                fontSize: 16,
+                              ),
+                            ),
                           ]),
-                          accountEmail: Row(children: [Icon(
+                          accountEmail: Row(children: [
+                            Icon(
                             Icons.email,
-                            color: Colors.black,
+                            color: Colors.white,
                           ),
-                            Text("${_viewModel.c.email}"),
+                            SizedBox(width: 10,),
+                            Text("${_viewModel.c.email}",
+                              style: TextStyle(
+                                fontSize: 16,
+                              ),
+                            ),
                           ]),
-                          currentAccountPicture: new CircleAvatar(
-                            backgroundImage: getPhoto(_viewModel.c.photo)
+                          currentAccountPicture: Container(
+                            color: Colors.yellow,
+                            child: InkWell(
+                              child: new CircleAvatar(
+                                backgroundImage: getPhoto(_viewModel.c.photo),
+                              ),
+                                onTap: () {
+                                  showChoiceDialog(_viewModel, context);
+                                }
+                            ),
                           ),
                         ),
                         new ListTile(
-                            title: Text("Home"),
+                            title: Row(
+                              mainAxisAlignment: MainAxisAlignment.start,
+                              children: [
+                                Icon(Icons.location_on, color: Colors.blue[900],),
+                                Text(" Map", style: TextStyle( color: Colors.blue[900], fontSize: 18),),
+                              ],
+                            ),
                             onTap: () {
-                              Navigator.push(context, MaterialPageRoute(builder:(context)=> Profile()));
+                              Navigator.push(context, MaterialPageRoute(builder:(context)=> Map()));
                             }
                         ),
                         new ListTile(
-                            title: Text("See my stations"),
+                            title: Row(
+                              mainAxisAlignment: MainAxisAlignment.start,
+                              children: [
+                                Icon(Icons.train, color: Colors.blue[900],),
+                                Text(" My Stations", style: TextStyle( color: Colors.blue[900], fontSize: 18),),
+                              ],
+                            ),
                             onTap: () {
                               Navigator.push(context, MaterialPageRoute(builder:(context)=> MyStations (email: _viewModel.c.email)));
                             }
                         ),
                         new ListTile(
-                            title: Text("See my comments"),
+                            title: Row(
+                              mainAxisAlignment: MainAxisAlignment.start,
+                              children: [
+                                Icon(Icons.comment, color: Colors.blue[900],),
+                                Text(" My Comments", style: TextStyle( color: Colors.blue[900], fontSize: 18),),
+                              ],
+                            ),
                             onTap: () {
                               Navigator.push(context, MaterialPageRoute(builder:(context)=> MyComments ()));
                             }
@@ -88,7 +135,13 @@ class _UserAccountState extends State<UserAccount> {
                             }
                         ),
                         new ListTile(
-                            title: Text("Reconnect"),
+                            title: Row(
+                              mainAxisAlignment: MainAxisAlignment.start,
+                              children: [
+                                Icon(Icons.refresh, color: Colors.blue[900],),
+                                Text(" Reconnect", style: TextStyle( color: Colors.blue[900], fontSize: 18),),
+                              ],
+                            ),
                             onTap: () {
                               DB.start().then((result) => setState(() {
                                 print("reconnected to mongoDb");
@@ -102,20 +155,21 @@ class _UserAccountState extends State<UserAccount> {
                             }
                         ),
                         new ListTile(
-                            title: Text("Change photo"),
-                            onTap: () {
-                              showChoiceDialog(_viewModel, context);
-                            }
-                        ),
-                        new ListTile(
                             title: Text("Profile"),
                             onTap: () {
                               Navigator.pushReplacement(context, MaterialPageRoute(
                                   builder: (BuildContext context) => InfoProfile(email:_viewModel.c.email)));
                             }
                         ),
+
                         new ListTile(
-                          title: Text("Logout"),
+                          title: Row(
+                            mainAxisAlignment: MainAxisAlignment.start,
+                            children: [
+                              Icon(Icons.exit_to_app, color: Colors.blue[900],),
+                              Text(" Logout", style: TextStyle( color: Colors.blue[900], fontSize: 18),),
+                            ],
+                          ),
                           onTap: () {
                             setLogged(false);
                             Navigator.pushReplacement(context, MaterialPageRoute(

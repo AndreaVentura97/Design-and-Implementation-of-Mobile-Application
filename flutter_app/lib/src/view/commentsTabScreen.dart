@@ -31,21 +31,7 @@ class _CommentsState extends State<Comments> {
             // //length: 2,
             // child:
             Scaffold(
-              // appBar: AppBar(
-              //   bottom: TabBar(
-              //     tabs: [
-              //       Tab(icon: Icon(Icons.email)),
-              //       Tab(icon: Icon(Icons.assignment)),
-              //     ],
-              //   ),
-              // ),
-              body:
-              // TabBarView(
-              //   children: [
-                  Messages(station: widget.station),
-              //     Comment(station: widget.station),
-              //   ],
-              // ),
+              body: Messages(station: widget.station),
             );
           //);
         });

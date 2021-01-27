@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_app/src/services/sendNotification.dart';
 import 'package:flutter_app/src/view/userAccountWidget.dart';
+import 'package:flutter_app/redux/model/AppState.dart';
 import 'package:flutter_app/src/view/viewModel.dart';
 import '../services/service.dart';
 import '../services/messagesService.dart';
@@ -9,10 +10,12 @@ import 'package:redux/redux.dart';
 import 'package:flutter_redux/flutter_redux.dart';
 import 'package:flutter_app/redux/model/AppState.dart';
 import 'package:flutter_app/redux/model/customer.dart';
-
+import '../services/stationServices.dart';
+import '../services/service.dart';
 
 class MyComments extends StatefulWidget {
-
+  String station;
+  MyComments({Key key, this.station}) : super(key: key);
   MyCommentsState createState() => MyCommentsState();
 }
 
@@ -20,6 +23,8 @@ class MyComments extends StatefulWidget {
 class MyCommentsState extends State<MyComments> {
   List myComments = [];
   List myComments2 = [];
+  String line;
+  String image = "";
 
 
 
@@ -29,7 +34,41 @@ class MyCommentsState extends State<MyComments> {
     })): null);
   }
 
+  void takeStationInformation (){
+    informationStation(widget.station).then((information) => setState(() {
+      line = information['line'];
+      //address = information['address'];
+      checkLine(line);
+    }));
+    pointsStation(widget.station).then((result) => setState(() {
+      //points = result;
+    }));
+  }
 
+  String checkLine(line){
+    if (line=="Metro M1"){
+      setState(() {
+        image = "assets/M1.jpeg";
+      });
+    }
+    if (line=="Metro M2"){
+      setState(() {
+        image = "assets/M2.jpeg";
+      });
+    }
+    if (line=="Metro M3"){
+      setState(() {
+        image = "assets/M3.jpeg";
+      });
+    }
+    if (line=="Metro M5"){
+      setState(() {
+        image = "assets/M5.jpeg";
+      });
+    };
+
+    return image;
+  }
 
 
   @override
@@ -49,6 +88,7 @@ class MyCommentsState extends State<MyComments> {
           return Scaffold(
               appBar: AppBar(
                 title: Text("Comments"),
+                backgroundColor: Colors.blue[900],
               ),
               drawer: UserAccount(),
               body:
@@ -84,7 +124,7 @@ class MyCommentsState extends State<MyComments> {
                                                     children: [
                                                       Container(
                                                         child: Image(
-                                                          image: AssetImage("assets/M1.png"),
+                                                          image: (image!="") ? AssetImage(image) : AssetImage("assets/loading.jpg"),
                                                           height: 30.0,
                                                           width: 45.0,
                                                         ),
@@ -183,4 +223,37 @@ class MyCommentsState extends State<MyComments> {
               );
         });
   }
+
+Widget showAlert() {
+//   if (_error != null)
+//     return Container(
+//       color: Colors.amber,
+//       width: double.infinity,
+//       padding: EdgeInsets.all(8.0),
+//       child: Row(
+//         children: [
+//           Padding(
+//             padding: const EdgeInsets.only(right: 8.0),
+//             child: Icon(Icons.error_outline),
+//           ),
+//           Expanded(
+//             child: AutoSizeText(
+//               "$_error",
+//               maxLines: 3,
+//             ),
+//           ),
+//           IconButton(
+//               icon: Icon(Icons.close),
+//               onPressed: () {
+//                 setState(() {
+//                   _error = null;
+//                 });
+//               })
+//         ],
+//       ),
+//     );
+//   return SizedBox(
+//     height: 0.0,
+//   );
+}
 }

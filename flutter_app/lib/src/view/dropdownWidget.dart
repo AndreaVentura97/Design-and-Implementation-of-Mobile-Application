@@ -88,7 +88,7 @@ class DropDownState extends State<DropDownWidget> {
                   child: (MeanValue!=null) ? Text(MeanValue,
                     style: TextStyle(
                       color: Colors.black,
-                      fontSize: 20,
+                      fontSize: 16,
                       fontWeight: FontWeight.bold,
                     ),
                   ) : Text("--",
