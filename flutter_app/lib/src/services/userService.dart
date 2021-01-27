@@ -53,7 +53,7 @@ deleteMyStations (email, station) async {
   var user = await DB.getDB().collection('users').findOne({'email': email});
   var list = user['myStations'].toList();
   list.remove(station);
-
+  await DB.getDB().collection('users').update({'email': email}, {"\$set": {"myStations":list}});
 }
 
 isMyStation (email,station) async {

@@ -22,9 +22,10 @@ class NotificationState extends State<Notification> {
 
         home: Scaffold(
             appBar: AppBar(
+              backgroundColor: Colors.blue[900],
               title: Row(
                 children: [
-                  Text("My Notification"),
+                  Text("Notification"),
                   NotificationWidget(),
                 ],
               ),

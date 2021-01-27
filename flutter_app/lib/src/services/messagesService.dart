@@ -154,6 +154,6 @@ sortListByUp(list){
   }
 }
 
-deleteMyComment(index) async {
-  await DB.getDB().collection('messages').remove({'_id': index});
+deleteMyComment(text,station,name) async {
+  await DB.getDB().collection('messages').remove({'text': text,'station':station, 'name':name});
 }

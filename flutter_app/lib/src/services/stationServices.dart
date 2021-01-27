@@ -1,9 +1,21 @@
 import '../db.dart' as DB;
 
 informationStation (name) async {
-  print("$name aaa");
   var response = await DB.getDB().collection('markers').findOne({'name': name});
   return response;
+}
+
+informationStationByName (name) async {
+  var response = await DB.getDB().collection('markers').findOne({'name': name});
+  return response;
+}
+
+lineStation (name) async {
+  var response = await DB.getDB().collection('markers').findOne({'name': name});
+  if (response['line'] == "Metro M1"){
+    return "Red";
+  }
+
 }
 
 pointsStation (name) async {
@@ -12,7 +24,7 @@ pointsStation (name) async {
 }
 
 sendCleaning(value, email, station, citizen) async {
-  var user = await DB.getDB().collection('votes').findOne({'vote': "cleaning", 'email':email, 'station': station, 'state':citizen});
+  var user = await DB.getDB().collection('votes').findOne({'vote': "cleaning", 'email':email, 'station': station});
   if (user!=null){
     await DB.getDB().collection('votes').update({'vote': "cleaning", 'email': email, 'station': station}, {"\$set": {"value":value}});
   }

@@ -83,9 +83,7 @@ class _UserAccountState extends State<UserAccount> {
                             title: Row(
                                 children: [Text("Notification"),NotificationWidget()]
                             ),
-                            onTap: () {
-                              Navigator.push(context, MaterialPageRoute(builder:(context)=>not.Notification()));
-                            }
+
                         ),
                         new ListTile(
                             title: Text("Reconnect"),

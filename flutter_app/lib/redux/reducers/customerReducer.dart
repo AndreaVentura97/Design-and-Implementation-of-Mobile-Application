@@ -3,6 +3,6 @@ import 'package:flutter_app/redux/model/customer.dart';
 
 customerReducer(stateLoading, dynamic action){
   if (action is updateCustomer){
-    return Customer(name:action.name, email:action.email, photo: action.photo, notification: action.notification);
+    return Customer(name:action.name, email:action.email, photo: action.photo, notification: action.notification, notifications: action.notifications);
   }
 }
