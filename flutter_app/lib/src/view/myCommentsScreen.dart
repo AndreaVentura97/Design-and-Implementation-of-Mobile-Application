@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_app/src/services/sendNotification.dart';
 import 'package:flutter_app/src/view/userAccountWidget.dart';
+import 'package:flutter_app/redux/model/AppState.dart';
 import 'package:flutter_app/src/view/viewModel.dart';
 import '../services/service.dart';
 import '../services/messagesService.dart';
@@ -10,11 +11,17 @@ import 'package:redux/redux.dart';
 import 'package:flutter_redux/flutter_redux.dart';
 import 'package:flutter_app/redux/model/AppState.dart';
 import 'package:flutter_app/redux/model/customer.dart';
+
 import 'package:delayed_display/delayed_display.dart';
 
 
-class MyComments extends StatefulWidget {
+import '../services/stationServices.dart';
+import '../services/service.dart';
 
+
+class MyComments extends StatefulWidget {
+  String station;
+  MyComments({Key key, this.station}) : super(key: key);
   MyCommentsState createState() => MyCommentsState();
 }
 
@@ -22,8 +29,10 @@ class MyComments extends StatefulWidget {
 class MyCommentsState extends State<MyComments> {
   List myComments = [];
   List myComments2 = [];
+
   List myCommentedStation = [];
   var ready = false;
+
 
 
 
@@ -41,6 +50,7 @@ class MyCommentsState extends State<MyComments> {
     }
     )));
   }
+
 
   @override
   void initState() {
@@ -78,7 +88,7 @@ class MyCommentsState extends State<MyComments> {
                 ),
                 drawer: UserAccount(),
                 body: DelayedDisplay(
-                  delay: Duration(milliseconds:100),
+                  delay: Duration(milliseconds:1000),
                   child: ListView.builder(
                             //shrinkWrap: true,
                             itemCount: myComments.length,
@@ -98,8 +108,7 @@ class MyCommentsState extends State<MyComments> {
                                     child: Container(
                                       //color: Colors.blue,
                                         margin: EdgeInsets.fromLTRB(20.0, 10.0, 10.0, 10.0),
-
-                                          child: Column(
+                                      child: Column(
                                             crossAxisAlignment: CrossAxisAlignment.start,
                                             children: [
                                               Container(
@@ -219,4 +228,37 @@ class MyCommentsState extends State<MyComments> {
           drawer: UserAccount());
         });
   }
+
+Widget showAlert() {
+//   if (_error != null)
+//     return Container(
+//       color: Colors.amber,
+//       width: double.infinity,
+//       padding: EdgeInsets.all(8.0),
+//       child: Row(
+//         children: [
+//           Padding(
+//             padding: const EdgeInsets.only(right: 8.0),
+//             child: Icon(Icons.error_outline),
+//           ),
+//           Expanded(
+//             child: AutoSizeText(
+//               "$_error",
+//               maxLines: 3,
+//             ),
+//           ),
+//           IconButton(
+//               icon: Icon(Icons.close),
+//               onPressed: () {
+//                 setState(() {
+//                   _error = null;
+//                 });
+//               })
+//         ],
+//       ),
+//     );
+//   return SizedBox(
+//     height: 0.0,
+//   );
+}
 }

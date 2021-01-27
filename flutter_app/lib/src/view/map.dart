@@ -48,6 +48,9 @@ class _MapState extends State<Map> {
     if (station['line']=="Metro M3"){
       return "assets/M3.jpeg";
     }
+    if (station['line']=="Metro M5"){
+      return "assets/M5.jpeg";
+    }
   }
 
   void _getLocationPermission() async {
@@ -76,9 +79,6 @@ class _MapState extends State<Map> {
 
   @override
   Widget build(BuildContext context) {
-    var _blankFocusNode = new FocusNode();
-
-
     return Scaffold(
       resizeToAvoidBottomPadding: false,
       resizeToAvoidBottomInset: false,

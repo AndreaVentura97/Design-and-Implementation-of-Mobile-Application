@@ -97,19 +97,37 @@ class _MenuStationState extends State<MenuStation> {
             selectedFontSize: 15,
             items: [
               BottomNavigationBarItem(
-                  icon: Icon(Icons.home),
-                  title: Text("Info Station"),
-                  backgroundColor: Colors.blue
+                  icon: Icon(Icons.home,
+                    color: Colors.blue[900],
+                  ),
+                  title: Text("Info Station",
+                    style: TextStyle(
+                      fontSize: 16.0,
+                      color: Colors.blue[900]
+                    ),
+                  ),
               ),
               BottomNavigationBarItem(
-                  icon: Icon(Icons.search),
-                  title: Text("Comments"),
-                  backgroundColor: Colors.blue
+                  icon: Icon(Icons.search,
+                    color: Colors.blue[900],
+                  ),
+                  title: Text("Comments",
+                    style: TextStyle(
+                      fontSize: 16.0,
+                      color: Colors.blue[900],
+                    ),
+                  ),
               ),
               BottomNavigationBarItem(
-                  icon: Icon(Icons.how_to_vote_outlined),
-                  title: Text("Voting"),
-                  backgroundColor: Colors.blue
+                  icon: Icon(Icons.how_to_vote_outlined,
+                    color: Colors.blue[900],
+                  ),
+                  title: Text("Voting",
+                    style: TextStyle(
+                      fontSize: 16.0,
+                      color: Colors.blue[900]
+                    ),
+                  ),
               ),
             ],
             onTap: (index){

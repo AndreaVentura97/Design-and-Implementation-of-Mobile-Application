@@ -76,6 +76,7 @@ class MessagesState extends State<Messages> {
         onInit: (store) => retrieveMyPreference(store.state.customer.email),
         builder: (context, _viewModel) {
           return Scaffold(
+            backgroundColor: Colors.grey[300],
               body: ListView.builder(
                 //shrinkWrap: true,
                 itemCount: messages.length,

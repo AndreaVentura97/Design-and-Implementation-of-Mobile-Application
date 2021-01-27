@@ -72,18 +72,16 @@ class MyStationsState extends State<MyStations> {
   Widget build(BuildContext context) {
     return Scaffold(
             appBar: AppBar(
+              backgroundColor: Colors.blue[900],
               title: Row(
                 children: [
                   Text("My Stations"),
-
                 ],
               ),
             ),
 
             drawer: UserAccount(),
-
-
-            body: DelayedDisplay(
+        body: DelayedDisplay(
               delay: Duration(seconds: 1),
               child: ListView.builder(
                 //shrinkWrap: true,
@@ -125,6 +123,7 @@ class MyStationsState extends State<MyStations> {
                                                 width: 60.0,
                                               ),
                                             ),
+
                                           ),
                                           SizedBox(width: 10.0,),
                                           Flexible(
@@ -174,6 +173,7 @@ class MyStationsState extends State<MyStations> {
                                       myFullStations.remove(myFullStations[index]);
                                     });
                                      },
+
                                 ),
                               ),
                             ],
@@ -188,6 +188,37 @@ class MyStationsState extends State<MyStations> {
     );
   }
 
-
+  Widget showAlert() {
+  //   if (_error != null)
+  //     return Container(
+  //       color: Colors.amber,
+  //       width: double.infinity,
+  //       padding: EdgeInsets.all(8.0),
+  //       child: Row(
+  //         children: [
+  //           Padding(
+  //             padding: const EdgeInsets.only(right: 8.0),
+  //             child: Icon(Icons.error_outline),
+  //           ),
+  //           Expanded(
+  //             child: AutoSizeText(
+  //               "$_error",
+  //               maxLines: 3,
+  //             ),
+  //           ),
+  //           IconButton(
+  //               icon: Icon(Icons.close),
+  //               onPressed: () {
+  //                 setState(() {
+  //                   _error = null;
+  //                 });
+  //               })
+  //         ],
+  //       ),
+  //     );
+  //   return SizedBox(
+  //     height: 0.0,
+  //   );
+   }
 
 }
