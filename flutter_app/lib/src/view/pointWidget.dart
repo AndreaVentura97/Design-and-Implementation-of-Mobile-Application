@@ -66,13 +66,7 @@ class PointWidgetState extends State<PointWidget>{
     launch(url2);
     }
 
-
-
-
-
-
-
-  Widget build(BuildContext context) {
+    Widget build(BuildContext context) {
      return new StoreConnector<AppState,ViewModel>(
          converter: (store) => createViewModel(store),
           onInit: (store) => retrieveMyPoints(store.state.customer.email,widget.point['_id']),

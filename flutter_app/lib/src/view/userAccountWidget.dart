@@ -25,14 +25,14 @@ import 'notificationWidget.dart';
 import 'package:image_picker/image_picker.dart';
 
 
-class UserAccount <State> extends StatefulWidget {
+class UserAccount extends StatefulWidget {
 
 
   @override
-  _UserAccountState createState() => _UserAccountState();
+  UserAccountState createState() => UserAccountState();
 }
 
-class _UserAccountState extends State<UserAccount> {
+class UserAccountState extends State<UserAccount> {
   var flag=false;
   var package;
   File imageFile;

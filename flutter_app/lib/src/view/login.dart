@@ -63,9 +63,7 @@ class _LoginState extends State<Login> {
     var padding = MediaQuery.of(context).padding;
     return DelayedDisplay(
       delay: Duration(seconds:1),
-      child: MaterialApp(
-        key: _scaffoldKey,
-        home: (!isLogged)
+      child: (!isLogged)
             ? Scaffold(
           resizeToAvoidBottomPadding: false,
           resizeToAvoidBottomInset: true,
@@ -256,7 +254,7 @@ class _LoginState extends State<Login> {
             ),
           ),
         ): Profile(),
-      ),
+
     );
   }
 
