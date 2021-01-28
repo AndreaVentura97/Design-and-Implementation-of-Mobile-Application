@@ -50,45 +50,51 @@ class _UserAccountState extends State<UserAccount> {
                         //   padding: EdgeInsets.zero,
                         // )
                         // ),
-                        new UserAccountsDrawerHeader(
-                          decoration: BoxDecoration(
-                            color: Colors.blue[900]
-                          ),
-                          accountName: Row(children: [
-                            Icon(
-                            Icons.account_box_outlined,
-                            color: Colors.white,
-                          ),
-                            SizedBox(width: 10,),
-                            Text("${_viewModel.c.name}",
-                              style: TextStyle(
-                                fontSize: 16,
+                        InkWell(
+                          child: new UserAccountsDrawerHeader(
+                            decoration: BoxDecoration(
+                              color: Colors.blue[900]
+                            ),
+                            accountName: Row(children: [
+                              Icon(
+                              Icons.account_box_outlined,
+                              color: Colors.white,
+                            ),
+                              SizedBox(width: 10,),
+                              Text("${_viewModel.c.name}",
+                                style: TextStyle(
+                                  fontSize: 16,
+                                ),
+                              ),
+                            ]),
+                            accountEmail: Row(children: [
+                              Icon(
+                              Icons.email,
+                              color: Colors.white,
+                            ),
+                              SizedBox(width: 10,),
+                              Text("${_viewModel.c.email}",
+                                style: TextStyle(
+                                  fontSize: 16,
+                                ),
+                              ),
+                            ]),
+                            currentAccountPicture: Container(
+                              color: Colors.yellow,
+                               child: InkWell(
+                                child: new CircleAvatar(
+                                  backgroundImage: getPhoto(_viewModel.c.photo),
+                                ),
+                                  onTap: () {
+                                    showChoiceDialog(_viewModel, context);
+                                  }
                               ),
                             ),
-                          ]),
-                          accountEmail: Row(children: [
-                            Icon(
-                            Icons.email,
-                            color: Colors.white,
                           ),
-                            SizedBox(width: 10,),
-                            Text("${_viewModel.c.email}",
-                              style: TextStyle(
-                                fontSize: 16,
-                              ),
-                            ),
-                          ]),
-                          currentAccountPicture: Container(
-                            color: Colors.yellow,
-                            child: InkWell(
-                              child: new CircleAvatar(
-                                backgroundImage: getPhoto(_viewModel.c.photo),
-                              ),
-                                onTap: () {
-                                  showChoiceDialog(_viewModel, context);
-                                }
-                            ),
-                          ),
+                          onTap: () {
+                            Navigator.pushReplacement(context, MaterialPageRoute(
+                                builder: (BuildContext context) => InfoProfile(email:_viewModel.c.email)));
+                          },
                         ),
                         new ListTile(
                             title: Row(
@@ -152,13 +158,15 @@ class _UserAccountState extends State<UserAccount> {
                               openApp();
                             }
                         ),
-                        new ListTile(
-                            title: Text("Profile"),
-                            onTap: () {
-                              Navigator.pushReplacement(context, MaterialPageRoute(
-                                  builder: (BuildContext context) => InfoProfile(email:_viewModel.c.email)));
-                            }
-                        ),
+
+
+                        // new ListTile(
+                        //     title: Text("Profile"),
+                        //     onTap: () {
+                        //       Navigator.pushReplacement(context, MaterialPageRoute(
+                        //           builder: (BuildContext context) => InfoProfile(email:_viewModel.c.email)));
+                        //     }
+                        // ),
 
                         new ListTile(
                           title: Row(
