@@ -12,14 +12,10 @@ class Register extends StatefulWidget {
 }
 
 class _RegisterState extends State<Register> {
-  FirebaseAuth _auth = FirebaseAuth.instance;
-  final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
   final TextEditingController _displayName = TextEditingController();
   final TextEditingController _emailController = TextEditingController();
   final TextEditingController _passwordController = TextEditingController();
-  final FirebaseMessaging _firebaseMessaging = FirebaseMessaging();
   var _error;
-  bool _isSuccess;
   bool _secText = true;
 
 
@@ -37,11 +33,7 @@ class _RegisterState extends State<Register> {
     var _blankFocusNode = new FocusNode();
     var height = MediaQuery.of(context).size.height;
     var padding = MediaQuery.of(context).padding;
-
-    return MaterialApp(
-      key: _formKey,
-      //backgroundColor: Colors.green,
-      home: Scaffold(
+    return Scaffold(
         //backgroundColor: Colors.green,
         resizeToAvoidBottomInset: true,
         resizeToAvoidBottomPadding: false,
@@ -278,8 +270,8 @@ class _RegisterState extends State<Register> {
             ),
           ),
         ),
-      ),
-    );
+      );
+
   }
 
 

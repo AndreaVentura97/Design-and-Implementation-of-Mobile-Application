@@ -597,6 +597,7 @@ packages:
       url: "https://pub.dartlang.org"
     source: hosted
     version: "1.10.0-nullsafety.2"
+<<<<<<< HEAD
   percent_indicator:
     dependency: "direct main"
     description:
@@ -604,6 +605,8 @@ packages:
       url: "https://pub.dartlang.org"
     source: hosted
     version: "2.1.9"
+=======
+>>>>>>> 622862346e58b78deb42997f5d6c0c73ec2d2557
   permission:
     dependency: "direct main"
     description:
@@ -743,14 +746,22 @@ packages:
       name: shelf_packages_handler
       url: "https://pub.dartlang.org"
     source: hosted
+<<<<<<< HEAD
     version: "2.0.1"
+=======
+    version: "2.0.0"
+>>>>>>> 622862346e58b78deb42997f5d6c0c73ec2d2557
   shelf_static:
     dependency: transitive
     description:
       name: shelf_static
       url: "https://pub.dartlang.org"
     source: hosted
+<<<<<<< HEAD
     version: "0.2.9+2"
+=======
+    version: "0.2.9+1"
+>>>>>>> 622862346e58b78deb42997f5d6c0c73ec2d2557
   shelf_web_socket:
     dependency: transitive
     description:

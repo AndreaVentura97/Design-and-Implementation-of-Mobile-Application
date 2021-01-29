@@ -88,8 +88,7 @@ class _MapState extends State<Map> {
       ),
       drawer: UserAccount(),
       body: Stack(children: [
-
-            GoogleMap(
+        GoogleMap(
               onMapCreated: _onMapCreated,
               initialCameraPosition: cameraPosition,
               markers: _markers,

@@ -84,7 +84,7 @@ class MyCommentsState extends State<MyComments> {
         builder: (context,_viewModel) {
           return (ready) ? Scaffold(
                 appBar: AppBar(
-                  title: Text("Comments"),
+                  title: Text("My Comments"),
                 ),
                 drawer: UserAccount(),
                 body: DelayedDisplay(
