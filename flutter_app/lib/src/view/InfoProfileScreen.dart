@@ -47,6 +47,8 @@ class InfoProfileState extends State<InfoProfile> {
   var commentMostLike;
   var commentMostUnLike;
   var win;
+  var totalLikesGiven = 0;
+  var totalUnlikesGiven = 0;
 
   void takeMyStatistics() async {
     getNumberOfMyComments(widget.email).then((result) => setState(() {
@@ -64,6 +66,12 @@ class InfoProfileState extends State<InfoProfile> {
     getCommentWithMostUnLike(widget.email).then((result) => setState(() {
           commentMostUnLike = result;
         }));
+    getLikesGiven(widget.email).then((result) => setState((){
+      totalLikesGiven = result;
+    }));
+    getUnlikesGiven(widget.email).then((result) => setState((){
+      totalUnlikesGiven = result;
+    }));
   }
 
   @override
@@ -344,7 +352,7 @@ class InfoProfileState extends State<InfoProfile> {
                                                               backgroundColor: Colors.green,
                                                               progressColor: Colors.red,
                                                             ),
-                                                            Text("Given", style: TextStyle(fontSize: 20, fontWeight: FontWeight.w700))
+                                                            Text("Received", style: TextStyle(fontSize: 20, fontWeight: FontWeight.w700))
                                                           ]
                                                         )
                                                       ),
@@ -356,7 +364,7 @@ class InfoProfileState extends State<InfoProfile> {
                                                                   animation: true,
                                                                   animationDuration: 1200,
                                                                   lineWidth: 15.0,
-                                                                  percent: totalUnlikes/ (totalLikes + totalUnlikes),
+                                                                  percent: totalUnlikesGiven/ (totalLikesGiven + totalUnlikesGiven),
                                                                   center: Container(
                                                                     child: Column(
                                                                       mainAxisAlignment: MainAxisAlignment.center,
@@ -367,14 +375,14 @@ class InfoProfileState extends State<InfoProfile> {
                                                                             Column(
                                                                                 children:[
                                                                                   Icon(Icons.thumb_up, color: Colors.green),
-                                                                                  Text('($totalLikes)', style: TextStyle(fontWeight: FontWeight.bold, fontSize: 15),)
+                                                                                  Text('($totalLikesGiven)', style: TextStyle(fontWeight: FontWeight.bold, fontSize: 15),)
                                                                                 ]
                                                                             ),
                                                                             Text(" | ", style: TextStyle(fontSize: 40),),
                                                                             Column(
                                                                                 children:[
                                                                                   Icon(Icons.thumb_down, color: Colors.red),
-                                                                                  Text('($totalUnlikes)', style: TextStyle(fontWeight: FontWeight.bold, fontSize: 15),)
+                                                                                  Text('($totalUnlikesGiven)', style: TextStyle(fontWeight: FontWeight.bold, fontSize: 15),)
                                                                                 ]
                                                                             ),
                                                                           ],
@@ -386,7 +394,7 @@ class InfoProfileState extends State<InfoProfile> {
                                                                   backgroundColor: Colors.green,
                                                                   progressColor: Colors.red,
                                                                 ),
-                                                                Text("Recived", style: TextStyle(fontSize: 20, fontWeight: FontWeight.w700),)
+                                                                Text("Given", style: TextStyle(fontSize: 20, fontWeight: FontWeight.w700),)
                                                               ]
                                                           )
                                                       )

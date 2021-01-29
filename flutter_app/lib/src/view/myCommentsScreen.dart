@@ -30,9 +30,11 @@ class MyComments extends StatefulWidget {
 
 class MyCommentsState extends State<MyComments> {
   List myComments = [];
-  List myComments2 = [];
+  List myCommentsInteractions = [];
 
-  List myCommentedStation = [];
+  var valueDrop = "Date";
+
+
   var ready = false;
 
 
@@ -48,9 +50,19 @@ class MyCommentsState extends State<MyComments> {
 
           }));
         }
-        ready = true;
-    }
-    )));
+
+    })));
+    getMyComments(email).then( ((netComments) => setState(() {
+      myCommentsInteractions = orderListByInteractions(netComments);
+      for (int i = 0; i < myCommentsInteractions.length; i++){
+        informationStationByName(myCommentsInteractions[i]['station']).then((result) => setState((){
+          myCommentsInteractions[i]['_id'] = result['line'];
+        }));
+
+      }
+
+    })));
+    ready = true;
   }
 
 
@@ -109,130 +121,25 @@ class MyCommentsState extends State<MyComments> {
                                   fontSize: 22
                                 ),
                               ),
-                              // DropdownButton(
-                    //     value: valueDrop,
-                    //     items: [
-                    //       DropdownMenuItem(
-                    //         child: Text("All users"),
-                    //         value: "All",
-                    //       ),
-                    //       DropdownMenuItem(
-                    //         child: Text("Citizens"),
-                    //         value: "Citizens",
-                    //       ),
-                        //   DropdownMenuItem(
-                        //     child: Text("Visitors"),
-                        //     value: "Visitors",
-                        //   ),
-                        // ],
-                        // onChanged: (value) {
-                        //   setState(() {
-                        //     valueDrop = value;
-                        //     if(value=="Visitors"){
-                        //       buildMeanVisitor(widget.station, "cleaning").then((result)=>setState((){
-                        //         if (result!=50){
-                        //           avgClean = result.toStringAsFixed(1);
-                        //         }
-                        //         else {
-                        //           avgClean = "--";
-                        //         }
-                        //       }));
-                        //       buildMeanVisitor(widget.station, "dis").then((result)=>setState((){
-                        //         if (result!=50){
-                        //           avgDis = result.toStringAsFixed(1);
-                        //         }
-                        //         else {
-                        //           avgDis = "--";
-                        //         }
-                        //       }));
-                        //       buildMeanVisitor(widget.station, "safety").then((result)=>setState((){
-                        //         if (result!=50){
-                        //           avgSafety = result.toStringAsFixed(1);
-                        //         }
-                        //         else {
-                        //           avgSafety = "--";
-                        //         }
-                        //       }));
-                        //       buildMeanVisitor(widget.station, "area").then((result)=>setState((){
-                        //         if (result!=50){
-                        //           avgArea = result.toStringAsFixed(1);
-                        //         }
-                        //         else {
-                        //           avgArea = "--";
-                        //         }
-                        //       }));
-                        //     }
-                        //     if (value=="Citizens"){
-                        //       buildMeanCitizen(widget.station, "cleaning").then((result)=>setState((){
-                        //         if (result!=50){
-                        //           avgClean = result.toStringAsFixed(1);
-                        //         }
-                        //         else {
-                        //           avgClean = "--";
-                        //         }
-                        //       }));
-                        //       buildMeanCitizen(widget.station, "dis").then((result)=>setState((){
-                        //         if (result!=50){
-                        //           avgDis = result.toStringAsFixed(1);
-                        //         }
-                        //         else {
-                        //           avgDis = "--";
-                        //         }
-                        //       }));
-                        //       buildMeanCitizen(widget.station, "safety").then((result)=>setState((){
-                        //         if (result!=50){
-                        //           avgSafety = result.toStringAsFixed(1);
-                        //         }
-                        //         else {
-                        //           avgSafety = "--";
-                        //         }
-                        //       }));
-                        //       buildMeanCitizen(widget.station, "area").then((result)=>setState((){
-                        //         if (result!=50){
-                        //           avgArea = result.toStringAsFixed(1);
-                        //         }
-                        //         else {
-                        //           avgArea = "--";
-                        //         }
-                        //       }));
-                        //     }
-                        //     if(value=="All") {
-                        //       updateMeanClean(widget.station).then((result)=>setState((){
-                        //         if (result!=50){
-                        //           avgClean = result.toStringAsFixed(1);
-                        //         }
-                        //         else {
-                        //           avgClean = "--";
-                        //         }
-                        //       }));
-                        //       updateMeanDis(widget.station).then((result)=>setState((){
-                        //         if (result!=50){
-                        //           avgDis = result.toStringAsFixed(1);
-                        //         }
-                        //         else {
-                        //           avgDis = "--";
-                        //         }
-                        //       }));
-                        //       updateMeanSafety(widget.station).then((result)=>setState((){
-                        //         if (result!=50){
-                        //           avgSafety = result.toStringAsFixed(1);
-                        //         }
-                        //         else {
-                        //           avgSafety = "--";
-                        //         }
-                        //       }));
-                        //       updateMeanArea(widget.station).then((result)=>setState((){
-                        //         if (result!=50){
-                        //           avgArea = result.toStringAsFixed(1);
-                        //         }
-                        //         else {
-                        //           avgArea = "--";
-                        //         }
-                        //       }));
-                        //     }
-                        //   });
-                        // });
-                            ],
+                               DropdownButton(
+                         value: valueDrop,
+                         items: [
+                          DropdownMenuItem(
+                             child: Text("Date"),
+                             value: "Date",
+                           ),
+                           DropdownMenuItem(
+                             child: Text("Interactions"),
+                             value: "Interactions",
+                           ),
+                         ],
+                         onChanged: (value) {
+                           setState(() {
+                             valueDrop = value;
+                             });
+                         })
+                         ],
+
                           ),
                       ),
                             Divider(
@@ -244,7 +151,7 @@ class MyCommentsState extends State<MyComments> {
                         )
                       ),
                       Expanded(
-                        child: ListView.builder(
+                        child: (valueDrop == "Date") ? ListView.builder(
                                   //shrinkWrap: true,
                                   itemCount: myComments.length,
                                   itemBuilder: (BuildContext context, int index) {
@@ -332,7 +239,9 @@ class MyCommentsState extends State<MyComments> {
                                                             trailing: IconButton(icon: Icon(Icons.close), onPressed: (){
                                                               deleteMyComment(myComments[index]['text'], myComments[index]['station'], myComments[index]['name']);
                                                               setState(() {
+                                                                myCommentsInteractions = removeFromList(myCommentsInteractions,myComments[index]['text'], myComments[index]['station'], myComments[index]['email']);
                                                                 myComments.remove(myComments[index]);
+
                                                               });
                                                             }),
                                                           ),
@@ -376,7 +285,140 @@ class MyCommentsState extends State<MyComments> {
                                       ],
                                     );
                                   },
+                                ) : ListView.builder(
+                          //shrinkWrap: true,
+                          itemCount: myCommentsInteractions.length,
+                          itemBuilder: (BuildContext context, int index) {
+                            return Column(
+                              children: [
+                                Card(
+                                  margin: EdgeInsets.fromLTRB(10.0, 10.0, 10.0, 0.0),
+                                  elevation: 3.0,
+                                  shape: RoundedRectangleBorder(
+                                    borderRadius: BorderRadius.circular(10.0),
+                                    side: BorderSide(
+                                      color: Colors.blue[900],
+                                      width: 2.0,
+                                    ),
+                                  ),
+                                  child: Container(
+                                    //color: Colors.blue,
+                                    margin: EdgeInsets.fromLTRB(20.0, 10.0, 10.0, 10.0),
+                                    child: Column(
+                                      crossAxisAlignment: CrossAxisAlignment.start,
+                                      children: [
+                                        Container(
+                                          //color: Colors.green,
+                                          child: ListTile(
+                                            dense: true,
+                                            contentPadding: EdgeInsets.all(0.0),
+                                            title: Row(
+                                              children: [
+                                                Container(
+                                                    child: DelayedDisplay(
+                                                      delay: Duration(seconds:1),
+                                                      child: InkWell(
+                                                          child: Image(
+                                                            image: buildAsset(myCommentsInteractions[index]['_id']),
+                                                            height: 30.0,
+                                                            width: 45.0,
+                                                          ),
+                                                          onTap: (){
+                                                            Navigator.push(context, MaterialPageRoute(builder:(context)=>MenuStation(name:myCommentsInteractions[index]['station'])));
+                                                          }
+                                                      ),
+                                                    )
+                                                ),
+                                                SizedBox(width: 10.0,),
+                                                IntrinsicWidth(
+                                                  child: Column(
+                                                    crossAxisAlignment: CrossAxisAlignment.start,
+                                                    children: [
+                                                      Text(myCommentsInteractions[index]['station'],
+                                                          style: TextStyle(
+                                                              fontSize: 20,
+                                                              fontWeight: FontWeight.w500,
+                                                              color: Colors.black
+                                                          )
+                                                      ),
+                                                      Container(
+                                                        //color: Colors.black,
+                                                        child: Row(
+                                                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                                          children: [
+                                                            Text(myCommentsInteractions[index]['date'],
+                                                              style: TextStyle(
+                                                                fontSize: 15.0,
+                                                                color: Colors.grey,
+                                                              ),
+                                                            ),
+
+                                                            //
+                                                            // Da cambiare in base se cittadino o visitatiore
+                                                            // Text('Citizen',
+                                                            //   style: TextStyle(
+                                                            //     fontSize: 15.0,
+                                                            //     color: Colors.grey,
+                                                            //   ),
+                                                            // ),
+
+                                                          ],
+                                                        ),
+                                                      ),
+                                                    ],
+                                                  ),
+                                                ),
+                                              ],
+                                            ),
+                                            trailing: IconButton(icon: Icon(Icons.close), onPressed: (){
+                                              deleteMyComment(myCommentsInteractions[index]['text'], myCommentsInteractions[index]['station'], myCommentsInteractions[index]['name']);
+                                              setState(() {
+                                                myComments = removeFromList(myComments,myCommentsInteractions[index]['text'], myCommentsInteractions[index]['station'], myCommentsInteractions[index]['email']);
+                                                myCommentsInteractions.remove(myCommentsInteractions[index]);
+                                              });
+                                            }),
+                                          ),
+                                        ),
+                                        Container(
+                                          //color: Colors.red,
+                                          child: Text(myCommentsInteractions[index]['text'],
+                                              style: TextStyle(
+                                                  fontSize: 15,
+                                                  fontWeight: FontWeight.w500,
+                                                  color: Colors.black
+                                              )
+                                          ),
+                                        ),
+                                        Container(
+                                          //color: Colors.yellow,
+                                          padding: EdgeInsets.symmetric(horizontal: 10.0),
+                                          child: Row(
+                                            mainAxisAlignment: MainAxisAlignment.end,
+                                            children: [
+                                              Icon(Icons.thumb_up,
+                                                size: 25.0,
+                                                color: Colors.green,
+                                              ),
+                                              Text(" ${myCommentsInteractions[index]['nl']} "),
+                                              Icon(Icons.thumb_down,
+                                                size: 25.0,
+                                                color: Colors.red,
+                                              ),
+                                              Text(" ${myCommentsInteractions[index]['nu']} "),
+                                            ],
+                                          ),
+                                        ),
+
+
+                                      ],
+                                    ),
+
+                                  ),
                                 ),
+                              ],
+                            );
+                          },
+                        ),
                       ),
                     ],
                   ),
@@ -386,7 +428,7 @@ class MyCommentsState extends State<MyComments> {
                 ),
           ) : Scaffold(
               appBar: AppBar(
-              title: Text("Comments"),
+              title: Text("My Comments"),
           ),
           drawer: UserAccount());
         });

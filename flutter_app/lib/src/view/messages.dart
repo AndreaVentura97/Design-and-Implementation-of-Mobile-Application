@@ -24,14 +24,19 @@ class Messages extends StatefulWidget {
 
 class MessagesState extends State<Messages> {
   List messages = [];
+  List messagesInteractions = [];
   List myLikes = [];
   List myUnlikes = [];
+  var valueDrop = "Date";
 
   void listMessages(station) {
     retrieveMessages(station).then((netMessages) =>
         setState(() {
-          messages = netMessages;
+          messages = new List.from(netMessages.reversed);
+          messagesInteractions = orderListByInteractions(netMessages);
         }));
+
+
   }
 
   bool checkLike(id) {
@@ -93,129 +98,23 @@ class MessagesState extends State<Messages> {
                                     fontSize: 22
                                 ),
                               ),
-                              // DropdownButton(
-                              //     value: valueDrop,
-                              //     items: [
-                              //       DropdownMenuItem(
-                              //         child: Text("All users"),
-                              //         value: "All",
-                              //       ),
-                              //       DropdownMenuItem(
-                              //         child: Text("Citizens"),
-                              //         value: "Citizens",
-                              //       ),
-                              //   DropdownMenuItem(
-                              //     child: Text("Visitors"),
-                              //     value: "Visitors",
-                              //   ),
-                              // ],
-                              // onChanged: (value) {
-                              //   setState(() {
-                              //     valueDrop = value;
-                              //     if(value=="Visitors"){
-                              //       buildMeanVisitor(widget.station, "cleaning").then((result)=>setState((){
-                              //         if (result!=50){
-                              //           avgClean = result.toStringAsFixed(1);
-                              //         }
-                              //         else {
-                              //           avgClean = "--";
-                              //         }
-                              //       }));
-                              //       buildMeanVisitor(widget.station, "dis").then((result)=>setState((){
-                              //         if (result!=50){
-                              //           avgDis = result.toStringAsFixed(1);
-                              //         }
-                              //         else {
-                              //           avgDis = "--";
-                              //         }
-                              //       }));
-                              //       buildMeanVisitor(widget.station, "safety").then((result)=>setState((){
-                              //         if (result!=50){
-                              //           avgSafety = result.toStringAsFixed(1);
-                              //         }
-                              //         else {
-                              //           avgSafety = "--";
-                              //         }
-                              //       }));
-                              //       buildMeanVisitor(widget.station, "area").then((result)=>setState((){
-                              //         if (result!=50){
-                              //           avgArea = result.toStringAsFixed(1);
-                              //         }
-                              //         else {
-                              //           avgArea = "--";
-                              //         }
-                              //       }));
-                              //     }
-                              //     if (value=="Citizens"){
-                              //       buildMeanCitizen(widget.station, "cleaning").then((result)=>setState((){
-                              //         if (result!=50){
-                              //           avgClean = result.toStringAsFixed(1);
-                              //         }
-                              //         else {
-                              //           avgClean = "--";
-                              //         }
-                              //       }));
-                              //       buildMeanCitizen(widget.station, "dis").then((result)=>setState((){
-                              //         if (result!=50){
-                              //           avgDis = result.toStringAsFixed(1);
-                              //         }
-                              //         else {
-                              //           avgDis = "--";
-                              //         }
-                              //       }));
-                              //       buildMeanCitizen(widget.station, "safety").then((result)=>setState((){
-                              //         if (result!=50){
-                              //           avgSafety = result.toStringAsFixed(1);
-                              //         }
-                              //         else {
-                              //           avgSafety = "--";
-                              //         }
-                              //       }));
-                              //       buildMeanCitizen(widget.station, "area").then((result)=>setState((){
-                              //         if (result!=50){
-                              //           avgArea = result.toStringAsFixed(1);
-                              //         }
-                              //         else {
-                              //           avgArea = "--";
-                              //         }
-                              //       }));
-                              //     }
-                              //     if(value=="All") {
-                              //       updateMeanClean(widget.station).then((result)=>setState((){
-                              //         if (result!=50){
-                              //           avgClean = result.toStringAsFixed(1);
-                              //         }
-                              //         else {
-                              //           avgClean = "--";
-                              //         }
-                              //       }));
-                              //       updateMeanDis(widget.station).then((result)=>setState((){
-                              //         if (result!=50){
-                              //           avgDis = result.toStringAsFixed(1);
-                              //         }
-                              //         else {
-                              //           avgDis = "--";
-                              //         }
-                              //       }));
-                              //       updateMeanSafety(widget.station).then((result)=>setState((){
-                              //         if (result!=50){
-                              //           avgSafety = result.toStringAsFixed(1);
-                              //         }
-                              //         else {
-                              //           avgSafety = "--";
-                              //         }
-                              //       }));
-                              //       updateMeanArea(widget.station).then((result)=>setState((){
-                              //         if (result!=50){
-                              //           avgArea = result.toStringAsFixed(1);
-                              //         }
-                              //         else {
-                              //           avgArea = "--";
-                              //         }
-                              //       }));
-                              //     }
-                              //   });
-                              // });
+                              DropdownButton(
+                                  value: valueDrop,
+                                  items: [
+                                    DropdownMenuItem(
+                                      child: Text("Date"),
+                                      value: "Date",
+                                    ),
+                                    DropdownMenuItem(
+                                      child: Text("Interactions"),
+                                      value: "Interactions",
+                                    ),
+                                  ],
+                                  onChanged: (value) {
+                                    setState(() {
+                                      valueDrop = value;
+                                    });
+                                  })
                             ],
                           ),
                         ),
@@ -228,9 +127,8 @@ class MessagesState extends State<Messages> {
                       ],
                     ),
                   ),
-
                   Expanded(
-                    child: ListView.builder(
+                    child: (valueDrop == "Date") ? ListView.builder(
                       //shrinkWrap: true,
                       itemCount: messages.length,
                       itemBuilder: (BuildContext context, int index) {
@@ -446,6 +344,233 @@ class MessagesState extends State<Messages> {
                                                   }
                                                 }),
                                             Text("${messages[index]['nu']}"),
+                                          ],
+                                        ),
+                                      ),
+
+                                    ],
+                                  ),
+                                )
+                            ),
+                          ],
+                        );
+                      },
+                    ) : ListView.builder(
+                      //shrinkWrap: true,
+                      itemCount: messagesInteractions.length,
+                      itemBuilder: (BuildContext context, int index) {
+                        return Column(
+                          children: [
+                            Card(
+                                margin: EdgeInsets.fromLTRB(10.0, 10.0, 10.0, 0.0),
+                                elevation: 3.0,
+                                shape: RoundedRectangleBorder(
+                                  borderRadius: BorderRadius.circular(10.0),
+                                  side: BorderSide(
+                                    color: Colors.blue[900],
+                                    width: 2.0,
+                                  ),
+                                ),
+                                child: Container(
+                                  //color: Colors.red,
+                                  margin: EdgeInsets.all(10.0),
+                                  child: Column(
+                                    crossAxisAlignment: CrossAxisAlignment.start,
+                                    children: [
+                                      Container(
+                                        //color: Colors.pink,
+                                        child: ListTile(
+                                          dense: true,
+                                          contentPadding: EdgeInsets.all(0.0),
+                                          title: Row(
+                                            children: [
+                                              CircleAvatar(
+                                                //backgroundColor: Colors.blue[900],
+                                                backgroundImage: getPhoto(
+                                                    messagesInteractions[index]['photo']),
+                                                //updatePhoto,
+                                                radius: 15.0,
+                                              ),
+                                              SizedBox(width: 10.0,),
+                                              IntrinsicWidth(
+                                                child: Column(
+                                                  crossAxisAlignment: CrossAxisAlignment
+                                                      .start,
+                                                  children: [
+                                                    InkWell(
+                                                        child: Text(
+                                                            messagesInteractions[index]['name'],
+                                                            style: TextStyle(
+                                                                fontSize: 18.0,
+                                                                fontWeight: FontWeight
+                                                                    .w500,
+                                                                color: Colors
+                                                                    .black)),
+                                                        onTap: () {
+                                                          showDialog(
+                                                              context: context,
+                                                              builder: (
+                                                                  BuildContext context) {
+                                                                return PopupVote(
+                                                                    email: messagesInteractions[index]['email'],
+                                                                    station: widget
+                                                                        .station);
+                                                              });
+                                                        }
+                                                    ),
+                                                    Container(
+                                                      //color: Colors.black,
+                                                      child: Row(
+                                                        mainAxisAlignment: MainAxisAlignment
+                                                            .spaceBetween,
+                                                        children: [
+                                                          Text(
+                                                            messagesInteractions[index]['date'],
+                                                            style: TextStyle(
+                                                              fontSize: 15.0,
+                                                              color: Colors.grey,
+                                                            ),
+                                                          ),
+
+                                                          //
+                                                          // Da cambiare in base se cittadino o visitatiore
+                                                          (messagesInteractions[index]['citizen'])
+                                                              ? Text(' - Citizen',
+                                                            style: TextStyle(
+                                                              fontSize: 15.0,
+                                                              color: Colors.grey,
+                                                            ),
+                                                          )
+                                                              : Text(' - Visitor',
+                                                            style: TextStyle(
+                                                              fontSize: 15.0,
+                                                              color: Colors.grey,
+                                                            ),
+                                                          )
+                                                        ],
+                                                      ),
+                                                    ),
+
+                                                  ],
+                                                ),
+                                              ),
+                                            ],
+                                          ),
+                                        ),
+                                      ),
+                                      Container(
+                                        //color: Colors.green[100],
+                                        child: Text(messagesInteractions[index]['text'],
+                                            style: TextStyle(
+                                                fontSize: 15,
+                                                fontWeight: FontWeight.w500,
+                                                color: Colors.black)),
+                                      ),
+                                      Container(
+                                        //color: Colors.blue[900],
+                                        child: Row(
+                                          mainAxisAlignment: MainAxisAlignment.end,
+                                          children: [
+                                            IconButton(
+                                                icon: Icon(Icons.thumb_up,
+                                                    size: 20.0,
+                                                    color: ((checkLike(
+                                                        messagesInteractions[index]['_id'])))
+                                                        ? Colors.green
+                                                        : Colors.grey),
+                                                onPressed: () {
+                                                  if ((!checkLike(
+                                                      messagesInteractions[index]['_id']))) {
+                                                    if (checkUnlike(
+                                                        messagesInteractions[index]['_id'])) {
+                                                      removeUnlike(_viewModel.c.email,
+                                                          messagesInteractions[index]['_id']);
+                                                      setState(() {
+                                                        myUnlikes.remove(
+                                                            messagesInteractions[index]['_id']);
+                                                      });
+                                                      messagesInteractions[index]['nu'] =
+                                                          messagesInteractions[index]['nu'] - 1;
+                                                      minusOne2(
+                                                          messagesInteractions[index]['_id']);
+                                                    }
+                                                    insertLike(_viewModel.c.email,
+                                                        messagesInteractions[index]['_id']);
+                                                    setState(() {
+                                                      myLikes.add(
+                                                          messagesInteractions[index]['_id']);
+                                                    });
+                                                    sendNotification(
+                                                        messagesInteractions[index]['email'],
+                                                        "like", _viewModel.c.name,
+                                                        messagesInteractions[index]['text'],
+                                                        messagesInteractions[index]['station']);
+                                                    plusOne(messagesInteractions[index]['_id']);
+                                                    messagesInteractions[index]['nl'] =
+                                                        messagesInteractions[index]['nl'] + 1;
+                                                  } else {
+                                                    removeLike(_viewModel.c.email,
+                                                        messagesInteractions[index]['_id']);
+                                                    setState(() {
+                                                      myLikes.remove(
+                                                          messagesInteractions[index]['_id']);
+                                                    });
+                                                    minusOne(messagesInteractions[index]['_id']);
+                                                    messagesInteractions[index]['nl'] =
+                                                        messagesInteractions[index]['nl'] - 1;
+                                                  }
+                                                }),
+                                            Text("${messagesInteractions[index]['nl']}"),
+                                            IconButton(
+                                                icon: Icon(Icons.thumb_down,
+                                                    size: 25.0,
+                                                    color: ((checkUnlike(
+                                                        messagesInteractions[index]['_id'])))
+                                                        ? Colors.red
+                                                        : Colors.grey),
+                                                onPressed: () {
+                                                  if ((!checkUnlike(
+                                                      messagesInteractions[index]['_id']))) {
+                                                    if (checkLike(
+                                                        (messagesInteractions[index]['_id']))) {
+                                                      removeLike(_viewModel.c.email,
+                                                          messagesInteractions[index]['_id']);
+                                                      setState(() {
+                                                        myLikes.remove(
+                                                            messagesInteractions[index]['_id']);
+                                                      });
+                                                      messagesInteractions[index]['nl'] =
+                                                          messagesInteractions[index]['nl'] - 1;
+                                                      minusOne(
+                                                          messagesInteractions[index]['_id']);
+                                                    }
+                                                    insertUnlike(_viewModel.c.email,
+                                                        messagesInteractions[index]['_id']);
+                                                    setState(() {
+                                                      myUnlikes.add(
+                                                          messagesInteractions[index]['_id']);
+                                                    });
+                                                    sendNotification(
+                                                        messagesInteractions[index]['email'],
+                                                        "unlike", _viewModel.c.name,
+                                                        messagesInteractions[index]['text'],
+                                                        messagesInteractions[index]['station']);
+                                                    plusOne2(messagesInteractions[index]['_id']);
+                                                    messagesInteractions[index]['nu'] =
+                                                        messagesInteractions[index]['nu'] + 1;
+                                                  } else {
+                                                    removeUnlike(_viewModel.c.email,
+                                                        messagesInteractions[index]['_id']);
+                                                    setState(() {
+                                                      myUnlikes.remove(
+                                                          messagesInteractions[index]['_id']);
+                                                    });
+                                                    minusOne2(messagesInteractions[index]['_id']);
+                                                    messagesInteractions[index]['nu'] =
+                                                        messagesInteractions[index]['nu'] - 1;
+                                                  }
+                                                }),
+                                            Text("${messagesInteractions[index]['nu']}"),
                                           ],
                                         ),
                                       ),
