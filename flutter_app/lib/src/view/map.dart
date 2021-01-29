@@ -84,7 +84,7 @@ class _MapState extends State<Map> {
       resizeToAvoidBottomInset: false,
       appBar: AppBar(
         title: Text('Map'),
-        backgroundColor: Colors.green[700],
+        backgroundColor: Colors.blue[900],
       ),
       drawer: UserAccount(),
       body: Stack(children: [
@@ -101,7 +101,7 @@ class _MapState extends State<Map> {
               left: 15.0,
               right: 60.0,
               child: Container(
-                padding: EdgeInsets.all(5),
+                padding: EdgeInsets.all(3.5),
                 decoration: BoxDecoration(
                   color: Colors.white,
                   border: Border.all(

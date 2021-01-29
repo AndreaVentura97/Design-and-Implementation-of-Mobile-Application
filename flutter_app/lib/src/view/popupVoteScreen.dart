@@ -58,7 +58,247 @@ class PopupVoteState extends State<PopupVote> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
+
+    Widget meanValues(String Title, MeanValue) {
+      return Expanded(
+        child: Container(
+          padding: EdgeInsets.symmetric(vertical: 5),
+          child: Column(
+            children: [
+              Text(Title,
+                style: TextStyle(
+                    //fontWeight: FontWeight.bold
+                ),
+              ),
+              SizedBox(
+                height: 5,
+              ),
+              Container(
+                height: 50,
+                width: 50,
+                decoration:
+                BoxDecoration(
+                  borderRadius: BorderRadius.circular(10),
+                  border: Border.all(
+                    color: Colors.blue[900],
+                    width: 2,
+                  ),
+                  //boxShadow: [BoxShadow( blurRadius: 10, spreadRadius: 10)],
+                ),
+                child: Center(
+                  child: (MeanValue!=null) ?
+                  Text(MeanValue,
+                    style: TextStyle(
+                      color: Colors.black,
+                      fontSize: 16,
+                      fontWeight: FontWeight.bold,
+                    ),
+                  ) :
+                  Text("--",
+                      style: TextStyle(
+                        color: Colors.black,
+                        fontSize: 10,
+                        fontWeight: FontWeight.bold,
+                      )),
+                ),
+              )
+            ],
+          ),
+        ),
+      );
+    }
+
+    return Dialog(
+      elevation: 3.0,
+      shape: RoundedRectangleBorder(
+        borderRadius: BorderRadius.circular(10.0),
+        side: BorderSide(
+          color: Colors.blue[900],
+          width: 2.0,
+        ),
+      ),
+      child: Card(
+        child: Container(
+          //color: Colors.red,
+          //padding: EdgeInsets.all(20),
+          child: Column(
+            mainAxisSize: MainAxisSize.min,
+            children: [
+              Container(
+                padding: EdgeInsets.symmetric(horizontal: 10),
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    Container(
+                      color: Colors.blue,
+                      height: 30,
+                      width: 30,
+                      // child: new CircleAvatar(
+                      //       backgroundImage: photo,
+                      //       radius: 40,
+                      //     ),
+                    ),
+                    SizedBox(width: 10,),
+                    Expanded(
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Row(children: [
+                            Icon(
+                              Icons.account_box,
+                              color: Colors.black,
+                            ),
+                            SizedBox(
+                              width: 10,
+                            ),
+                            Text(
+                              "Nome Utente",
+                              style: TextStyle(
+                                fontSize: 20,
+                                //fontWeight: FontWeight.bold,
+                              ),
+                            ),
+                          ]),
+                          Row(children: [
+                            Icon(
+                              Icons.email,
+                              color: Colors.black,
+                            ),
+                            SizedBox(
+                              width: 10,
+                            ),
+                            Text(
+                              "Mail Utente",
+                              style: TextStyle(
+                                fontSize: 20,
+                                //fontWeight: FontWeight.bold
+                              ),
+                            ),
+                          ]),
+                          Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                            children: [
+                              Text("Total comments:",
+                                style: TextStyle(
+                                    color: Colors.grey,
+                                    fontSize: 16.0,
+                                    fontWeight: FontWeight.w400
+                                ),
+                              ),
+                              Text("20",//"$numberComments",
+                                style: TextStyle(
+                                    color: Colors.grey,
+                                    fontSize: 18.0
+                                ),
+                              )
+                            ],
+                          ),
+                          Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                            children: [
+                              Text("Total Interactions:",
+                                style: TextStyle(
+                                  color: Colors.grey,
+                                    fontSize: 16.0,
+                                    fontWeight: FontWeight.w400
+                                ),
+                              ),
+                              Text("20",//"$numberComments",
+                                style: TextStyle(
+                                    color: Colors.grey,
+                                    fontSize: 18.0
+                                ),
+                              )
+                            ],
+                          ),
+                        ],
+                      ),
+                    ),
+                  ],
+                ),
+              ),
+              Divider(
+                height: 1,
+                thickness: 2,
+                indent: 10, endIndent: 10,
+                color: Colors.blue[900],
+              ),
+              Container(
+                  padding: EdgeInsets.all(10),
+                  color: Colors.grey[200],
+                  child: Column(
+                    children: [
+                      Column(
+                        crossAxisAlignment: CrossAxisAlignment.center,
+                        children: [
+                          Text("<<Station name>>",
+                            style: TextStyle(
+                                fontSize: 18,
+                                fontWeight: FontWeight.w700
+                            ),
+                          ),
+                          // Divider(
+                          //   height: 2,
+                          //   thickness: 2,
+                          //   color: Colors.blue[900],
+                          // ),
+                          Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                            children: [
+                              meanValues('Cleaniness', '50'),
+                              meanValues('Services', '50'),
+                              meanValues('Safety', '50'),
+                              meanValues('Area', '50')
+                            ],
+                          ),
+                          Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                            children: [
+                              Text(" Comments:",
+                                style: TextStyle(
+                                  fontSize: 18.0,
+                                  fontWeight: FontWeight.w700
+                                ),
+                              ),
+                              Text("20",//"$numberComments",
+                                style: TextStyle(
+                                    fontSize: 20.0
+                                ),
+                              )
+                            ],
+                          ),
+                          Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                            children: [
+                              Text(" Interactions:",
+                                style: TextStyle(
+                                    fontSize: 18.0,
+                                    fontWeight: FontWeight.w700
+                                ),
+                              ),
+                              Text("20",//"$numberComments",
+                                style: TextStyle(
+                                    fontSize: 20.0
+                                ),
+                              )
+                            ],
+                          ),
+                        ],
+                      )
+
+                    ],
+                  ),
+                ),
+            ],
+          ),
+        ),
+      ),
+    );
+
+
+
+
+      Scaffold(
             resizeToAvoidBottomPadding: false,
             resizeToAvoidBottomInset: true,
             //backgroundColor: Colors.green,
