@@ -3,6 +3,8 @@ import 'package:flutter_app/src/services/sendNotification.dart';
 import 'package:flutter_app/src/view/userAccountWidget.dart';
 import 'package:flutter_app/redux/model/AppState.dart';
 import 'package:flutter_app/src/view/viewModel.dart';
+import 'package:flutter_app/src/services/stationServices.dart';
+import 'displayMenuStation.dart';
 import '../services/service.dart';
 import '../services/messagesService.dart';
 import '../services/userService.dart';
@@ -83,140 +85,301 @@ class MyCommentsState extends State<MyComments> {
         onInit: (store) => retrieveMyComments(store.state.customer.email),
         builder: (context,_viewModel) {
           return (ready) ? Scaffold(
+            backgroundColor: Colors.grey[300],
                 appBar: AppBar(
+                  backgroundColor: Colors.blue[900],
                   title: Text("My Comments"),
                 ),
                 drawer: UserAccount(),
                 body: DelayedDisplay(
                   delay: Duration(milliseconds:1000),
-                  child: ListView.builder(
-                            //shrinkWrap: true,
-                            itemCount: myComments.length,
-                            itemBuilder: (BuildContext context, int index) {
-                              return Column(
-                                children: [
-                                  Card(
-                                    margin: EdgeInsets.fromLTRB(10.0, 10.0, 10.0, 0.0),
-                                    elevation: 3.0,
-                                    shape: RoundedRectangleBorder(
-                                      borderRadius: BorderRadius.circular(10.0),
-                                      side: BorderSide(
-                                        color: Colors.blue[900],
-                                        width: 2.0,
-                                      ),
-                                    ),
-                                    child: Container(
-                                      //color: Colors.blue,
-                                        margin: EdgeInsets.fromLTRB(20.0, 10.0, 10.0, 10.0),
-                                      child: Column(
-                                            crossAxisAlignment: CrossAxisAlignment.start,
-                                            children: [
-                                              Container(
-                                                    //color: Colors.green,
-                                                    child: ListTile(
-                                                      dense: true,
-                                                      contentPadding: EdgeInsets.all(0.0),
-                                                      title: Row(
-                                                        children: [
-                                                           Container(
-                                                            child: DelayedDisplay(
-                                                              delay: Duration(seconds:1),
-                                                              child: Image(
-                                                                image: buildAsset(myComments[index]['_id']),
-                                                                height: 30.0,
-                                                                width: 45.0,
-                                                              ),
-                                                            )
-                                                          ),
-                                                          SizedBox(width: 10.0,),
-                                                          IntrinsicWidth(
-                                                            child: Column(
-                                                              crossAxisAlignment: CrossAxisAlignment.start,
+                  child: Column(
+                    children: [
+                      Container(
+                        color: Colors.white,
+                        child:Column(
+                          children: [
+                            Container(
+                        //color: Colors.red,
+                        padding: EdgeInsets.fromLTRB(10,10,10,10),
+                          child: Row(
+                            children: [
+                              Text("Sorted by:",
+                                style: TextStyle(
+                                  fontSize: 22
+                                ),
+                              ),
+                              // DropdownButton(
+                    //     value: valueDrop,
+                    //     items: [
+                    //       DropdownMenuItem(
+                    //         child: Text("All users"),
+                    //         value: "All",
+                    //       ),
+                    //       DropdownMenuItem(
+                    //         child: Text("Citizens"),
+                    //         value: "Citizens",
+                    //       ),
+                        //   DropdownMenuItem(
+                        //     child: Text("Visitors"),
+                        //     value: "Visitors",
+                        //   ),
+                        // ],
+                        // onChanged: (value) {
+                        //   setState(() {
+                        //     valueDrop = value;
+                        //     if(value=="Visitors"){
+                        //       buildMeanVisitor(widget.station, "cleaning").then((result)=>setState((){
+                        //         if (result!=50){
+                        //           avgClean = result.toStringAsFixed(1);
+                        //         }
+                        //         else {
+                        //           avgClean = "--";
+                        //         }
+                        //       }));
+                        //       buildMeanVisitor(widget.station, "dis").then((result)=>setState((){
+                        //         if (result!=50){
+                        //           avgDis = result.toStringAsFixed(1);
+                        //         }
+                        //         else {
+                        //           avgDis = "--";
+                        //         }
+                        //       }));
+                        //       buildMeanVisitor(widget.station, "safety").then((result)=>setState((){
+                        //         if (result!=50){
+                        //           avgSafety = result.toStringAsFixed(1);
+                        //         }
+                        //         else {
+                        //           avgSafety = "--";
+                        //         }
+                        //       }));
+                        //       buildMeanVisitor(widget.station, "area").then((result)=>setState((){
+                        //         if (result!=50){
+                        //           avgArea = result.toStringAsFixed(1);
+                        //         }
+                        //         else {
+                        //           avgArea = "--";
+                        //         }
+                        //       }));
+                        //     }
+                        //     if (value=="Citizens"){
+                        //       buildMeanCitizen(widget.station, "cleaning").then((result)=>setState((){
+                        //         if (result!=50){
+                        //           avgClean = result.toStringAsFixed(1);
+                        //         }
+                        //         else {
+                        //           avgClean = "--";
+                        //         }
+                        //       }));
+                        //       buildMeanCitizen(widget.station, "dis").then((result)=>setState((){
+                        //         if (result!=50){
+                        //           avgDis = result.toStringAsFixed(1);
+                        //         }
+                        //         else {
+                        //           avgDis = "--";
+                        //         }
+                        //       }));
+                        //       buildMeanCitizen(widget.station, "safety").then((result)=>setState((){
+                        //         if (result!=50){
+                        //           avgSafety = result.toStringAsFixed(1);
+                        //         }
+                        //         else {
+                        //           avgSafety = "--";
+                        //         }
+                        //       }));
+                        //       buildMeanCitizen(widget.station, "area").then((result)=>setState((){
+                        //         if (result!=50){
+                        //           avgArea = result.toStringAsFixed(1);
+                        //         }
+                        //         else {
+                        //           avgArea = "--";
+                        //         }
+                        //       }));
+                        //     }
+                        //     if(value=="All") {
+                        //       updateMeanClean(widget.station).then((result)=>setState((){
+                        //         if (result!=50){
+                        //           avgClean = result.toStringAsFixed(1);
+                        //         }
+                        //         else {
+                        //           avgClean = "--";
+                        //         }
+                        //       }));
+                        //       updateMeanDis(widget.station).then((result)=>setState((){
+                        //         if (result!=50){
+                        //           avgDis = result.toStringAsFixed(1);
+                        //         }
+                        //         else {
+                        //           avgDis = "--";
+                        //         }
+                        //       }));
+                        //       updateMeanSafety(widget.station).then((result)=>setState((){
+                        //         if (result!=50){
+                        //           avgSafety = result.toStringAsFixed(1);
+                        //         }
+                        //         else {
+                        //           avgSafety = "--";
+                        //         }
+                        //       }));
+                        //       updateMeanArea(widget.station).then((result)=>setState((){
+                        //         if (result!=50){
+                        //           avgArea = result.toStringAsFixed(1);
+                        //         }
+                        //         else {
+                        //           avgArea = "--";
+                        //         }
+                        //       }));
+                        //     }
+                        //   });
+                        // });
+                            ],
+                          ),
+                      ),
+                            Divider(
+                              thickness: 1.0,
+                              height: 1,
+                              color: Colors.black,
+                            ),
+                          ]
+                        )
+                      ),
+                      Expanded(
+                        child: ListView.builder(
+                                  //shrinkWrap: true,
+                                  itemCount: myComments.length,
+                                  itemBuilder: (BuildContext context, int index) {
+                                    return Column(
+                                      children: [
+                                        Card(
+                                          margin: EdgeInsets.fromLTRB(10.0, 10.0, 10.0, 0.0),
+                                          elevation: 3.0,
+                                          shape: RoundedRectangleBorder(
+                                            borderRadius: BorderRadius.circular(10.0),
+                                            side: BorderSide(
+                                              color: Colors.blue[900],
+                                              width: 2.0,
+                                            ),
+                                          ),
+                                          child: Container(
+                                            //color: Colors.blue,
+                                              margin: EdgeInsets.fromLTRB(20.0, 10.0, 10.0, 10.0),
+                                            child: Column(
+                                                  crossAxisAlignment: CrossAxisAlignment.start,
+                                                  children: [
+                                                    Container(
+                                                          //color: Colors.green,
+                                                          child: ListTile(
+                                                            dense: true,
+                                                            contentPadding: EdgeInsets.all(0.0),
+                                                            title: Row(
                                                               children: [
-                                                                Text(myComments[index]['station'],
-                                                                    style: TextStyle(
-                                                                        fontSize: 20,
-                                                                        fontWeight: FontWeight.w500,
-                                                                        color: Colors.black
-                                                                    )
+                                                                 Container(
+                                                                  child: DelayedDisplay(
+                                                                    delay: Duration(seconds:1),
+                                                                    child: InkWell(
+                                                                      child: Image(
+                                                                        image: buildAsset(myComments[index]['_id']),
+                                                                        height: 30.0,
+                                                                        width: 45.0,
+                                                                      ),
+                                                                        onTap: (){
+                                                                          Navigator.push(context, MaterialPageRoute(builder:(context)=>MenuStation(name:myComments[index]['station'])));
+                                                                        }
+                                                                    ),
+                                                                  )
                                                                 ),
-                                                                Container(
-                                                                  //color: Colors.black,
-                                                                  child: Row(
-                                                                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                                                SizedBox(width: 10.0,),
+                                                                IntrinsicWidth(
+                                                                  child: Column(
+                                                                    crossAxisAlignment: CrossAxisAlignment.start,
                                                                     children: [
-                                                                      Text(myComments[index]['date'],
-                                                                        style: TextStyle(
-                                                                          fontSize: 15.0,
-                                                                          color: Colors.grey,
+                                                                      Text(myComments[index]['station'],
+                                                                          style: TextStyle(
+                                                                              fontSize: 20,
+                                                                              fontWeight: FontWeight.w500,
+                                                                              color: Colors.black
+                                                                          )
+                                                                      ),
+                                                                      Container(
+                                                                        //color: Colors.black,
+                                                                        child: Row(
+                                                                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                                                          children: [
+                                                                            Text(myComments[index]['date'],
+                                                                              style: TextStyle(
+                                                                                fontSize: 15.0,
+                                                                                color: Colors.grey,
+                                                                              ),
+                                                                            ),
+
+                                                                            //
+                                                                            // Da cambiare in base se cittadino o visitatiore
+                                                                            // Text('Citizen',
+                                                                            //   style: TextStyle(
+                                                                            //     fontSize: 15.0,
+                                                                            //     color: Colors.grey,
+                                                                            //   ),
+                                                                            // ),
+
+                                                                          ],
                                                                         ),
                                                                       ),
-
-                                                                      //
-                                                                      // Da cambiare in base se cittadino o visitatiore
-                                                                      // Text('Citizen',
-                                                                      //   style: TextStyle(
-                                                                      //     fontSize: 15.0,
-                                                                      //     color: Colors.grey,
-                                                                      //   ),
-                                                                      // ),
-
                                                                     ],
                                                                   ),
                                                                 ),
                                                               ],
                                                             ),
+                                                            trailing: IconButton(icon: Icon(Icons.close), onPressed: (){
+                                                              deleteMyComment(myComments[index]['text'], myComments[index]['station'], myComments[index]['name']);
+                                                              setState(() {
+                                                                myComments.remove(myComments[index]);
+                                                              });
+                                                            }),
                                                           ),
+                                                        ),
+                                                    Container(
+                                                      //color: Colors.red,
+                                                      child: Text(myComments[index]['text'],
+                                                          style: TextStyle(
+                                                              fontSize: 15,
+                                                              fontWeight: FontWeight.w500,
+                                                              color: Colors.black
+                                                          )
+                                                      ),
+                                                    ),
+                                                    Container(
+                                                      //color: Colors.yellow,
+                                                      padding: EdgeInsets.symmetric(horizontal: 10.0),
+                                                      child: Row(
+                                                        mainAxisAlignment: MainAxisAlignment.end,
+                                                        children: [
+                                                          Icon(Icons.thumb_up,
+                                                                  size: 25.0,
+                                                                  color: Colors.green,
+                                                              ),
+                                                          Text(" ${myComments[index]['nl']} "),
+                                                          Icon(Icons.thumb_down,
+                                                                  size: 25.0,
+                                                                  color: Colors.red,
+                                                             ),
+                                                          Text(" ${myComments[index]['nu']} "),
                                                         ],
                                                       ),
-                                                      trailing: IconButton(icon: Icon(Icons.close), onPressed: (){
-                                                        deleteMyComment(myComments[index]['text'], myComments[index]['station'], myComments[index]['name']);
-                                                        setState(() {
-                                                          myComments.remove(myComments[index]);
-                                                        });
-                                                      }),
                                                     ),
-                                                  ),
-                                              Container(
-                                                //color: Colors.red,
-                                                child: Text(myComments[index]['text'],
-                                                    style: TextStyle(
-                                                        fontSize: 15,
-                                                        fontWeight: FontWeight.w500,
-                                                        color: Colors.black
-                                                    )
-                                                ),
-                                              ),
-                                              Container(
-                                                //color: Colors.yellow,
-                                                padding: EdgeInsets.symmetric(horizontal: 10.0),
-                                                child: Row(
-                                                  mainAxisAlignment: MainAxisAlignment.end,
-                                                  children: [
-                                                    Icon(Icons.thumb_up,
-                                                            size: 25.0,
-                                                            color: Colors.green,
-                                                        ),
-                                                    Text(" ${myComments[index]['nl']} "),
-                                                    Icon(Icons.thumb_down,
-                                                            size: 25.0,
-                                                            color: Colors.red,
-                                                       ),
-                                                    Text(" ${myComments[index]['nu']} "),
+
+
                                                   ],
                                                 ),
-                                              ),
 
-
-                                            ],
                                           ),
-
-                                    ),
-                                  ),
-                                ],
-                              );
-                            },
-                          ),
+                                        ),
+                                      ],
+                                    );
+                                  },
+                                ),
+                      ),
+                    ],
+                  ),
 
 
 

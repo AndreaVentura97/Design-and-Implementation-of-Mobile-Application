@@ -77,245 +77,389 @@ class MessagesState extends State<Messages> {
         builder: (context, _viewModel) {
           return Scaffold(
             backgroundColor: Colors.grey[300],
-              body: ListView.builder(
-                //shrinkWrap: true,
-                itemCount: messages.length,
-                itemBuilder: (BuildContext context, int index) {
-                  return Column(
-                    children: [
-                      Card(
-                          margin: EdgeInsets.fromLTRB(10.0, 10.0, 10.0, 0.0),
-                          elevation: 3.0,
-                          shape: RoundedRectangleBorder(
-                            borderRadius: BorderRadius.circular(10.0),
-                            side: BorderSide(
-                              color: Colors.blue[900],
-                              width: 2.0,
-                            ),
+              body: Column(
+                children: [
+                  Container(
+                    color: Colors.white,
+                    //padding: EdgeInsets.fromLTRB(0,10,0,0),
+                    child: Column(
+                      children: [
+                        Container(
+                          margin: EdgeInsets.fromLTRB(10, 10, 10, 10),
+                          child: Row(
+                            children: [
+                              Text("Sorted by:",
+                                style: TextStyle(
+                                    fontSize: 22
+                                ),
+                              ),
+                              // DropdownButton(
+                              //     value: valueDrop,
+                              //     items: [
+                              //       DropdownMenuItem(
+                              //         child: Text("All users"),
+                              //         value: "All",
+                              //       ),
+                              //       DropdownMenuItem(
+                              //         child: Text("Citizens"),
+                              //         value: "Citizens",
+                              //       ),
+                              //   DropdownMenuItem(
+                              //     child: Text("Visitors"),
+                              //     value: "Visitors",
+                              //   ),
+                              // ],
+                              // onChanged: (value) {
+                              //   setState(() {
+                              //     valueDrop = value;
+                              //     if(value=="Visitors"){
+                              //       buildMeanVisitor(widget.station, "cleaning").then((result)=>setState((){
+                              //         if (result!=50){
+                              //           avgClean = result.toStringAsFixed(1);
+                              //         }
+                              //         else {
+                              //           avgClean = "--";
+                              //         }
+                              //       }));
+                              //       buildMeanVisitor(widget.station, "dis").then((result)=>setState((){
+                              //         if (result!=50){
+                              //           avgDis = result.toStringAsFixed(1);
+                              //         }
+                              //         else {
+                              //           avgDis = "--";
+                              //         }
+                              //       }));
+                              //       buildMeanVisitor(widget.station, "safety").then((result)=>setState((){
+                              //         if (result!=50){
+                              //           avgSafety = result.toStringAsFixed(1);
+                              //         }
+                              //         else {
+                              //           avgSafety = "--";
+                              //         }
+                              //       }));
+                              //       buildMeanVisitor(widget.station, "area").then((result)=>setState((){
+                              //         if (result!=50){
+                              //           avgArea = result.toStringAsFixed(1);
+                              //         }
+                              //         else {
+                              //           avgArea = "--";
+                              //         }
+                              //       }));
+                              //     }
+                              //     if (value=="Citizens"){
+                              //       buildMeanCitizen(widget.station, "cleaning").then((result)=>setState((){
+                              //         if (result!=50){
+                              //           avgClean = result.toStringAsFixed(1);
+                              //         }
+                              //         else {
+                              //           avgClean = "--";
+                              //         }
+                              //       }));
+                              //       buildMeanCitizen(widget.station, "dis").then((result)=>setState((){
+                              //         if (result!=50){
+                              //           avgDis = result.toStringAsFixed(1);
+                              //         }
+                              //         else {
+                              //           avgDis = "--";
+                              //         }
+                              //       }));
+                              //       buildMeanCitizen(widget.station, "safety").then((result)=>setState((){
+                              //         if (result!=50){
+                              //           avgSafety = result.toStringAsFixed(1);
+                              //         }
+                              //         else {
+                              //           avgSafety = "--";
+                              //         }
+                              //       }));
+                              //       buildMeanCitizen(widget.station, "area").then((result)=>setState((){
+                              //         if (result!=50){
+                              //           avgArea = result.toStringAsFixed(1);
+                              //         }
+                              //         else {
+                              //           avgArea = "--";
+                              //         }
+                              //       }));
+                              //     }
+                              //     if(value=="All") {
+                              //       updateMeanClean(widget.station).then((result)=>setState((){
+                              //         if (result!=50){
+                              //           avgClean = result.toStringAsFixed(1);
+                              //         }
+                              //         else {
+                              //           avgClean = "--";
+                              //         }
+                              //       }));
+                              //       updateMeanDis(widget.station).then((result)=>setState((){
+                              //         if (result!=50){
+                              //           avgDis = result.toStringAsFixed(1);
+                              //         }
+                              //         else {
+                              //           avgDis = "--";
+                              //         }
+                              //       }));
+                              //       updateMeanSafety(widget.station).then((result)=>setState((){
+                              //         if (result!=50){
+                              //           avgSafety = result.toStringAsFixed(1);
+                              //         }
+                              //         else {
+                              //           avgSafety = "--";
+                              //         }
+                              //       }));
+                              //       updateMeanArea(widget.station).then((result)=>setState((){
+                              //         if (result!=50){
+                              //           avgArea = result.toStringAsFixed(1);
+                              //         }
+                              //         else {
+                              //           avgArea = "--";
+                              //         }
+                              //       }));
+                              //     }
+                              //   });
+                              // });
+                            ],
                           ),
-                          child: Container(
-                            //color: Colors.red,
-                            margin: EdgeInsets.all(10.0),
-                            child: Column(
-                              crossAxisAlignment: CrossAxisAlignment.start,
-                              children: [
-                                Container(
-                                  //color: Colors.pink,
-                                  child: ListTile(
-                                      dense: true,
-                                      contentPadding: EdgeInsets.all(0.0),
-                                      title: Row(
-                                        children: [
-                                          CircleAvatar(
-                                            //backgroundColor: Colors.blue[900],
-                                            backgroundImage: getPhoto(
-                                                messages[index]['photo']),
-                                            //updatePhoto,
-                                            radius: 15.0,
-                                          ),
-                                          SizedBox(width: 10.0,),
-                                          IntrinsicWidth(
-                                            child: Column(
-                                              crossAxisAlignment: CrossAxisAlignment
-                                                  .start,
+                        ),
+                        Divider(
+                          height: 1,
+                          thickness: 1.0,
+                          //indent: 10, endIndent: 10,
+                          color: Colors.black,
+                        ),
+                      ],
+                    ),
+                  ),
+
+                  Expanded(
+                    child: ListView.builder(
+                      //shrinkWrap: true,
+                      itemCount: messages.length,
+                      itemBuilder: (BuildContext context, int index) {
+                        return Column(
+                          children: [
+                            Card(
+                                margin: EdgeInsets.fromLTRB(10.0, 10.0, 10.0, 0.0),
+                                elevation: 3.0,
+                                shape: RoundedRectangleBorder(
+                                  borderRadius: BorderRadius.circular(10.0),
+                                  side: BorderSide(
+                                    color: Colors.blue[900],
+                                    width: 2.0,
+                                  ),
+                                ),
+                                child: Container(
+                                  //color: Colors.red,
+                                  margin: EdgeInsets.all(10.0),
+                                  child: Column(
+                                    crossAxisAlignment: CrossAxisAlignment.start,
+                                    children: [
+                                      Container(
+                                        //color: Colors.pink,
+                                        child: ListTile(
+                                            dense: true,
+                                            contentPadding: EdgeInsets.all(0.0),
+                                            title: Row(
                                               children: [
-                                                InkWell(
-                                                    child: Text(
-                                                        messages[index]['name'],
-                                                        style: TextStyle(
-                                                            fontSize: 18.0,
-                                                            fontWeight: FontWeight
-                                                                .w500,
-                                                            color: Colors
-                                                                .black)),
-                                                    onTap: () {
-                                                      showDialog(
-                                                          context: context,
-                                                          builder: (
-                                                              BuildContext context) {
-                                                            return PopupVote(
-                                                                email: messages[index]['email'],
-                                                                station: widget
-                                                                    .station);
-                                                          });
-                                                    }
+                                                CircleAvatar(
+                                                  //backgroundColor: Colors.blue[900],
+                                                  backgroundImage: getPhoto(
+                                                      messages[index]['photo']),
+                                                  //updatePhoto,
+                                                  radius: 15.0,
                                                 ),
-                                                Container(
-                                                  color: Colors.black,
-                                                  child: Row(
-                                                    mainAxisAlignment: MainAxisAlignment
-                                                        .spaceBetween,
+                                                SizedBox(width: 10.0,),
+                                                IntrinsicWidth(
+                                                  child: Column(
+                                                    crossAxisAlignment: CrossAxisAlignment
+                                                        .start,
                                                     children: [
-                                                      Text(
-                                                        messages[index]['date'],
-                                                        style: TextStyle(
-                                                          fontSize: 15.0,
-                                                          color: Colors.grey,
+                                                      InkWell(
+                                                          child: Text(
+                                                              messages[index]['name'],
+                                                              style: TextStyle(
+                                                                  fontSize: 18.0,
+                                                                  fontWeight: FontWeight
+                                                                      .w500,
+                                                                  color: Colors
+                                                                      .black)),
+                                                          onTap: () {
+                                                            showDialog(
+                                                                context: context,
+                                                                builder: (
+                                                                    BuildContext context) {
+                                                                  return PopupVote(
+                                                                      email: messages[index]['email'],
+                                                                      station: widget
+                                                                          .station);
+                                                                });
+                                                          }
+                                                      ),
+                                                      Container(
+                                                        //color: Colors.black,
+                                                        child: Row(
+                                                          mainAxisAlignment: MainAxisAlignment
+                                                              .spaceBetween,
+                                                          children: [
+                                                            Text(
+                                                              messages[index]['date'],
+                                                              style: TextStyle(
+                                                                fontSize: 15.0,
+                                                                color: Colors.grey,
+                                                              ),
+                                                            ),
+
+                                                            //
+                                                            // Da cambiare in base se cittadino o visitatiore
+                                                            (messages[index]['citizen'])
+                                                                ? Text(' - Citizen',
+                                                              style: TextStyle(
+                                                                fontSize: 15.0,
+                                                                color: Colors.grey,
+                                                              ),
+                                                            )
+                                                                : Text(' - Visitor',
+                                                              style: TextStyle(
+                                                                fontSize: 15.0,
+                                                                color: Colors.grey,
+                                                              ),
+                                                            )
+                                                          ],
                                                         ),
                                                       ),
 
-                                                      //
-                                                      // Da cambiare in base se cittadino o visitatiore
-                                                      (messages[index]['citizen'])
-                                                          ? Text('Citizen',
-                                                        style: TextStyle(
-                                                          fontSize: 15.0,
-                                                          color: Colors.grey,
-                                                        ),
-                                                      )
-                                                          : Text('Visitor',
-                                                        style: TextStyle(
-                                                          fontSize: 15.0,
-                                                          color: Colors.grey,
-                                                        ),
-                                                      )
                                                     ],
                                                   ),
                                                 ),
-
                                               ],
                                             ),
-                                          ),
-                                        ],
+                                        ),
                                       ),
-                                      trailing: SmoothStarRating(
-                                        rating: 5,
-                                        starCount: 5,
-                                        isReadOnly: true,
-                                        color: Colors.amber,
-                                      )
-                                  ),
-                                ),
-                                Container(
-                                  color: Colors.green[100],
-                                  child: InkWell(
-                                    child: Text(messages[index]['text'],
-                                        style: TextStyle(
-                                            fontSize: 15,
-                                            fontWeight: FontWeight.w500,
-                                            color: Colors.black)),
-                                    onTap: () {
+                                      Container(
+                                        //color: Colors.green[100],
+                                          child: Text(messages[index]['text'],
+                                              style: TextStyle(
+                                                  fontSize: 15,
+                                                  fontWeight: FontWeight.w500,
+                                                  color: Colors.black)),
+                                      ),
+                                      Container(
+                                        //color: Colors.blue[900],
+                                        child: Row(
+                                          mainAxisAlignment: MainAxisAlignment.end,
+                                          children: [
+                                            IconButton(
+                                                icon: Icon(Icons.thumb_up,
+                                                    size: 20.0,
+                                                    color: ((checkLike(
+                                                        messages[index]['_id'])))
+                                                        ? Colors.green
+                                                        : Colors.grey),
+                                                onPressed: () {
+                                                  if ((!checkLike(
+                                                      messages[index]['_id']))) {
+                                                    if (checkUnlike(
+                                                        messages[index]['_id'])) {
+                                                      removeUnlike(_viewModel.c.email,
+                                                          messages[index]['_id']);
+                                                      setState(() {
+                                                        myUnlikes.remove(
+                                                            messages[index]['_id']);
+                                                      });
+                                                      messages[index]['nu'] =
+                                                          messages[index]['nu'] - 1;
+                                                      minusOne2(
+                                                          messages[index]['_id']);
+                                                    }
+                                                    insertLike(_viewModel.c.email,
+                                                        messages[index]['_id']);
+                                                    setState(() {
+                                                      myLikes.add(
+                                                          messages[index]['_id']);
+                                                    });
+                                                    sendNotification(
+                                                        messages[index]['email'],
+                                                        "like", _viewModel.c.name,
+                                                        messages[index]['text'],
+                                                        messages[index]['station']);
+                                                    plusOne(messages[index]['_id']);
+                                                    messages[index]['nl'] =
+                                                        messages[index]['nl'] + 1;
+                                                  } else {
+                                                    removeLike(_viewModel.c.email,
+                                                        messages[index]['_id']);
+                                                    setState(() {
+                                                      myLikes.remove(
+                                                          messages[index]['_id']);
+                                                    });
+                                                    minusOne(messages[index]['_id']);
+                                                    messages[index]['nl'] =
+                                                        messages[index]['nl'] - 1;
+                                                  }
+                                                }),
+                                            Text("${messages[index]['nl']}"),
+                                            IconButton(
+                                                icon: Icon(Icons.thumb_down,
+                                                    size: 25.0,
+                                                    color: ((checkUnlike(
+                                                        messages[index]['_id'])))
+                                                        ? Colors.red
+                                                        : Colors.grey),
+                                                onPressed: () {
+                                                  if ((!checkUnlike(
+                                                      messages[index]['_id']))) {
+                                                    if (checkLike(
+                                                        (messages[index]['_id']))) {
+                                                      removeLike(_viewModel.c.email,
+                                                          messages[index]['_id']);
+                                                      setState(() {
+                                                        myLikes.remove(
+                                                            messages[index]['_id']);
+                                                      });
+                                                      messages[index]['nl'] =
+                                                          messages[index]['nl'] - 1;
+                                                      minusOne(
+                                                          messages[index]['_id']);
+                                                    }
+                                                    insertUnlike(_viewModel.c.email,
+                                                        messages[index]['_id']);
+                                                    setState(() {
+                                                      myUnlikes.add(
+                                                          messages[index]['_id']);
+                                                    });
+                                                    sendNotification(
+                                                        messages[index]['email'],
+                                                        "unlike", _viewModel.c.name,
+                                                        messages[index]['text'],
+                                                        messages[index]['station']);
+                                                    plusOne2(messages[index]['_id']);
+                                                    messages[index]['nu'] =
+                                                        messages[index]['nu'] + 1;
+                                                  } else {
+                                                    removeUnlike(_viewModel.c.email,
+                                                        messages[index]['_id']);
+                                                    setState(() {
+                                                      myUnlikes.remove(
+                                                          messages[index]['_id']);
+                                                    });
+                                                    minusOne2(messages[index]['_id']);
+                                                    messages[index]['nu'] =
+                                                        messages[index]['nu'] - 1;
+                                                  }
+                                                }),
+                                            Text("${messages[index]['nu']}"),
+                                          ],
+                                        ),
+                                      ),
 
-                                    },
-                                  ),
-
-                                ),
-                                Container(
-                                  color: Colors.blue[900],
-                                  child: Row(
-                                    mainAxisAlignment: MainAxisAlignment.end,
-                                    children: [
-                                      IconButton(
-                                          icon: Icon(Icons.thumb_up,
-                                              size: 20.0,
-                                              color: ((checkLike(
-                                                  messages[index]['_id'])))
-                                                  ? Colors.green
-                                                  : Colors.grey),
-                                          onPressed: () {
-                                            if ((!checkLike(
-                                                messages[index]['_id']))) {
-                                              if (checkUnlike(
-                                                  messages[index]['_id'])) {
-                                                removeUnlike(_viewModel.c.email,
-                                                    messages[index]['_id']);
-                                                setState(() {
-                                                  myUnlikes.remove(
-                                                      messages[index]['_id']);
-                                                });
-                                                messages[index]['nu'] =
-                                                    messages[index]['nu'] - 1;
-                                                minusOne2(
-                                                    messages[index]['_id']);
-                                              }
-                                              insertLike(_viewModel.c.email,
-                                                  messages[index]['_id']);
-                                              setState(() {
-                                                myLikes.add(
-                                                    messages[index]['_id']);
-                                              });
-                                              sendNotification(
-                                                  messages[index]['email'],
-                                                  "like", _viewModel.c.name,
-                                                  messages[index]['text'],
-                                                  messages[index]['station']);
-                                              plusOne(messages[index]['_id']);
-                                              messages[index]['nl'] =
-                                                  messages[index]['nl'] + 1;
-                                            } else {
-                                              removeLike(_viewModel.c.email,
-                                                  messages[index]['_id']);
-                                              setState(() {
-                                                myLikes.remove(
-                                                    messages[index]['_id']);
-                                              });
-                                              minusOne(messages[index]['_id']);
-                                              messages[index]['nl'] =
-                                                  messages[index]['nl'] - 1;
-                                            }
-                                          }),
-                                      Text("${messages[index]['nl']}"),
-                                      IconButton(
-                                          icon: Icon(Icons.thumb_down,
-                                              size: 25.0,
-                                              color: ((checkUnlike(
-                                                  messages[index]['_id'])))
-                                                  ? Colors.red
-                                                  : Colors.grey),
-                                          onPressed: () {
-                                            if ((!checkUnlike(
-                                                messages[index]['_id']))) {
-                                              if (checkLike(
-                                                  (messages[index]['_id']))) {
-                                                removeLike(_viewModel.c.email,
-                                                    messages[index]['_id']);
-                                                setState(() {
-                                                  myLikes.remove(
-                                                      messages[index]['_id']);
-                                                });
-                                                messages[index]['nl'] =
-                                                    messages[index]['nl'] - 1;
-                                                minusOne(
-                                                    messages[index]['_id']);
-                                              }
-                                              insertUnlike(_viewModel.c.email,
-                                                  messages[index]['_id']);
-                                              setState(() {
-                                                myUnlikes.add(
-                                                    messages[index]['_id']);
-                                              });
-                                              sendNotification(
-                                                  messages[index]['email'],
-                                                  "unlike", _viewModel.c.name,
-                                                  messages[index]['text'],
-                                                  messages[index]['station']);
-                                              plusOne2(messages[index]['_id']);
-                                              messages[index]['nu'] =
-                                                  messages[index]['nu'] + 1;
-                                            } else {
-                                              removeUnlike(_viewModel.c.email,
-                                                  messages[index]['_id']);
-                                              setState(() {
-                                                myUnlikes.remove(
-                                                    messages[index]['_id']);
-                                              });
-                                              minusOne2(messages[index]['_id']);
-                                              messages[index]['nu'] =
-                                                  messages[index]['nu'] - 1;
-                                            }
-                                          }),
-                                      Text("${messages[index]['nu']}"),
                                     ],
                                   ),
-                                ),
-
-                              ],
+                                )
                             ),
-                          )
-                      ),
-                    ],
-                  );
-                },
+                          ],
+                        );
+                      },
+                    ),
+                  ),
+                ],
               ));
         });
   }

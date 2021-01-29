@@ -269,7 +269,7 @@ class InfoProfileState extends State<InfoProfile> {
                                                           children: [
                                                             Icon(Icons.thumb_down, color: Colors.red, size:20),
                                                             (commentMostUnLike == null) ? Text('(-)', style: TextStyle(fontSize: 22.0))
-                                                                : Text('(${commentMostUnLike['nl']})', style: TextStyle(fontSize: 22.0))
+                                                                : Text('(${commentMostUnLike['nu']})', style: TextStyle(fontSize: 22.0))
                                                           ],
                                                         ),
                                                       ),
@@ -356,11 +356,31 @@ class InfoProfileState extends State<InfoProfile> {
                                                                   animation: true,
                                                                   animationDuration: 1200,
                                                                   lineWidth: 15.0,
-                                                                  percent: 0.4,
-                                                                  center: new Text(
-                                                                    "40 hours",
-                                                                    style:
-                                                                    new TextStyle(fontWeight: FontWeight.bold, fontSize: 20.0),
+                                                                  percent: totalUnlikes/ (totalLikes + totalUnlikes),
+                                                                  center: Container(
+                                                                    child: Column(
+                                                                      mainAxisAlignment: MainAxisAlignment.center,
+                                                                      children: [
+                                                                        Row(
+                                                                          mainAxisAlignment: MainAxisAlignment.center,
+                                                                          children: [
+                                                                            Column(
+                                                                                children:[
+                                                                                  Icon(Icons.thumb_up, color: Colors.green),
+                                                                                  Text('($totalLikes)', style: TextStyle(fontWeight: FontWeight.bold, fontSize: 15),)
+                                                                                ]
+                                                                            ),
+                                                                            Text(" | ", style: TextStyle(fontSize: 40),),
+                                                                            Column(
+                                                                                children:[
+                                                                                  Icon(Icons.thumb_down, color: Colors.red),
+                                                                                  Text('($totalUnlikes)', style: TextStyle(fontWeight: FontWeight.bold, fontSize: 15),)
+                                                                                ]
+                                                                            ),
+                                                                          ],
+                                                                        ),
+                                                                      ],
+                                                                    ),
                                                                   ),
                                                                   circularStrokeCap: CircularStrokeCap.butt,
                                                                   backgroundColor: Colors.green,
