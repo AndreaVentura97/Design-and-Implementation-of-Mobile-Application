@@ -160,6 +160,18 @@ getCommentWithMostUnLike(email) async {
   return comment;
 }
 
+getLikesGiven(email) async {
+  var user = await DB.getDB().collection("users").findOne({'email':email});
+  var list = user['myLiked'];
+  return list.length;
+}
+
+getUnlikesGiven(email) async {
+  var user = await DB.getDB().collection("users").findOne({'email':email});
+  var list = user['myUnliked'];
+  return list.length;
+}
+
 retrieveMyLikedPoints(email) async {
   var user = await DB.getDB().collection('users').findOne({'email': email});
   var myLiked = user['myLikedPoints'].toList();
@@ -183,4 +195,47 @@ updateState(email,value) async {
   return value;
 }
 
+orderListByInteractions (list) {
+  List orderedList = [];
+  if (list.length==0) {
+    return list;
+  }
+  var flag = true;
+  while (flag){
+    for (int i=0; i< list.length; i++){
+      if(list[i]['nl'] + list[i]['nu'] >= checkMax(list)){
+
+        orderedList.add(list[i]);
+        list.remove(list[i]);
+
+      }
+      if(list.length==0){
+        flag = false;
+
+      }
+  }
+  }
+  return orderedList;
+}
+
+checkMax(list){
+  var total = 0;
+  for (int i = 0; i < list.length; i++){
+    if (list[i]['nl'] + list[i]['nu'] >= total){
+      total = list[i]['nl'] + list[i]['nu'];
+    }
+  }
+  return total;
+}
+
+removeFromList(list,text,station,email){
+  for (int i=0; i < list.length; i++){
+    if (list[i]['text']==text && list[i]['email']==email && list[i]['station']==station){
+      list.remove(list[i]);
+
+    }
+
+  }
+  return list;
+}
 
