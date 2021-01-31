@@ -12,30 +12,29 @@ import 'package:shared_preferences/shared_preferences.dart';
 import 'src/checkLogin.dart';
 import 'redux/model/customer.dart';
 
-
 final server = new Sevr();
 const port = 8081;
 SharedPreferences prefs;
-Store <AppState> store;
-void main () async {
+Store<AppState> store;
+
+void main() async {
   server.listen(port, callback: () {
     print('Server listening on port: $port');
   });
   WidgetsFlutterBinding.ensureInitialized();
   await Firebase.initializeApp();
-  if (await getLogged()==true){
+  if (await getLogged() == true) {
     var user = await exportProfile();
     print("just logged");
-    final Customer customer = new Customer(name: user[0], email: user[1], photo: user[2],notification:false);
-    store = new Store(appReducer, initialState: AppState(customer:customer));
-  }
-  else {
+    final Customer customer = new Customer(
+        name: user[0], email: user[1], photo: user[2], notification: false);
+    store = new Store(appReducer, initialState: AppState(customer: customer));
+  } else {
     print("not logged");
     store = new Store(appReducer, initialState: AppState());
   }
-  runApp(MyApp(store:store));
+  runApp(MyApp(store: store));
 }
-
 
 /*
 class MyApp extends StatelessWidget {
@@ -58,18 +57,21 @@ class MyApp extends StatelessWidget {
 
 class MyApp extends StatefulWidget {
   final Store<AppState> store;
+
   const MyApp({Key key, this.store}) : super(key: key);
+
   MyAppState createState() => MyAppState();
 }
 
-class MyAppState extends State<MyApp>{
+class MyAppState extends State<MyApp> {
   bool ready = false;
 
   void setReady() {
     DB.start().then((result) => setState(() {
-      ready = result;
-    }));
+          ready = result;
+        }));
   }
+
   @override
   void initState() {
     super.initState();
@@ -78,7 +80,7 @@ class MyAppState extends State<MyApp>{
 
   @override
   Widget build(BuildContext context) {
-    return new StoreProvider <AppState>(
+    return new StoreProvider<AppState>(
       store: widget.store,
       child: MaterialApp(
           title: 'Flutter App',
@@ -86,17 +88,8 @@ class MyAppState extends State<MyApp>{
             primarySwatch: Colors.blue,
             visualDensity: VisualDensity.adaptivePlatformDensity,
           ),
-          home: (ready) ? Login () :
-              Center (
-                child: Text("Loading")
-              ),
-        debugShowCheckedModeBanner:false
-
-
-      ),
+          home: (ready) ? Login() : Center(child: Text("Loading")),
+          debugShowCheckedModeBanner: false),
     );
   }
-
 }
-
-

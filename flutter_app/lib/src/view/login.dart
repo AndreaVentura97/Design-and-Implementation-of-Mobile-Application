@@ -3,16 +3,14 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/gestures.dart';
 import 'package:auto_size_text/auto_size_text.dart';
-import 'profile.dart';
+import 'map.dart';
+import '../tabView/tabLogin.dart';
 import '../handleLogin.dart' as handle;
 import '../checkLogin.dart';
 import 'register.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 
-
-
 class Login extends StatefulWidget {
-
   @override
   State<StatefulWidget> createState() {
     // TODO: implement createState
@@ -30,8 +28,6 @@ class _LoginState extends State<Login> {
   final GlobalKey<ScaffoldState> _scaffoldKey = GlobalKey<ScaffoldState>();
   final TextEditingController _passwordController = TextEditingController();
 
-
-
   getprefs() async {
     getLogged().then((log) => setState(() {
           if (log != null) {
@@ -47,7 +43,6 @@ class _LoginState extends State<Login> {
     getprefs();
   }
 
-
   @override
   void dispose() {
     _emailController.dispose();
@@ -55,206 +50,210 @@ class _LoginState extends State<Login> {
     super.dispose();
   }
 
-
   @override
   Widget build(BuildContext context) {
     var _blankFocusNode = new FocusNode();
     var height = MediaQuery.of(context).size.height;
+    double _width = MediaQuery.of(context).size.width;
     var padding = MediaQuery.of(context).padding;
-    return DelayedDisplay(
-      delay: Duration(seconds:1),
+    return (_width > 700)? TabLogin() : DelayedDisplay(
+      delay: Duration(seconds: 1),
       child: (!isLogged)
-            ? Scaffold(
-          resizeToAvoidBottomPadding: false,
-          resizeToAvoidBottomInset: true,
-          backgroundColor: Colors.green,
-          body: SingleChildScrollView(
-            child: Container(
-              decoration: BoxDecoration(
-                image: DecorationImage(
-                  image: AssetImage("assets/background.jpg"),
-                  fit: BoxFit.cover,
-                )
-              ),
-              child: GestureDetector(
-                behavior: HitTestBehavior.opaque,
-                onTap: () {
-                  FocusScope.of(context).requestFocus(_blankFocusNode);
-                },
-                child: SafeArea(
-                  child: Container(
-                    height: height - padding.top - padding.bottom,
-                    margin: EdgeInsets.symmetric(horizontal: 25.0),
-                    //color: Colors.red,
-                    child: Center(
-                        child: Column(
+          ? Scaffold(
+              resizeToAvoidBottomPadding: false,
+              resizeToAvoidBottomInset: true,
+              backgroundColor: Colors.green,
+              body: SingleChildScrollView(
+                child: Container(
+                  decoration: BoxDecoration(
+                      image: DecorationImage(
+                    image: AssetImage("assets/background.jpg"),
+                    fit: BoxFit.cover,
+                  )),
+                  child: GestureDetector(
+                    behavior: HitTestBehavior.opaque,
+                    onTap: () {
+                      FocusScope.of(context).requestFocus(_blankFocusNode);
+                    },
+                    child: SafeArea(
+                      child: Container(
+                        height: height - padding.top - padding.bottom,
+                        margin: EdgeInsets.symmetric(horizontal: 25.0),
+                        //color: Colors.red,
+                        child: Center(
+                            child: Column(
                                 crossAxisAlignment: CrossAxisAlignment.center,
-                                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                                mainAxisAlignment:
+                                    MainAxisAlignment.spaceEvenly,
                                 mainAxisSize: MainAxisSize.max,
                                 children: [
-                                    showAlert(),
-                                    //Box Logo
-                                    Container(
-                                      color: Colors.black,
-                                      width: 200.0,
-                                      height: 200.0,
-                                      child: Column(
-                                          mainAxisAlignment:
-                                              MainAxisAlignment.spaceEvenly,
-                                          mainAxisSize: MainAxisSize.max,
-                                          crossAxisAlignment:
-                                              CrossAxisAlignment.center,
-                                          children: [
-                                            Container(
-                                              width: 100.0,
-                                              height: 100.0,
-                                              color: Colors.grey,
-                                            ),
-                                            Text('Nome applicazione',
-                                                style: TextStyle(
-                                                  fontSize: 15.0,
-                                                  color: Colors.grey,
-                                                )),
-                                          ]),
-                                    ),
+                              showAlert(),
+                              //Box Logo
+                              Container(
+                                color: Colors.black,
+                                width: 200.0,
+                                height: 200.0,
+                                child: Column(
+                                    mainAxisAlignment:
+                                        MainAxisAlignment.spaceEvenly,
+                                    mainAxisSize: MainAxisSize.max,
+                                    crossAxisAlignment:
+                                        CrossAxisAlignment.center,
+                                    children: [
+                                      Container(
+                                        width: 100.0,
+                                        height: 100.0,
+                                        color: Colors.grey,
+                                      ),
+                                      Text('Nome applicazione',
+                                          style: TextStyle(
+                                            fontSize: 15.0,
+                                            color: Colors.grey,
+                                          )),
+                                    ]),
+                              ),
 
-                                    //LogIn
-                                    Card(
-                                      elevation: 5.0,
-                                      shape: RoundedRectangleBorder(
-                                          borderRadius: BorderRadius.circular(10.0)),
-                                      color: Colors.white,
-                                      margin: const EdgeInsets.symmetric(
-                                          horizontal: 25.0),
-                                      child: Center(child: withEmailPassword()),
-                                    ),
+                              //LogIn
+                              Card(
+                                elevation: 5.0,
+                                shape: RoundedRectangleBorder(
+                                    borderRadius: BorderRadius.circular(10.0)),
+                                color: Colors.white,
+                                margin: const EdgeInsets.symmetric(
+                                    horizontal: 25.0),
+                                child: Center(child: withEmailPassword()),
+                              ),
 
-                                    Container(
-                                      //color: Colors.black,
-                                      margin: EdgeInsets.symmetric(horizontal: 25.0),
-                                      child: Column(
-                                        children: [
-                                          Row(
-                                            mainAxisAlignment:
-                                                MainAxisAlignment.spaceEvenly,
-                                            mainAxisSize: MainAxisSize.max,
-                                            children: [
-                                              Expanded(
-                                                  child: Divider(
-                                                color: Colors.white,
-                                                height: 2.0,
-                                              )),
-                                              SizedBox(
-                                                width: 5.0,
-                                              ),
-                                              Text(
-                                                'or',
-                                                style: TextStyle(
-                                                  color: Colors.white,
-                                                  fontSize: 16.0,
-                                                ),
-                                              ),
-                                              SizedBox(
-                                                width: 5.0,
-                                              ),
-                                              Expanded(
-                                                  child: Divider(
-                                                color: Colors.white,
-                                                height: 2.0,
-                                              )),
-                                            ],
+                              Container(
+                                //color: Colors.black,
+                                margin: EdgeInsets.symmetric(horizontal: 25.0),
+                                child: Column(
+                                  children: [
+                                    Row(
+                                      mainAxisAlignment:
+                                          MainAxisAlignment.spaceEvenly,
+                                      mainAxisSize: MainAxisSize.max,
+                                      children: [
+                                        Expanded(
+                                            child: Divider(
+                                          color: Colors.white,
+                                          height: 2.0,
+                                        )),
+                                        SizedBox(
+                                          width: 5.0,
+                                        ),
+                                        Text(
+                                          'or',
+                                          style: TextStyle(
+                                            color: Colors.white,
+                                            fontSize: 16.0,
                                           ),
-                                          Row(
-                                              mainAxisAlignment:
-                                                  MainAxisAlignment.spaceEvenly,
-                                              children: [
-                                                Expanded(
-                                                  child: RaisedButton(
-                                                    elevation: 5.0,
-                                                    color: Colors.white,
-                                                    child: Text("Google",
-                                                        style: TextStyle(
-                                                          color: Colors.black,
-                                                          fontSize: 15.0,
-                                                        )),
-                                                    shape: RoundedRectangleBorder(
-                                                        borderRadius:
-                                                            BorderRadius.circular(
-                                                                15.0)),
-                                                    onPressed: () {
-                                                      handle.loginWithGoogle(context).then((value)=> setState(() {
-                                                        isLogged = value;
-                                                      }));
-                                                    },
-                                                  ),
-                                                ),
-                                                SizedBox(width: 25.0),
-                                                Expanded(
-                                                  child: RaisedButton(
-                                                    elevation: 5.0,
-                                                    color: Color.fromRGBO(
-                                                        59, 89, 152, 1),
-                                                    child: Text("Facebook",
-                                                        style: TextStyle(
-                                                          color: Colors.white,
-                                                          fontSize: 15.0,
-                                                        )),
-                                                    shape: RoundedRectangleBorder(
-                                                        borderRadius:
-                                                            BorderRadius.circular(
-                                                                15.0)),
-                                                    onPressed: () {
-                                                      handle.loginWithFB(context).then((value)=> setState(() {
-                                                          isLogged = value;
-                                                        }));
-                                                      }
-                                                      ),
-                                                ),
-                                              ]),
-                                        ],
-                                      ),
+                                        ),
+                                        SizedBox(
+                                          width: 5.0,
+                                        ),
+                                        Expanded(
+                                            child: Divider(
+                                          color: Colors.white,
+                                          height: 2.0,
+                                        )),
+                                      ],
                                     ),
-
-                                    Align(
-                                      alignment: Alignment.bottomCenter,
-                                      child: RichText(
-                                        text: TextSpan(
-                                            text: "Don't have an account? ",
-                                            style: TextStyle(
+                                    Row(
+                                        mainAxisAlignment:
+                                            MainAxisAlignment.spaceEvenly,
+                                        children: [
+                                          Expanded(
+                                            child: RaisedButton(
+                                              elevation: 5.0,
                                               color: Colors.white,
-                                              fontSize: 16.0,
+                                              child: Text("Google",
+                                                  style: TextStyle(
+                                                    color: Colors.black,
+                                                    fontSize: 15.0,
+                                                  )),
+                                              shape: RoundedRectangleBorder(
+                                                  borderRadius:
+                                                      BorderRadius.circular(
+                                                          15.0)),
+                                              onPressed: () {
+                                                handle
+                                                    .loginWithGoogle(context)
+                                                    .then(
+                                                        (value) => setState(() {
+                                                              isLogged = value;
+                                                            }));
+                                              },
                                             ),
-                                            children: [
-                                              TextSpan(
-                                                text: 'Register now',
-                                                style: TextStyle(
-                                                  color: Colors.blue,
-                                                  decoration:
-                                                      TextDecoration.underline,
-                                                  fontSize: 16.0,
-                                                ),
-                                                recognizer: TapGestureRecognizer()
-                                                  ..onTap = () async {
-                                                    Navigator.push(
-                                                      context,
-                                                      MaterialPageRoute(
-                                                          builder: (context) =>
-                                                              Register()),
-                                                    );
-                                                  },
-                                              )
-                                            ]),
+                                          ),
+                                          SizedBox(width: 25.0),
+                                          Expanded(
+                                            child: RaisedButton(
+                                                elevation: 5.0,
+                                                color: Color.fromRGBO(
+                                                    59, 89, 152, 1),
+                                                child: Text("Facebook",
+                                                    style: TextStyle(
+                                                      color: Colors.white,
+                                                      fontSize: 15.0,
+                                                    )),
+                                                shape: RoundedRectangleBorder(
+                                                    borderRadius:
+                                                        BorderRadius.circular(
+                                                            15.0)),
+                                                onPressed: () {
+                                                  handle
+                                                      .loginWithFB(context)
+                                                      .then((value) =>
+                                                          setState(() {
+                                                            isLogged = value;
+                                                          }));
+                                                }),
+                                          ),
+                                        ]),
+                                  ],
+                                ),
+                              ),
+
+                              Align(
+                                alignment: Alignment.bottomCenter,
+                                child: RichText(
+                                  text: TextSpan(
+                                      text: "Don't have an account? ",
+                                      style: TextStyle(
+                                        color: Colors.white,
+                                        fontSize: 16.0,
                                       ),
-                                    )
-                                  ])
-                            ),
+                                      children: [
+                                        TextSpan(
+                                          text: 'Register now',
+                                          style: TextStyle(
+                                            color: Colors.blue,
+                                            decoration:
+                                                TextDecoration.underline,
+                                            fontSize: 16.0,
+                                          ),
+                                          recognizer: TapGestureRecognizer()
+                                            ..onTap = () async {
+                                              Navigator.push(
+                                                context,
+                                                MaterialPageRoute(
+                                                    builder: (context) =>
+                                                        Register()),
+                                              );
+                                            },
+                                        )
+                                      ]),
+                                ),
+                              )
+                            ])),
+                      ),
+                    ),
                   ),
                 ),
               ),
-            ),
-          ),
-        ): Profile(),
-
+            )
+          : Map(),
     );
   }
 
@@ -418,11 +417,12 @@ class _LoginState extends State<Login> {
                   )),
               onPressed: () async {
                 if (_formKey.currentState.validate()) {
-                  handle.signInWithEmailAndPassword(context,_emailController.text,_passwordController.text).then(
-                      (value) => setState (() {
-                        _error = value;
-                      }));
-
+                  handle
+                      .signInWithEmailAndPassword(context,
+                          _emailController.text, _passwordController.text)
+                      .then((value) => setState(() {
+                            _error = value;
+                          }));
                 }
               },
             ),
