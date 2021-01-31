@@ -81,120 +81,97 @@ class _LoginState extends State<Login> {
                         margin: EdgeInsets.symmetric(horizontal: 25.0),
                         //color: Colors.red,
                         child: Center(
-                            child: Column(
-                                crossAxisAlignment: CrossAxisAlignment.center,
-                                mainAxisAlignment:
-                                    MainAxisAlignment.spaceEvenly,
-                                mainAxisSize: MainAxisSize.max,
-                                children: [
-                              showAlert(),
-                              //Box Logo
-                              Container(
-                                color: Colors.black,
-                                width: 200.0,
-                                height: 200.0,
-                                child: Column(
-                                    mainAxisAlignment:
-                                        MainAxisAlignment.spaceEvenly,
-                                    mainAxisSize: MainAxisSize.max,
-                                    crossAxisAlignment:
-                                        CrossAxisAlignment.center,
-                                    children: [
-                                      Container(
-                                        width: 100.0,
-                                        height: 100.0,
-                                        color: Colors.grey,
-                                      ),
-                                      Text('Nome applicazione',
-                                          style: TextStyle(
-                                            fontSize: 15.0,
-                                            color: Colors.grey,
-                                          )),
-                                    ]),
-                              ),
-
-                              //LogIn
-                              Card(
-                                elevation: 5.0,
-                                shape: RoundedRectangleBorder(
-                                    borderRadius: BorderRadius.circular(10.0)),
-                                color: Colors.white,
-                                margin: const EdgeInsets.symmetric(
-                                    horizontal: 25.0),
-                                child: Center(child: withEmailPassword()),
-                              ),
-
-                              Container(
-                                //color: Colors.black,
-                                margin: EdgeInsets.symmetric(horizontal: 25.0),
-                                child: Column(
+                            child: Stack(
+                              children: [
+                                showAlert(),
+                                Column(
+                                  crossAxisAlignment: CrossAxisAlignment.center,
+                                  mainAxisAlignment:
+                                      MainAxisAlignment.spaceEvenly,
+                                  mainAxisSize: MainAxisSize.max,
                                   children: [
-                                    Row(
+                                //Box Logo
+                                Container(
+                                  color: Colors.black,
+                                  width: 200.0,
+                                  height: 200.0,
+                                  child: Column(
                                       mainAxisAlignment:
                                           MainAxisAlignment.spaceEvenly,
                                       mainAxisSize: MainAxisSize.max,
+                                      crossAxisAlignment:
+                                          CrossAxisAlignment.center,
                                       children: [
-                                        Expanded(
-                                            child: Divider(
-                                          color: Colors.white,
-                                          height: 2.0,
-                                        )),
-                                        SizedBox(
-                                          width: 5.0,
+                                        Container(
+                                          width: 100.0,
+                                          height: 100.0,
+                                          color: Colors.grey,
                                         ),
-                                        Text(
-                                          'or',
-                                          style: TextStyle(
-                                            color: Colors.white,
-                                            fontSize: 16.0,
-                                          ),
-                                        ),
-                                        SizedBox(
-                                          width: 5.0,
-                                        ),
-                                        Expanded(
-                                            child: Divider(
-                                          color: Colors.white,
-                                          height: 2.0,
-                                        )),
-                                      ],
-                                    ),
-                                    Row(
+                                        Text('Nome applicazione',
+                                            style: TextStyle(
+                                              fontSize: 15.0,
+                                              color: Colors.grey,
+                                            )),
+                                      ]),
+                                ),
+
+                                //LogIn
+                                Card(
+                                  elevation: 5.0,
+                                  shape: RoundedRectangleBorder(
+                                      borderRadius: BorderRadius.circular(10.0)),
+                                  color: Colors.white,
+                                  margin: const EdgeInsets.symmetric(
+                                      horizontal: 25.0),
+                                  child: Center(child: withEmailPassword()),
+                                ),
+
+                                Container(
+                                  //color: Colors.black,
+                                  margin: EdgeInsets.symmetric(horizontal: 25.0),
+                                  child: Column(
+                                    children: [
+                                      Row(
                                         mainAxisAlignment:
                                             MainAxisAlignment.spaceEvenly,
+                                        mainAxisSize: MainAxisSize.max,
                                         children: [
                                           Expanded(
-                                            child: RaisedButton(
-                                              elevation: 5.0,
+                                              child: Divider(
+                                            color: Colors.white,
+                                            height: 2.0,
+                                          )),
+                                          SizedBox(
+                                            width: 5.0,
+                                          ),
+                                          Text(
+                                            'or',
+                                            style: TextStyle(
                                               color: Colors.white,
-                                              child: Text("Google",
-                                                  style: TextStyle(
-                                                    color: Colors.black,
-                                                    fontSize: 15.0,
-                                                  )),
-                                              shape: RoundedRectangleBorder(
-                                                  borderRadius:
-                                                      BorderRadius.circular(
-                                                          15.0)),
-                                              onPressed: () {
-                                                handle
-                                                    .loginWithGoogle(context)
-                                                    .then(
-                                                        (value) => setState(() {
-                                                              isLogged = value;
-                                                            }));
-                                              },
+                                              fontSize: 16.0,
                                             ),
                                           ),
-                                          SizedBox(width: 25.0),
+                                          SizedBox(
+                                            width: 5.0,
+                                          ),
                                           Expanded(
-                                            child: RaisedButton(
+                                              child: Divider(
+                                            color: Colors.white,
+                                            height: 2.0,
+                                          )),
+                                        ],
+                                      ),
+                                      Row(
+                                          mainAxisAlignment:
+                                              MainAxisAlignment.spaceEvenly,
+                                          children: [
+                                            Expanded(
+                                              child: RaisedButton(
                                                 elevation: 5.0,
-                                                color: Color.fromRGBO(
-                                                    59, 89, 152, 1),
-                                                child: Text("Facebook",
+                                                color: Colors.white,
+                                                child: Text("Google",
                                                     style: TextStyle(
-                                                      color: Colors.white,
+                                                      color: Colors.black,
                                                       fontSize: 15.0,
                                                     )),
                                                 shape: RoundedRectangleBorder(
@@ -203,50 +180,77 @@ class _LoginState extends State<Login> {
                                                             15.0)),
                                                 onPressed: () {
                                                   handle
-                                                      .loginWithFB(context)
-                                                      .then((value) =>
-                                                          setState(() {
-                                                            isLogged = value;
-                                                          }));
-                                                }),
-                                          ),
-                                        ]),
-                                  ],
+                                                      .loginWithGoogle(context)
+                                                      .then(
+                                                          (value) => setState(() {
+                                                                isLogged = value;
+                                                              }));
+                                                },
+                                              ),
+                                            ),
+                                            SizedBox(width: 25.0),
+                                            Expanded(
+                                              child: RaisedButton(
+                                                  elevation: 5.0,
+                                                  color: Color.fromRGBO(
+                                                      59, 89, 152, 1),
+                                                  child: Text("Facebook",
+                                                      style: TextStyle(
+                                                        color: Colors.white,
+                                                        fontSize: 15.0,
+                                                      )),
+                                                  shape: RoundedRectangleBorder(
+                                                      borderRadius:
+                                                          BorderRadius.circular(
+                                                              15.0)),
+                                                  onPressed: () {
+                                                    handle
+                                                        .loginWithFB(context)
+                                                        .then((value) =>
+                                                            setState(() {
+                                                              isLogged = value;
+                                                            }));
+                                                  }),
+                                            ),
+                                          ]),
+                                    ],
+                                  ),
                                 ),
-                              ),
 
-                              Align(
-                                alignment: Alignment.bottomCenter,
-                                child: RichText(
-                                  text: TextSpan(
-                                      text: "Don't have an account? ",
-                                      style: TextStyle(
-                                        color: Colors.white,
-                                        fontSize: 16.0,
-                                      ),
-                                      children: [
-                                        TextSpan(
-                                          text: 'Register now',
-                                          style: TextStyle(
-                                            color: Colors.blue,
-                                            decoration:
-                                                TextDecoration.underline,
-                                            fontSize: 16.0,
-                                          ),
-                                          recognizer: TapGestureRecognizer()
-                                            ..onTap = () async {
-                                              Navigator.push(
-                                                context,
-                                                MaterialPageRoute(
-                                                    builder: (context) =>
-                                                        Register()),
-                                              );
-                                            },
-                                        )
-                                      ]),
-                                ),
-                              )
-                            ])),
+                                Align(
+                                  alignment: Alignment.bottomCenter,
+                                  child: RichText(
+                                    text: TextSpan(
+                                        text: "Don't have an account? ",
+                                        style: TextStyle(
+                                          color: Colors.white,
+                                          fontSize: 16.0,
+                                        ),
+                                        children: [
+                                          TextSpan(
+                                            text: 'Register now',
+                                            style: TextStyle(
+                                              color: Colors.blue,
+                                              decoration:
+                                                  TextDecoration.underline,
+                                              fontSize: 16.0,
+                                            ),
+                                            recognizer: TapGestureRecognizer()
+                                              ..onTap = () async {
+                                                Navigator.push(
+                                                  context,
+                                                  MaterialPageRoute(
+                                                      builder: (context) =>
+                                                          Register()),
+                                                );
+                                              },
+                                          )
+                                        ]),
+                                  ),
+                                )
+                              ]),
+                              ]
+                            )),
                       ),
                     ),
                   ),

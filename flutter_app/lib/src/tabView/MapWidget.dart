@@ -81,7 +81,7 @@ class MapWidgetState extends State<MapWidget> {
     return Scaffold(
         resizeToAvoidBottomPadding: false,
         resizeToAvoidBottomInset: false,
-        drawer: UserAccount(),
+        //drawer: UserAccount(),
         body: //Stack(children: [
           GoogleMap(
             onMapCreated: _onMapCreated,

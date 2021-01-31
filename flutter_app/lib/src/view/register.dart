@@ -55,12 +55,15 @@ class _RegisterState extends State<Register> {
                   height: height - padding.top - padding.bottom,
                   margin: EdgeInsets.symmetric(horizontal: 25.0),
                   //color: Colors.red,
-                  child: Column(
+                  child: Stack(
+                  children: [
+                    showAlert(),
+                    Column(
                     crossAxisAlignment: CrossAxisAlignment.center,
                     mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                     mainAxisSize: MainAxisSize.max,
                     children: [
-                      showAlert(),
+
                       //Box Logo
                       Container(
                         color: Colors.black,
@@ -264,7 +267,8 @@ class _RegisterState extends State<Register> {
                         ),
                       ),
                     ],
-                  ),
+                  )],
+                  )
                 ),
               ),
             ),

@@ -24,12 +24,12 @@ import '../view/notificationScreen.dart' as not;
 import '../view/notificationWidget.dart';
 import 'package:image_picker/image_picker.dart';
 
-class BuilderWidget extends StatefulWidget {
+class TabDrawer extends StatefulWidget {
   @override
-  BuilderWidgetState createState() => BuilderWidgetState();
+  TabDrawerState createState() => TabDrawerState();
 }
 
-class BuilderWidgetState extends State<BuilderWidget> {
+class TabDrawerState extends State<TabDrawer> {
   var flag = false;
   var package;
   File imageFile;
@@ -39,31 +39,26 @@ class BuilderWidgetState extends State<BuilderWidget> {
     return new StoreConnector<AppState, ViewModel>(
         converter: (store) => createViewModel(store),
         builder: (context, _viewModel) {
-          return Scaffold(
-            appBar: AppBar(
-              backgroundColor: Colors.blue[900],
-            ),
-            drawer: new Drawer(
+          return new Drawer(
                 child: ListView(children: <Widget>[
-                  InkWell(
-                child: new UserAccountsDrawerHeader(
-                  decoration: BoxDecoration(color: Colors.blue[900]),
-                  accountName: Row(children: [
-                    Icon(
-                      Icons.account_box_outlined,
-                      color: Colors.white,
-                    ),
-                    SizedBox(
-                      width: 10,
-                    ),
-                    Text(
-                      "Name Surname",
-                      style: TextStyle(
-                        fontSize: 16,
-                      ),
-                    ),
-                  ]),
-                  accountEmail: Row(children: [
+                   InkWell(
+                     child: new UserAccountsDrawerHeader(
+                      decoration: BoxDecoration(color: Colors.blue[900]),
+                       accountName: Row(children: [
+                         Icon(
+                          Icons.account_box_outlined,
+                          color: Colors.white,
+                         ),
+                         SizedBox(
+                          width: 10,
+                         ),
+                        Text("${_viewModel.c.name}",
+                          style: TextStyle(
+                            fontSize: 16,
+                          ),
+                        ),
+                       ]),
+                      accountEmail: Row(children: [
                     Icon(
                       Icons.email,
                       color: Colors.white,
@@ -72,23 +67,17 @@ class BuilderWidgetState extends State<BuilderWidget> {
                       width: 10,
                     ),
                     Text(
-                      "email@email.it",
+                      "${_viewModel.c.email}",
                       style: TextStyle(
                         fontSize: 16,
                       ),
                     ),
                   ]),
-                  currentAccountPicture: Container(
-                      color: Colors.yellow,
-                      child: Container(
-                        height: 50,
-                        width: 50,
-                        color: Colors.red,
-                      )
-
-                      // new CircleAvatar(
-                      //       backgroundImage: getPhoto(_viewModel.c.photo),
-                      //     ),
+                      currentAccountPicture: Container(
+                        color: Colors.yellow,
+                        child: new CircleAvatar(
+                            backgroundImage: getPhoto(_viewModel.c.photo),
+                          ),
                       ),
                 ),
                 onTap: () {
@@ -99,7 +88,7 @@ class BuilderWidgetState extends State<BuilderWidget> {
                   //             InfoProfile(email: _viewModel.c.email)));
                 },
               ),
-                  new ListTile(
+              new ListTile(
                   title: Row(
                     mainAxisAlignment: MainAxisAlignment.start,
                     children: [
@@ -121,6 +110,27 @@ class BuilderWidgetState extends State<BuilderWidget> {
                     //             MyStations(email: _viewModel.c.email)));
                   }),
                   new ListTile(
+                      title: Row(
+                        mainAxisAlignment: MainAxisAlignment.start,
+                        children: [
+                          Icon(
+                            Icons.search,
+                            color: Colors.blue[900],
+                          ),
+                          Text(
+                            " Search Stations",
+                            style: TextStyle(color: Colors.blue[900], fontSize: 18),
+                          ),
+                        ],
+                      ),
+                      onTap: () {
+                        // Navigator.push(
+                        //     context,
+                        //     MaterialPageRoute(
+                        //         builder: (context) =>
+                        //             MyStations(email: _viewModel.c.email)));
+                      }),
+              new ListTile(
                   title: Row(
                     mainAxisAlignment: MainAxisAlignment.start,
                     children: [
@@ -142,7 +152,7 @@ class BuilderWidgetState extends State<BuilderWidget> {
               //   title:
               //       Row(children: [Text("Notification"), NotificationWidget()]),
               // ),
-                  new ListTile(
+              new ListTile(
                   title: Row(
                     mainAxisAlignment: MainAxisAlignment.start,
                     children: [
@@ -161,34 +171,28 @@ class BuilderWidgetState extends State<BuilderWidget> {
                           print("reconnected to mongoDb");
                         }));
                   }),
-                  new ListTile(
+              new ListTile(
                   title: Text("Buy a ticket"),
                   onTap: () {
                     openApp();
                   }),
 
-              // new ListTile(
-              //   title: Row(
-              //     mainAxisAlignment: MainAxisAlignment.start,
-              //     children: [
-              //       Icon(Icons.exit_to_app, color: Colors.blue[900],),
-              //       Text(" Logout", style: TextStyle( color: Colors.blue[900], fontSize: 18),),
-              //     ],
-              //   ),
+              new ListTile(
+                title: Row(
+                  mainAxisAlignment: MainAxisAlignment.start,
+                  children: [
+                    Icon(Icons.exit_to_app, color: Colors.blue[900],),
+                    Text(" Logout", style: TextStyle( color: Colors.blue[900], fontSize: 18),),
+                  ],
+                ),
               //   onTap: () {
               //     setLogged(false);
               //     Navigator.pushReplacement(context, MaterialPageRoute(
               //         builder: (BuildContext context) => Login()));
               //   },
-              // ),
-            ])),
-            body: Column(
-              children: [
-                Container(color: Colors.blue, height: 300),
-                Container(color: Colors.red, height: 300),
-              ],
-            ),
-          );
+              ),
+
+            ]));
         });
   }
 
