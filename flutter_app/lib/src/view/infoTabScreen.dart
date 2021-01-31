@@ -194,7 +194,12 @@ class InfoStationState extends State<InfoStation> {
 
                                               ],
                                             ),
-                                            Text("$address",
+                                            (address!=null) ? Text("$address",
+                                              style: TextStyle(
+                                                fontSize: 16.0,
+                                                color: Colors.grey,
+                                              ),
+                                            ) : Text("Loading",
                                               style: TextStyle(
                                                 fontSize: 16.0,
                                                 color: Colors.grey,

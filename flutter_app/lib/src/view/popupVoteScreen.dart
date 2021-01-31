@@ -5,13 +5,16 @@ import 'package:flutter_app/src/view/viewModel.dart';
 import 'package:flutter_redux/flutter_redux.dart';
 import '../services/stationServices.dart';
 import '../services/userService.dart';
+import 'dart:convert';
 import 'package:flutter_app/src/services/service.dart';
 
 class PopupVote extends StatefulWidget {
+  String name;
+  String photo;
   String email;
   String station;
 
-  PopupVote({Key key, this.email,this.station}) : super(key: key);
+  PopupVote({Key key, this.name, this.photo, this.email,this.station}) : super(key: key);
 
   PopupVoteState createState() => PopupVoteState();
 }
@@ -21,6 +24,9 @@ class PopupVoteState extends State<PopupVote> {
   var dis;
   var safety;
   var area;
+  var commentsThisStation;
+  var totalComments;
+  var totalInteractions;
   List<bool> voting = [false, false, false, false];
 
   retrieveMyVotes() {
@@ -50,16 +56,41 @@ class PopupVoteState extends State<PopupVote> {
     }));
   }
 
+  retrieveData() {
+    getMyComments(widget.email).then((result) =>
+        setState(() {
+          totalComments = result.length;
+        }));
+    commentsStation(widget.email, widget.station).then((result) =>
+        setState(() {
+          commentsThisStation = result;
+        }));
+  }
+
   @override
   void initState() {
     super.initState();
     retrieveMyVotes();
+    retrieveData();
+  }
+
+  ImageProvider getPhoto(photo) {
+    if (photo == null) {
+      return NetworkImage(
+          "https://loverary.files.wordpress.com/2013/10/facebook-default-no-profile-pic.jpg?w=619&zoom=2");
+    }
+    if (photo is String && photo.length > 200) {
+      return new MemoryImage(base64Decode(photo));
+    }
+    else {
+      return new NetworkImage(photo);
+    }
   }
 
   @override
   Widget build(BuildContext context) {
 
-    Widget meanValues(String Title, MeanValue) {
+    Widget meanValues(String Title, MeanValue,i) {
       return Expanded(
         child: Container(
           padding: EdgeInsets.symmetric(vertical: 5),
@@ -86,7 +117,7 @@ class PopupVoteState extends State<PopupVote> {
                   //boxShadow: [BoxShadow( blurRadius: 10, spreadRadius: 10)],
                 ),
                 child: Center(
-                  child: (MeanValue!=null) ?
+                  child: (voting[i]==true) ?
                   Text(MeanValue,
                     style: TextStyle(
                       color: Colors.black,
@@ -133,10 +164,10 @@ class PopupVoteState extends State<PopupVote> {
                       color: Colors.blue,
                       height: 30,
                       width: 30,
-                      // child: new CircleAvatar(
-                      //       backgroundImage: photo,
-                      //       radius: 40,
-                      //     ),
+                      child: new CircleAvatar(
+                             backgroundImage: getPhoto(widget.photo),
+                             radius: 40,
+                           ),
                     ),
                     SizedBox(width: 10,),
                     Expanded(
@@ -152,7 +183,7 @@ class PopupVoteState extends State<PopupVote> {
                               width: 10,
                             ),
                             Text(
-                              "Nome Utente",
+                              "${widget.name}",
                               style: TextStyle(
                                 fontSize: 20,
                                 //fontWeight: FontWeight.bold,
@@ -168,7 +199,7 @@ class PopupVoteState extends State<PopupVote> {
                               width: 10,
                             ),
                             Text(
-                              "Mail Utente",
+                              "${widget.email}",
                               style: TextStyle(
                                 fontSize: 20,
                                 //fontWeight: FontWeight.bold
@@ -185,12 +216,18 @@ class PopupVoteState extends State<PopupVote> {
                                     fontWeight: FontWeight.w400
                                 ),
                               ),
-                              Text("20",//"$numberComments",
+                              (totalComments!=null) ? Text("$totalComments",
                                 style: TextStyle(
                                     color: Colors.grey,
                                     fontSize: 18.0
                                 ),
-                              )
+                              ) : Container(
+                                child: Image(
+                                  image: AssetImage("assets/loading.jpg"),
+                                  height: 20.0,
+                                  width: 30.0,
+                                ),
+                              ),
                             ],
                           ),
                           Row(
@@ -231,7 +268,7 @@ class PopupVoteState extends State<PopupVote> {
                       Column(
                         crossAxisAlignment: CrossAxisAlignment.center,
                         children: [
-                          Text("<<Station name>>",
+                          Text("${widget.station}",
                             style: TextStyle(
                                 fontSize: 18,
                                 fontWeight: FontWeight.w700
@@ -245,44 +282,52 @@ class PopupVoteState extends State<PopupVote> {
                           Row(
                             mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                             children: [
-                              meanValues('Cleaniness', '50'),
-                              meanValues('Services', '50'),
-                              meanValues('Safety', '50'),
-                              meanValues('Area', '50')
+                              meanValues('Cleaniness', '$cleaning',0),
+                              meanValues('Services', '$dis',1),
+                              meanValues('Safety', '$safety',2),
+                              meanValues('Area', '$area',3)
                             ],
                           ),
                           Row(
                             mainAxisAlignment: MainAxisAlignment.spaceBetween,
                             children: [
-                              Text(" Comments:",
+                              Text(" Comments for this station:",
                                 style: TextStyle(
                                   fontSize: 18.0,
                                   fontWeight: FontWeight.w700
                                 ),
                               ),
-                              Text("20",//"$numberComments",
+                              (commentsThisStation!=null) ? Text("$commentsThisStation",//"$numberComments",
                                 style: TextStyle(
                                     fontSize: 20.0
                                 ),
-                              )
+                              ) : Container(
+                                child: Image(
+                                  image: AssetImage("assets/loading.jpg"),
+                                  height: 20.0,
+                                  width: 30.0,
+                                ),
+                              ),
                             ],
                           ),
+                          /*
                           Row(
                             mainAxisAlignment: MainAxisAlignment.spaceBetween,
                             children: [
-                              Text(" Interactions:",
+                              Text(" Interactions for this station:",
                                 style: TextStyle(
                                     fontSize: 18.0,
                                     fontWeight: FontWeight.w700
                                 ),
                               ),
-                              Text("20",//"$numberComments",
+                              Text("$interactionsThisStation",//"$numberComments",
                                 style: TextStyle(
                                     fontSize: 20.0
                                 ),
                               )
                             ],
                           ),
+                          */
                         ],
                       )
 
@@ -294,6 +339,8 @@ class PopupVoteState extends State<PopupVote> {
         ),
       ),
     );
+
+
 
 
 
@@ -343,6 +390,9 @@ class PopupVoteState extends State<PopupVote> {
               ],
             ),
         );
+
+
+
 
   }
 }

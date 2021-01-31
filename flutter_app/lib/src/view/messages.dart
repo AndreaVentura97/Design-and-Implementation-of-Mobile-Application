@@ -185,6 +185,8 @@ class MessagesState extends State<Messages> {
                                                                 builder: (
                                                                     BuildContext context) {
                                                                   return PopupVote(
+                                                                      name: messages[index]['name'],
+                                                                      photo: messages[index]['photo'],
                                                                       email: messages[index]['email'],
                                                                       station: widget
                                                                           .station);

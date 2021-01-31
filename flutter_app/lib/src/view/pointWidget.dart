@@ -101,25 +101,21 @@ class PointWidgetState extends State<PointWidget>{
                         //color: Colors.orange,
                         child: Row(
                           children: [
-                            Icon(Icons.restaurant),
-                            Text('${widget.point['name']}',
-                              style: TextStyle(
-                                decoration: TextDecoration.underline,
-                                fontSize: 16.0,
-                                fontWeight: FontWeight.bold,
+                            InkWell(
+                              child: Text('${widget.point['name']}',
+                                style: TextStyle(
+                                  decoration: TextDecoration.underline,
+                                  fontSize: 16.0,
+                                  fontWeight: FontWeight.bold,
+                                ),
                               ),
+                                onTap: () => {
+                                  launch(widget.point['webAddress']),
+                                }
                             ),
                           ],
                         ),
                       ),
-                      Container(
-                        //color: Colors.green[200],
-                        child: InkWell(
-                            child: Text('Link', style:TextStyle(color: Colors.blue,)),
-                            onTap: () => {
-                              launch(widget.point['webAddress']),
-                            }
-                      )),
                       Container(
                         //color: Colors.green[200],
                           child: Text('Distance from the station: $distance km', style:TextStyle(color: Colors.black,)),

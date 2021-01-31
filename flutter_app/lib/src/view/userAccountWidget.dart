@@ -125,7 +125,7 @@ class UserAccountState extends State<UserAccount> {
                               mainAxisAlignment: MainAxisAlignment.start,
                               children: [
                                 Icon(Icons.comment, color: Colors.blue[900],),
-                                Text(" My Comments", style: TextStyle( color: Colors.blue[900], fontSize: 18),),
+                                Text(" My Comments ", style: TextStyle( color: Colors.blue[900], fontSize: 18),),
                               ],
                             ),
                             onTap: () {
@@ -133,31 +133,24 @@ class UserAccountState extends State<UserAccount> {
                             }
                         ),
                         new ListTile(
-                            title: Row(
-                                children: [Text("Notification"),NotificationWidget()]
-                            ),
+                          title: Row(
+                            mainAxisAlignment: MainAxisAlignment.start,
+                            children: [
+                              NotificationWidget(),
+                              Text(" Notifications ", style: TextStyle( color: Colors.blue[900], fontSize: 18),),
+
+
+                            ],
+                          ),
 
                         ),
-                        new ListTile(
-                            title: Row(
-                              mainAxisAlignment: MainAxisAlignment.start,
-                              children: [
-                                Icon(Icons.refresh, color: Colors.blue[900],),
-                                Text(" Reconnect", style: TextStyle( color: Colors.blue[900], fontSize: 18),),
-                              ],
-                            ),
-                            onTap: () {
-                              DB.start().then((result) => setState(() {
-                                print("reconnected to mongoDb");
-                              }));
-                            }
-                        ),
-                        new ListTile(
-                            title: Text("Buy a ticket"),
-                            onTap: () {
-                              openApp();
-                            }
-                        ),
+
+                        //new ListTile(
+                          //  title: Text("Buy a ticket"),
+                          //  onTap: () {
+                           //   openApp();
+                           // }
+                       // ),
 
 
                         // new ListTile(

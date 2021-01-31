@@ -61,7 +61,7 @@ class _NotificationWidgetState extends State<NotificationWidget> {
           yes = _viewModel.c.notification;
           return IconButton(
             icon: Icon(Icons.notifications,
-              color: (yes) ? Colors.red : Colors.black,
+              color: (yes) ? Colors.red : Colors.blue[900],
             ),
             onPressed: () {
               StoreProvider.of<AppState>(context).dispatch(updateCustomer(name:_viewModel.c.name, email:_viewModel.c.email, photo: _viewModel.c.photo,notification: false));

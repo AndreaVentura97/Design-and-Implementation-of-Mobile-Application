@@ -239,3 +239,10 @@ removeFromList(list,text,station,email){
   return list;
 }
 
+commentsStation(email,station) async {
+  var listUser = await DB.getDB().collection('messages').find({'email':email, 'station':station}).toList();
+  print(listUser);
+  return listUser.length;
+}
+
+
