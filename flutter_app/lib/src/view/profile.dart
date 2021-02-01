@@ -50,8 +50,7 @@ class _ProfileState extends State<Profile> {
           return Scaffold(
               appBar: AppBar(
                 title: Row(
-
-                  mainAxisAlignment: MainAxisAlignment.center,
+                    mainAxisAlignment: MainAxisAlignment.center,
                   crossAxisAlignment: CrossAxisAlignment.center,
                   children: [
                     Text(

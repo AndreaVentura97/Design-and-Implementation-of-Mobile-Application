@@ -155,267 +155,277 @@ class MyCommentsState extends State<MyComments> {
                                   //shrinkWrap: true,
                                   itemCount: myComments.length,
                                   itemBuilder: (BuildContext context, int index) {
-                                    return Column(
-                                      children: [
-                                        Card(
-                                          margin: EdgeInsets.fromLTRB(10.0, 10.0, 10.0, 0.0),
-                                          elevation: 3.0,
-                                          shape: RoundedRectangleBorder(
-                                            borderRadius: BorderRadius.circular(10.0),
-                                            side: BorderSide(
-                                              color: Colors.blue[900],
-                                              width: 2.0,
+                                    return GestureDetector(
+                                      onTap: (){
+                                        Navigator.push(context, MaterialPageRoute(builder:(context)=>MenuStation(name:myComments[index]['station'])));
+                                      },
+                                      child: Column(
+                                        children: [
+                                          Card(
+                                            margin: EdgeInsets.fromLTRB(10.0, 10.0, 10.0, 0.0),
+                                            elevation: 3.0,
+                                            shape: RoundedRectangleBorder(
+                                              borderRadius: BorderRadius.circular(10.0),
+                                              side: BorderSide(
+                                                color: Colors.blue[900],
+                                                width: 2.0,
+                                              ),
+                                            ),
+                                            child: Container(
+                                              //color: Colors.blue,
+                                                margin: EdgeInsets.fromLTRB(20.0, 10.0, 10.0, 10.0),
+                                              child: Column(
+                                                    crossAxisAlignment: CrossAxisAlignment.start,
+                                                    children: [
+                                                      Container(
+                                                            //color: Colors.green,
+                                                            child: ListTile(
+                                                              dense: true,
+                                                              contentPadding: EdgeInsets.all(0.0),
+                                                              title: Row(
+                                                                children: [
+                                                                   Container(
+                                                                    child: DelayedDisplay(
+                                                                      delay: Duration(seconds:1),
+                                                                      child: InkWell(
+                                                                        child: Image(
+                                                                          image: buildAsset(myComments[index]['_id']),
+                                                                          height: 30.0,
+                                                                          width: 45.0,
+                                                                        ),
+                                                                          onTap: (){
+                                                                            Navigator.push(context, MaterialPageRoute(builder:(context)=>MenuStation(name:myComments[index]['station'])));
+                                                                          }
+                                                                      ),
+                                                                    )
+                                                                  ),
+                                                                  SizedBox(width: 10.0,),
+                                                                  IntrinsicWidth(
+                                                                    child: Column(
+                                                                      crossAxisAlignment: CrossAxisAlignment.start,
+                                                                      children: [
+                                                                        Text(myComments[index]['station'],
+                                                                            style: TextStyle(
+                                                                                fontSize: 20,
+                                                                                fontWeight: FontWeight.w500,
+                                                                                color: Colors.black
+                                                                            )
+                                                                        ),
+                                                                        Container(
+                                                                          //color: Colors.black,
+                                                                          child: Row(
+                                                                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                                                            children: [
+                                                                              Text(myComments[index]['date'],
+                                                                                style: TextStyle(
+                                                                                  fontSize: 15.0,
+                                                                                  color: Colors.grey,
+                                                                                ),
+                                                                              ),
+
+                                                                              //
+                                                                              // Da cambiare in base se cittadino o visitatiore
+                                                                              // Text('Citizen',
+                                                                              //   style: TextStyle(
+                                                                              //     fontSize: 15.0,
+                                                                              //     color: Colors.grey,
+                                                                              //   ),
+                                                                              // ),
+
+                                                                            ],
+                                                                          ),
+                                                                        ),
+                                                                      ],
+                                                                    ),
+                                                                  ),
+                                                                ],
+                                                              ),
+                                                              trailing: IconButton(icon: Icon(Icons.close), onPressed: (){
+                                                                deleteMyComment(myComments[index]['text'], myComments[index]['station'], myComments[index]['name']);
+                                                                setState(() {
+                                                                  myCommentsInteractions = removeFromList(myCommentsInteractions,myComments[index]['text'], myComments[index]['station'], myComments[index]['email']);
+                                                                  myComments.remove(myComments[index]);
+
+                                                                });
+                                                              }),
+                                                            ),
+                                                          ),
+                                                      Container(
+                                                        //color: Colors.red,
+                                                        child: Text(myComments[index]['text'],
+                                                            style: TextStyle(
+                                                                fontSize: 15,
+                                                                fontWeight: FontWeight.w500,
+                                                                color: Colors.black
+                                                            )
+                                                        ),
+                                                      ),
+                                                      Container(
+                                                        //color: Colors.yellow,
+                                                        padding: EdgeInsets.symmetric(horizontal: 10.0),
+                                                        child: Row(
+                                                          mainAxisAlignment: MainAxisAlignment.end,
+                                                          children: [
+                                                            Icon(Icons.thumb_up,
+                                                                    size: 25.0,
+                                                                    color: Colors.green,
+                                                                ),
+                                                            Text(" ${myComments[index]['nl']} "),
+                                                            Icon(Icons.thumb_down,
+                                                                    size: 25.0,
+                                                                    color: Colors.red,
+                                                               ),
+                                                            Text(" ${myComments[index]['nu']} "),
+                                                          ],
+                                                        ),
+                                                      ),
+
+
+                                                    ],
+                                                  ),
+
                                             ),
                                           ),
-                                          child: Container(
-                                            //color: Colors.blue,
-                                              margin: EdgeInsets.fromLTRB(20.0, 10.0, 10.0, 10.0),
-                                            child: Column(
-                                                  crossAxisAlignment: CrossAxisAlignment.start,
-                                                  children: [
-                                                    Container(
-                                                          //color: Colors.green,
-                                                          child: ListTile(
-                                                            dense: true,
-                                                            contentPadding: EdgeInsets.all(0.0),
-                                                            title: Row(
-                                                              children: [
-                                                                 Container(
-                                                                  child: DelayedDisplay(
-                                                                    delay: Duration(seconds:1),
-                                                                    child: InkWell(
-                                                                      child: Image(
-                                                                        image: buildAsset(myComments[index]['_id']),
-                                                                        height: 30.0,
-                                                                        width: 45.0,
-                                                                      ),
-                                                                        onTap: (){
-                                                                          Navigator.push(context, MaterialPageRoute(builder:(context)=>MenuStation(name:myComments[index]['station'])));
-                                                                        }
-                                                                    ),
-                                                                  )
-                                                                ),
-                                                                SizedBox(width: 10.0,),
-                                                                IntrinsicWidth(
-                                                                  child: Column(
-                                                                    crossAxisAlignment: CrossAxisAlignment.start,
-                                                                    children: [
-                                                                      Text(myComments[index]['station'],
-                                                                          style: TextStyle(
-                                                                              fontSize: 20,
-                                                                              fontWeight: FontWeight.w500,
-                                                                              color: Colors.black
-                                                                          )
-                                                                      ),
-                                                                      Container(
-                                                                        //color: Colors.black,
-                                                                        child: Row(
-                                                                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                                                                          children: [
-                                                                            Text(myComments[index]['date'],
-                                                                              style: TextStyle(
-                                                                                fontSize: 15.0,
-                                                                                color: Colors.grey,
-                                                                              ),
-                                                                            ),
-
-                                                                            //
-                                                                            // Da cambiare in base se cittadino o visitatiore
-                                                                            // Text('Citizen',
-                                                                            //   style: TextStyle(
-                                                                            //     fontSize: 15.0,
-                                                                            //     color: Colors.grey,
-                                                                            //   ),
-                                                                            // ),
-
-                                                                          ],
-                                                                        ),
-                                                                      ),
-                                                                    ],
-                                                                  ),
-                                                                ),
-                                                              ],
-                                                            ),
-                                                            trailing: IconButton(icon: Icon(Icons.close), onPressed: (){
-                                                              deleteMyComment(myComments[index]['text'], myComments[index]['station'], myComments[index]['name']);
-                                                              setState(() {
-                                                                myCommentsInteractions = removeFromList(myCommentsInteractions,myComments[index]['text'], myComments[index]['station'], myComments[index]['email']);
-                                                                myComments.remove(myComments[index]);
-
-                                                              });
-                                                            }),
-                                                          ),
-                                                        ),
-                                                    Container(
-                                                      //color: Colors.red,
-                                                      child: Text(myComments[index]['text'],
-                                                          style: TextStyle(
-                                                              fontSize: 15,
-                                                              fontWeight: FontWeight.w500,
-                                                              color: Colors.black
-                                                          )
-                                                      ),
-                                                    ),
-                                                    Container(
-                                                      //color: Colors.yellow,
-                                                      padding: EdgeInsets.symmetric(horizontal: 10.0),
-                                                      child: Row(
-                                                        mainAxisAlignment: MainAxisAlignment.end,
-                                                        children: [
-                                                          Icon(Icons.thumb_up,
-                                                                  size: 25.0,
-                                                                  color: Colors.green,
-                                                              ),
-                                                          Text(" ${myComments[index]['nl']} "),
-                                                          Icon(Icons.thumb_down,
-                                                                  size: 25.0,
-                                                                  color: Colors.red,
-                                                             ),
-                                                          Text(" ${myComments[index]['nu']} "),
-                                                        ],
-                                                      ),
-                                                    ),
-
-
-                                                  ],
-                                                ),
-
-                                          ),
-                                        ),
-                                      ],
+                                        ],
+                                      ),
                                     );
                                   },
                                 ) : ListView.builder(
                           //shrinkWrap: true,
                           itemCount: myCommentsInteractions.length,
                           itemBuilder: (BuildContext context, int index) {
-                            return Column(
-                              children: [
-                                Card(
-                                  margin: EdgeInsets.fromLTRB(10.0, 10.0, 10.0, 0.0),
-                                  elevation: 3.0,
-                                  shape: RoundedRectangleBorder(
-                                    borderRadius: BorderRadius.circular(10.0),
-                                    side: BorderSide(
-                                      color: Colors.blue[900],
-                                      width: 2.0,
+                            return GestureDetector(
+                              onTap: (){
+                                Navigator.push(context, MaterialPageRoute(builder:(context)=>MenuStation(name:myComments[index]['station'])));
+                              },
+                              child: Column(
+                                children: [
+                                  Card(
+                                    margin: EdgeInsets.fromLTRB(10.0, 10.0, 10.0, 0.0),
+                                    elevation: 3.0,
+                                    shape: RoundedRectangleBorder(
+                                      borderRadius: BorderRadius.circular(10.0),
+                                      side: BorderSide(
+                                        color: Colors.blue[900],
+                                        width: 2.0,
+                                      ),
                                     ),
-                                  ),
-                                  child: Container(
-                                    //color: Colors.blue,
-                                    margin: EdgeInsets.fromLTRB(20.0, 10.0, 10.0, 10.0),
-                                    child: Column(
-                                      crossAxisAlignment: CrossAxisAlignment.start,
-                                      children: [
-                                        Container(
-                                          //color: Colors.green,
-                                          child: ListTile(
-                                            dense: true,
-                                            contentPadding: EdgeInsets.all(0.0),
-                                            title: Row(
-                                              children: [
-                                                Container(
-                                                    child: DelayedDisplay(
-                                                      delay: Duration(seconds:1),
-                                                      child: InkWell(
-                                                          child: Image(
-                                                            image: buildAsset(myCommentsInteractions[index]['_id']),
-                                                            height: 30.0,
-                                                            width: 45.0,
-                                                          ),
-                                                          onTap: (){
-                                                            Navigator.push(context, MaterialPageRoute(builder:(context)=>MenuStation(name:myCommentsInteractions[index]['station'])));
-                                                          }
-                                                      ),
-                                                    )
-                                                ),
-                                                SizedBox(width: 10.0,),
-                                                IntrinsicWidth(
-                                                  child: Column(
-                                                    crossAxisAlignment: CrossAxisAlignment.start,
-                                                    children: [
-                                                      Text(myCommentsInteractions[index]['station'],
-                                                          style: TextStyle(
-                                                              fontSize: 20,
-                                                              fontWeight: FontWeight.w500,
-                                                              color: Colors.black
-                                                          )
-                                                      ),
-                                                      Container(
-                                                        //color: Colors.black,
-                                                        child: Row(
-                                                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                                                          children: [
-                                                            Text(myCommentsInteractions[index]['date'],
-                                                              style: TextStyle(
-                                                                fontSize: 15.0,
-                                                                color: Colors.grey,
-                                                              ),
+                                    child: Container(
+                                      //color: Colors.blue,
+                                      margin: EdgeInsets.fromLTRB(20.0, 10.0, 10.0, 10.0),
+                                      child: Column(
+                                        crossAxisAlignment: CrossAxisAlignment.start,
+                                        children: [
+                                          Container(
+                                            //color: Colors.green,
+                                            child: ListTile(
+                                              dense: true,
+                                              contentPadding: EdgeInsets.all(0.0),
+                                              title: Row(
+                                                children: [
+                                                  Container(
+                                                      child: DelayedDisplay(
+                                                        delay: Duration(seconds:1),
+                                                        child: InkWell(
+                                                            child: Image(
+                                                              image: buildAsset(myCommentsInteractions[index]['_id']),
+                                                              height: 30.0,
+                                                              width: 45.0,
                                                             ),
-
-                                                            //
-                                                            // Da cambiare in base se cittadino o visitatiore
-                                                            // Text('Citizen',
-                                                            //   style: TextStyle(
-                                                            //     fontSize: 15.0,
-                                                            //     color: Colors.grey,
-                                                            //   ),
-                                                            // ),
-
-                                                          ],
+                                                            onTap: (){
+                                                              Navigator.push(context, MaterialPageRoute(builder:(context)=>MenuStation(name:myCommentsInteractions[index]['station'])));
+                                                            }
                                                         ),
-                                                      ),
-                                                    ],
+                                                      )
                                                   ),
+                                                  SizedBox(width: 10.0,),
+                                                  IntrinsicWidth(
+                                                    child: Column(
+                                                      crossAxisAlignment: CrossAxisAlignment.start,
+                                                      children: [
+                                                        Text(myCommentsInteractions[index]['station'],
+                                                            style: TextStyle(
+                                                                fontSize: 20,
+                                                                fontWeight: FontWeight.w500,
+                                                                color: Colors.black
+                                                            )
+                                                        ),
+                                                        Container(
+                                                          //color: Colors.black,
+                                                          child: Row(
+                                                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                                            children: [
+                                                              Text(myCommentsInteractions[index]['date'],
+                                                                style: TextStyle(
+                                                                  fontSize: 15.0,
+                                                                  color: Colors.grey,
+                                                                ),
+                                                              ),
+
+                                                              //
+                                                              // Da cambiare in base se cittadino o visitatiore
+                                                              // Text('Citizen',
+                                                              //   style: TextStyle(
+                                                              //     fontSize: 15.0,
+                                                              //     color: Colors.grey,
+                                                              //   ),
+                                                              // ),
+
+                                                            ],
+                                                          ),
+                                                        ),
+                                                      ],
+                                                    ),
+                                                  ),
+                                                ],
+                                              ),
+                                              trailing: IconButton(icon: Icon(Icons.close), onPressed: (){
+                                                deleteMyComment(myCommentsInteractions[index]['text'], myCommentsInteractions[index]['station'], myCommentsInteractions[index]['name']);
+                                                setState(() {
+                                                  myComments = removeFromList(myComments,myCommentsInteractions[index]['text'], myCommentsInteractions[index]['station'], myCommentsInteractions[index]['email']);
+                                                  myCommentsInteractions.remove(myCommentsInteractions[index]);
+                                                });
+                                              }),
+                                            ),
+                                          ),
+                                          Container(
+                                            //color: Colors.red,
+                                            child: Text(myCommentsInteractions[index]['text'],
+                                                style: TextStyle(
+                                                    fontSize: 15,
+                                                    fontWeight: FontWeight.w500,
+                                                    color: Colors.black
+                                                )
+                                            ),
+                                          ),
+                                          Container(
+                                            //color: Colors.yellow,
+                                            padding: EdgeInsets.symmetric(horizontal: 10.0),
+                                            child: Row(
+                                              mainAxisAlignment: MainAxisAlignment.end,
+                                              children: [
+                                                Icon(Icons.thumb_up,
+                                                  size: 25.0,
+                                                  color: Colors.green,
                                                 ),
+                                                Text(" ${myCommentsInteractions[index]['nl']} "),
+                                                Icon(Icons.thumb_down,
+                                                  size: 25.0,
+                                                  color: Colors.red,
+                                                ),
+                                                Text(" ${myCommentsInteractions[index]['nu']} "),
                                               ],
                                             ),
-                                            trailing: IconButton(icon: Icon(Icons.close), onPressed: (){
-                                              deleteMyComment(myCommentsInteractions[index]['text'], myCommentsInteractions[index]['station'], myCommentsInteractions[index]['name']);
-                                              setState(() {
-                                                myComments = removeFromList(myComments,myCommentsInteractions[index]['text'], myCommentsInteractions[index]['station'], myCommentsInteractions[index]['email']);
-                                                myCommentsInteractions.remove(myCommentsInteractions[index]);
-                                              });
-                                            }),
                                           ),
-                                        ),
-                                        Container(
-                                          //color: Colors.red,
-                                          child: Text(myCommentsInteractions[index]['text'],
-                                              style: TextStyle(
-                                                  fontSize: 15,
-                                                  fontWeight: FontWeight.w500,
-                                                  color: Colors.black
-                                              )
-                                          ),
-                                        ),
-                                        Container(
-                                          //color: Colors.yellow,
-                                          padding: EdgeInsets.symmetric(horizontal: 10.0),
-                                          child: Row(
-                                            mainAxisAlignment: MainAxisAlignment.end,
-                                            children: [
-                                              Icon(Icons.thumb_up,
-                                                size: 25.0,
-                                                color: Colors.green,
-                                              ),
-                                              Text(" ${myCommentsInteractions[index]['nl']} "),
-                                              Icon(Icons.thumb_down,
-                                                size: 25.0,
-                                                color: Colors.red,
-                                              ),
-                                              Text(" ${myCommentsInteractions[index]['nu']} "),
-                                            ],
-                                          ),
-                                        ),
 
 
-                                      ],
+                                        ],
+                                      ),
+
                                     ),
-
                                   ),
-                                ),
-                              ],
+                                ],
+                              ),
                             );
                           },
                         ),
