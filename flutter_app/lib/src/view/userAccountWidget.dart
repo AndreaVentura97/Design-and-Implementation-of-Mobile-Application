@@ -43,161 +43,168 @@ class UserAccountState extends State<UserAccount> {
         builder : (context, _viewModel) {
           return
             new Drawer(
-                child: ListView(
-                    children: <Widget>[
-                      // DrawerHeader(child: Container(
-                      //   color: Colors.blue[900],
-                      //   padding: EdgeInsets.zero,
-                      // )
-                      // ),
-                      InkWell(
-                        child: new UserAccountsDrawerHeader(
-                          decoration: BoxDecoration(
+                  child: ListView(
+                      children: <Widget>[
+                        // DrawerHeader(child: Container(
+                        //   color: Colors.blue[900],
+                        //   padding: EdgeInsets.zero,
+                        // )
+                        // ),
+                        InkWell(
+                          child: new UserAccountsDrawerHeader(
+                            decoration: BoxDecoration(
                               color: Colors.blue[900]
-                          ),
-                          accountName: Row(children: [
-                            Icon(
+                            ),
+                            accountName: Row(children: [
+                              Icon(
                               Icons.account_box_outlined,
                               color: Colors.white,
                             ),
-                            SizedBox(width: 10,),
-                            Text("${_viewModel.c.name}",
-                              style: TextStyle(
-                                fontSize: 16,
+                              SizedBox(width: 10,),
+                              Text("${_viewModel.c.name}",
+                                style: TextStyle(
+                                  fontSize: 16,
+                                ),
                               ),
-                            ),
-                          ]),
-                          accountEmail: Row(children: [
-                            Icon(
+                            ]),
+                            accountEmail: Row(children: [
+                              Icon(
                               Icons.email,
                               color: Colors.white,
                             ),
-                            SizedBox(width: 10,),
-                            Text("${_viewModel.c.email}",
-                              style: TextStyle(
-                                fontSize: 16,
+                              SizedBox(width: 10,),
+                              Text("${_viewModel.c.email}",
+                                style: TextStyle(
+                                  fontSize: 16,
+                                ),
                               ),
-                            ),
-                          ]),
-                          currentAccountPicture: Container(
-                            color: Colors.yellow,
-                            child: InkWell(
+                            ]),
+                            currentAccountPicture: Container(
+                              color: Colors.yellow,
+                               child: InkWell(
                                 child: new CircleAvatar(
                                   backgroundImage: getPhoto(_viewModel.c.photo),
                                 ),
-                                onTap: () {
-                                  showChoiceDialog(_viewModel, context);
-                                }
+                                  onTap: () {
+                                    showChoiceDialog(_viewModel, context);
+                                  }
+                              ),
                             ),
                           ),
+                          onTap: () {
+                            Navigator.pushReplacement(context, MaterialPageRoute(
+                                builder: (BuildContext context) => InfoProfile(email:_viewModel.c.email)));
+                          },
                         ),
-                        onTap: () {
-                          Navigator.pushReplacement(context, MaterialPageRoute(
-                              builder: (BuildContext context) => InfoProfile(email:_viewModel.c.email)));
-                        },
-                      ),
-                      new ListTile(
+                        new ListTile(
+                            title: Row(
+                              mainAxisAlignment: MainAxisAlignment.start,
+                              children: [
+                                Icon(Icons.location_on, color: Colors.blue[900],),
+                                Text(" Map", style: TextStyle( color: Colors.blue[900], fontSize: 18),),
+                              ],
+                            ),
+                            onTap: () {
+                              Navigator.push(context, MaterialPageRoute(builder:(context)=> Map()));
+                            }
+                        ),
+                        new ListTile(
+                            title: Row(
+                              mainAxisAlignment: MainAxisAlignment.start,
+                              children: [
+                                Icon(Icons.train, color: Colors.blue[900],),
+                                Text(" My Stations", style: TextStyle( color: Colors.blue[900], fontSize: 18),),
+                              ],
+                            ),
+                            onTap: () {
+                              Navigator.push(context, MaterialPageRoute(builder:(context)=> MyStations (email: _viewModel.c.email)));
+                            }
+                        ),
+                        new ListTile(
+                            title: Row(
+                              mainAxisAlignment: MainAxisAlignment.start,
+                              children: [
+                                Icon(Icons.comment, color: Colors.blue[900],),
+                                Text(" My Comments", style: TextStyle( color: Colors.blue[900], fontSize: 18),),
+                              ],
+                            ),
+                            onTap: () {
+                              Navigator.push(context, MaterialPageRoute(builder:(context)=> MyComments ()));
+                            }
+                        ),
+                        new ListTile(
+                            title: Row(
+                                children: [Text("Notification"),NotificationWidget()]
+                            ),
+
+                        ),
+                        new ListTile(
+                            title: Row(
+                              mainAxisAlignment: MainAxisAlignment.start,
+                              children: [
+                                Icon(Icons.refresh, color: Colors.blue[900],),
+                                Text(" Reconnect", style: TextStyle( color: Colors.blue[900], fontSize: 18),),
+                              ],
+                            ),
+                            onTap: () {
+                              DB.start().then((result) => setState(() {
+                                print("reconnected to mongoDb");
+                              }));
+                            }
+                        ),
+                        new ListTile(
+                            title: Text("Buy a ticket"),
+                            onTap: () {
+                              openApp();
+                            }
+                        ),
+
+
+                        // new ListTile(
+                        //     title: Text("Profile"),
+                        //     onTap: () {
+                        //       Navigator.pushReplacement(context, MaterialPageRoute(
+                        //           builder: (BuildContext context) => InfoProfile(email:_viewModel.c.email)));
+                        //     }
+                        // ),
+
+                        new ListTile(
                           title: Row(
                             mainAxisAlignment: MainAxisAlignment.start,
                             children: [
-                              Icon(Icons.location_on, color: Colors.blue[900],),
-                              Text(" Map", style: TextStyle( color: Colors.blue[900], fontSize: 18),),
+                              Icon(Icons.exit_to_app, color: Colors.blue[900],),
+                              Text(" Logout", style: TextStyle( color: Colors.blue[900], fontSize: 18),),
                             ],
                           ),
                           onTap: () {
-                            Navigator.push(context, MaterialPageRoute(builder:(context)=> Map()));
-                          }
-                      ),
-                      new ListTile(
-                          title: Row(
-                            mainAxisAlignment: MainAxisAlignment.start,
-                            children: [
-                              Icon(Icons.train, color: Colors.blue[900],),
-                              Text(" My Stations", style: TextStyle( color: Colors.blue[900], fontSize: 18),),
-                            ],
-                          ),
-                          onTap: () {
-                            Navigator.push(context, MaterialPageRoute(builder:(context)=> MyStations (email: _viewModel.c.email)));
-                          }
-                      ),
-                      new ListTile(
-                          title: Row(
-                            mainAxisAlignment: MainAxisAlignment.start,
-                            children: [
-                              Icon(Icons.comment, color: Colors.blue[900],),
-                              Text(" My Comments ", style: TextStyle( color: Colors.blue[900], fontSize: 18),),
-                            ],
-                          ),
-                          onTap: () {
-                            Navigator.push(context, MaterialPageRoute(builder:(context)=> MyComments ()));
-                          }
-                      ),
-                      new ListTile(
-                        title: Row(
-                          mainAxisAlignment: MainAxisAlignment.start,
-                          children: [
-                            NotificationWidget(),
-                            Text(" Notifications ", style: TextStyle( color: Colors.blue[900], fontSize: 18),),
-
-
-                          ],
+                            setLogged(false);
+                            Navigator.pushReplacement(context, MaterialPageRoute(
+                                builder: (BuildContext context) => Login()));
+                          },
                         ),
-
-                      ),
-
-                      //new ListTile(
-                      //  title: Text("Buy a ticket"),
-                      //  onTap: () {
-                      //   openApp();
-                      // }
-                      // ),
-
-
-                      // new ListTile(
-                      //     title: Text("Profile"),
-                      //     onTap: () {
-                      //       Navigator.pushReplacement(context, MaterialPageRoute(
-                      //           builder: (BuildContext context) => InfoProfile(email:_viewModel.c.email)));
-                      //     }
-                      // ),
-
-                      new ListTile(
-                        title: Row(
-                          mainAxisAlignment: MainAxisAlignment.start,
-                          children: [
-                            Icon(Icons.exit_to_app, color: Colors.blue[900],),
-                            Text(" Logout", style: TextStyle( color: Colors.blue[900], fontSize: 18),),
-                          ],
-                        ),
-                        onTap: () {
-                          setLogged(false);
-                          Navigator.pushReplacement(context, MaterialPageRoute(
-                              builder: (BuildContext context) => Login()));
-                        },
-                      ),
-                    ]
-                )
-            );
+                      ]
+                  )
+              );
         });
 
   }
-  openApp () async {
-    String dt = "https://www.atm.it/it/AtmNews/AtmInforma/Pagine/accedi_metro_smartphone.aspx";
+openApp () async {
+  String dt = "https://www.atm.it/it/AtmNews/AtmInforma/Pagine/accedi_metro_smartphone.aspx";
 
-    DeviceApps.getInstalledApplications(
-        includeAppIcons: true,
-        includeSystemApps: false,
-        onlyAppsWithLaunchIntent: false).
-    then((result)=>setState((){
-      for(int i=0;i<result.length;i++){
-        if(result[i].appName=="ATM Milano"){
-          package = result[i].packageName;
-          flag = true;
-          //print(" $flag + $package");
-        }
+  DeviceApps.getInstalledApplications(
+      includeAppIcons: true,
+      includeSystemApps: false,
+      onlyAppsWithLaunchIntent: false).
+  then((result)=>setState((){
+    for(int i=0;i<result.length;i++){
+      if(result[i].appName=="ATM Milano"){
+        package = result[i].packageName;
+        flag = true;
+        //print(" $flag + $package");
       }
-    }));
-    if (flag == true) {
+    }
+  }));
+  if (flag == true) {
       DeviceApps.openApp(package);
     }
     else
@@ -214,25 +221,25 @@ class UserAccountState extends State<UserAccount> {
   Future<void> showChoiceDialog (_viewModel,BuildContext context){
     return showDialog (context:context, builder: (BuildContext context) {
       return AlertDialog(
-          title: Text("Make a choice"),
-          content: SingleChildScrollView(
-              child: ListBody(
-                  children: <Widget>[
-                    GestureDetector(
-                        child: Text("Gallery"),
-                        onTap: (){
-                          _openGallery(_viewModel,context);
-                        }
-                    ),
-                    GestureDetector(
-                        child: Text("Camera"),
-                        onTap: (){
-                          _openCamera(_viewModel,context);
-                        }
-                    )
-                  ]
-              )
-          )
+        title: Text("Make a choice"),
+        content: SingleChildScrollView(
+          child: ListBody(
+          children: <Widget>[
+            GestureDetector(
+              child: Text("Gallery"),
+              onTap: (){
+                _openGallery(_viewModel,context);
+              }
+           ),
+            GestureDetector(
+                child: Text("Camera"),
+                onTap: (){
+                  _openCamera(_viewModel,context);
+                }
+            )
+          ]
+      )
+      )
       );
     });
   }

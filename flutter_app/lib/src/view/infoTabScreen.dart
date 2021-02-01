@@ -61,7 +61,7 @@ class InfoStationState extends State<InfoStation> {
       points = result;
     }));
   }
-
+  
   String checkLine(line){
     if (line=="Metro M1"){
       setState(() {
@@ -106,23 +106,23 @@ class InfoStationState extends State<InfoStation> {
       onInit: (store) => updateFav(store.state.customer.email, widget.station),
       builder: (context,_viewModel){
         List<Widget> buildPoints (){
-          List<Widget> list = new List();
-          for (int i=0; i< points.length;i++){
-            list.add(PointWidget(point:points[i]));
-          }
-          return list;
+            List<Widget> list = new List();
+            for (int i=0; i< points.length;i++){
+              list.add(PointWidget(point:points[i]));
+            }
+            return list;
         }
         return Scaffold(
-            backgroundColor: Colors.grey[300],
+          backgroundColor: Colors.grey[300],
             body: SingleChildScrollView(
               child: Column (
-                  mainAxisAlignment: MainAxisAlignment.center,
+                mainAxisAlignment: MainAxisAlignment.center,
                   children:[
                     Card(
                       margin: EdgeInsets.fromLTRB(10.0, 10.0, 10.0, 0.0),
                       elevation: 3.0,
                       shape: RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(10.0),
+                          borderRadius: BorderRadius.circular(10.0),
                         side: BorderSide(
                           color: Colors.blue[900],
                           width: 2.0,
@@ -133,88 +133,83 @@ class InfoStationState extends State<InfoStation> {
                         margin: EdgeInsets.all(10.0),
                         //color: Colors.green,
                         child: ListTile(
-                          contentPadding: EdgeInsets.zero,
-                          title: Row(
-                            //mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            children: [
-                              Container(
-                                child: Image(
-                                  image: (image!="") ? AssetImage(image) : AssetImage("assets/loading.jpg"),
-                                  height: 40.0,
-                                  width: 60.0,
-                                ),
-                              ),
-                              SizedBox(width: 10.0,),
-                              Flexible(
-                                child: Container(
-                                  //color: Colors.blue,
-                                  child: Column(
-                                    crossAxisAlignment: CrossAxisAlignment.start,
-                                    children: [
-                                      Row(
-                                        children: [
-                                          Text("${widget.station}",
-                                            style: TextStyle(
-                                              fontSize: 25.0,
-                                              color: Colors.black,
+                                contentPadding: EdgeInsets.zero,
+                                title: Row(
+                                  //mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                  crossAxisAlignment: CrossAxisAlignment.start,
+                                  children: [
+                                    Container(
+                                      child: Image(
+                                        image: (image!="") ? AssetImage(image) : AssetImage("assets/loading.jpg"),
+                                        height: 40.0,
+                                        width: 60.0,
+                                      ),
+                                    ),
+                                    SizedBox(width: 10.0,),
+                                    Flexible(
+                                      child: Container(
+                                        //color: Colors.blue,
+                                        child: Column(
+                                          crossAxisAlignment: CrossAxisAlignment.start,
+                                          children: [
+                                            Row(
+                                              children: [
+                                                Text("${widget.station}",
+                                                  style: TextStyle(
+                                                    fontSize: 25.0,
+                                                    color: Colors.black,
+                                                  ),
+                                                ),
+                                                SizedBox(width: 5.0,),
+                                                Icon(Icons.circle,
+                                                  color: Colors.green,
+                                                  size: 15,
+                                                ),
+                                                Spacer(),
+                                                Container(
+                                                  width: 25,
+                                                  height: 25,
+                                                  padding: EdgeInsets.zero,
+                                                  //color: Colors.blue,
+                                                  child: IconButton(
+                                                    padding: EdgeInsets.zero,
+                                                    icon: Icon(!_favStation ? Icons.favorite_outline : Icons.favorite,
+                                                      size: 20.0,
+                                                      color: Colors.black,
+                                                    ),
+                                                    onPressed: (!_favStation) ?  () {
+                                                      addMyStations(_viewModel.c.email, widget.station);
+                                                      setState(() {
+                                                        _favStation = true;
+                                                      });
+                                                    } : () {
+                                                      deleteMyStations(_viewModel.c.email, widget.station);
+                                                      setState(() {
+                                                        _favStation = false;
+                                                      });
+                                                    },
+                                                  ),
+                                                )
+
+
+                                              ],
                                             ),
-                                          ),
-                                          SizedBox(width: 5.0,),
-                                          Icon(Icons.circle,
-                                            color: Colors.green,
-                                            size: 15,
-                                          ),
-                                          Spacer(),
-                                          Container(
-                                            width: 25,
-                                            height: 25,
-                                            padding: EdgeInsets.zero,
-                                            //color: Colors.blue,
-                                            child: IconButton(
-                                              padding: EdgeInsets.zero,
-                                              icon: Icon(!_favStation ? Icons.favorite_outline : Icons.favorite,
-                                                size: 20.0,
-                                                color: Colors.black,
+                                            Text("$address",
+                                              style: TextStyle(
+                                                fontSize: 16.0,
+                                                color: Colors.grey,
                                               ),
-                                              onPressed: (!_favStation) ?  () {
-                                                addMyStations(_viewModel.c.email, widget.station);
-                                                setState(() {
-                                                  _favStation = true;
-                                                });
-                                              } : () {
-                                                deleteMyStations(_viewModel.c.email, widget.station);
-                                                setState(() {
-                                                  _favStation = false;
-                                                });
-                                              },
                                             ),
-                                          )
-
-
-                                        ],
-                                      ),
-                                      (address!=null) ? Text("$address",
-                                        style: TextStyle(
-                                          fontSize: 16.0,
-                                          color: Colors.grey,
-                                        ),
-                                      ) : Text("Loading",
-                                        style: TextStyle(
-                                          fontSize: 16.0,
-                                          color: Colors.grey,
+                                          ],
                                         ),
                                       ),
-                                    ],
-                                  ),
+                                    ),
+
+
+                                  ],
                                 ),
+
                               ),
-
-
-                            ],
-                          ),
-
-                        ),
 
 
                       ),
@@ -272,7 +267,7 @@ class InfoStationState extends State<InfoStation> {
                           children: [
                             Text('Services:',
                               style: TextStyle(
-                                  fontSize: 18.0
+                                fontSize: 18.0
                               ),
                             ),
                             Spacer(),
@@ -307,33 +302,33 @@ class InfoStationState extends State<InfoStation> {
                               thickness: 1.0,
                             ),
                             Column(
-                              crossAxisAlignment: CrossAxisAlignment.start,
-                              children: buildPoints(),
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                                children: buildPoints(),
                             ),
 
                           ],
                         ),
                       ),
                     ),
-                    Column(children: [
-                      TextField(
-                          decoration: InputDecoration(
-                            border: InputBorder.none,
-                            hintText: 'Enter a suggestion',
-                          ),
-                          controller: myController),
-                      OutlineButton(
-                        child: Text("Send"),
-                        onPressed: () {
-                          var name = _viewModel.c.name;
-                          var email = _viewModel.c.email;
-                          var photo = _viewModel.c.photo;
-                          saveSuggestion(email, name, myController.text, photo, widget.station);
-                          myController.clear();
-                        },
-                      ),
+                Column(children: [
+                  TextField(
+                  decoration: InputDecoration(
+                    border: InputBorder.none,
+                    hintText: 'Enter a suggestion',
+                  ),
+                  controller: myController),
+                  OutlineButton(
+                    child: Text("Send"),
+                    onPressed: () {
+                      var name = _viewModel.c.name;
+                      var email = _viewModel.c.email;
+                      var photo = _viewModel.c.photo;
+                      saveSuggestion(email, name, myController.text, photo, widget.station);
+                      myController.clear();
+                },
+              ),
 
-                    ])
+            ])
                   ]
               ),
             )

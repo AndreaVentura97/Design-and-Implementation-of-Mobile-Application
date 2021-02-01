@@ -81,7 +81,7 @@ class MessagesState extends State<Messages> {
         onInit: (store) => retrieveMyPreference(store.state.customer.email),
         builder: (context, _viewModel) {
           return Scaffold(
-              backgroundColor: Colors.grey[300],
+            backgroundColor: Colors.grey[300],
               body: Column(
                 children: [
                   Container(
@@ -153,93 +153,91 @@ class MessagesState extends State<Messages> {
                                       Container(
                                         //color: Colors.pink,
                                         child: ListTile(
-                                          dense: true,
-                                          contentPadding: EdgeInsets.all(0.0),
-                                          title: Row(
-                                            children: [
-                                              CircleAvatar(
-                                                //backgroundColor: Colors.blue[900],
-                                                backgroundImage: getPhoto(
-                                                    messages[index]['photo']),
-                                                //updatePhoto,
-                                                radius: 15.0,
-                                              ),
-                                              SizedBox(width: 10.0,),
-                                              IntrinsicWidth(
-                                                child: Column(
-                                                  crossAxisAlignment: CrossAxisAlignment
-                                                      .start,
-                                                  children: [
-                                                    InkWell(
-                                                        child: Text(
-                                                            messages[index]['name'],
-                                                            style: TextStyle(
-                                                                fontSize: 18.0,
-                                                                fontWeight: FontWeight
-                                                                    .w500,
-                                                                color: Colors
-                                                                    .black)),
-                                                        onTap: () {
-                                                          showDialog(
-                                                              context: context,
-                                                              builder: (
-                                                                  BuildContext context) {
-                                                                return PopupVote(
-                                                                    name: messages[index]['name'],
-                                                                    photo: messages[index]['photo'],
-                                                                    email: messages[index]['email'],
-                                                                    station: widget
-                                                                        .station);
-                                                              });
-                                                        }
-                                                    ),
-                                                    Container(
-                                                      //color: Colors.black,
-                                                      child: Row(
-                                                        mainAxisAlignment: MainAxisAlignment
-                                                            .spaceBetween,
-                                                        children: [
-                                                          Text(
-                                                            messages[index]['date'],
-                                                            style: TextStyle(
-                                                              fontSize: 15.0,
-                                                              color: Colors.grey,
-                                                            ),
-                                                          ),
-
-                                                          //
-                                                          // Da cambiare in base se cittadino o visitatiore
-                                                          (messages[index]['citizen'])
-                                                              ? Text(' - Citizen',
-                                                            style: TextStyle(
-                                                              fontSize: 15.0,
-                                                              color: Colors.grey,
-                                                            ),
-                                                          )
-                                                              : Text(' - Visitor',
-                                                            style: TextStyle(
-                                                              fontSize: 15.0,
-                                                              color: Colors.grey,
-                                                            ),
-                                                          )
-                                                        ],
-                                                      ),
-                                                    ),
-
-                                                  ],
+                                            dense: true,
+                                            contentPadding: EdgeInsets.all(0.0),
+                                            title: Row(
+                                              children: [
+                                                CircleAvatar(
+                                                  //backgroundColor: Colors.blue[900],
+                                                  backgroundImage: getPhoto(
+                                                      messages[index]['photo']),
+                                                  //updatePhoto,
+                                                  radius: 15.0,
                                                 ),
-                                              ),
-                                            ],
-                                          ),
+                                                SizedBox(width: 10.0,),
+                                                IntrinsicWidth(
+                                                  child: Column(
+                                                    crossAxisAlignment: CrossAxisAlignment
+                                                        .start,
+                                                    children: [
+                                                      InkWell(
+                                                          child: Text(
+                                                              messages[index]['name'],
+                                                              style: TextStyle(
+                                                                  fontSize: 18.0,
+                                                                  fontWeight: FontWeight
+                                                                      .w500,
+                                                                  color: Colors
+                                                                      .black)),
+                                                          onTap: () {
+                                                            showDialog(
+                                                                context: context,
+                                                                builder: (
+                                                                    BuildContext context) {
+                                                                  return PopupVote(
+                                                                      email: messages[index]['email'],
+                                                                      station: widget
+                                                                          .station);
+                                                                });
+                                                          }
+                                                      ),
+                                                      Container(
+                                                        //color: Colors.black,
+                                                        child: Row(
+                                                          mainAxisAlignment: MainAxisAlignment
+                                                              .spaceBetween,
+                                                          children: [
+                                                            Text(
+                                                              messages[index]['date'],
+                                                              style: TextStyle(
+                                                                fontSize: 15.0,
+                                                                color: Colors.grey,
+                                                              ),
+                                                            ),
+
+                                                            //
+                                                            // Da cambiare in base se cittadino o visitatiore
+                                                            (messages[index]['citizen'])
+                                                                ? Text(' - Citizen',
+                                                              style: TextStyle(
+                                                                fontSize: 15.0,
+                                                                color: Colors.grey,
+                                                              ),
+                                                            )
+                                                                : Text(' - Visitor',
+                                                              style: TextStyle(
+                                                                fontSize: 15.0,
+                                                                color: Colors.grey,
+                                                              ),
+                                                            )
+                                                          ],
+                                                        ),
+                                                      ),
+
+                                                    ],
+                                                  ),
+                                                ),
+                                              ],
+                                            ),
                                         ),
                                       ),
                                       Container(
                                         //color: Colors.green[100],
-                                        child: Text(messages[index]['text'],
-                                            style: TextStyle(
-                                                fontSize: 15,
-                                                fontWeight: FontWeight.w500,
-                                                color: Colors.black)),
+                                          child: Text(messages[index]['text'],
+                                              style: TextStyle(
+                                                  fontSize: 15,
+                                                  fontWeight: FontWeight.w500,
+                                                  color: Colors.black)),
                                       ),
                                       Container(
                                         //color: Colors.blue[900],
@@ -604,3 +602,4 @@ class MessagesState extends State<Messages> {
     }
   }
 }
+
