@@ -82,9 +82,7 @@ class _MenuStationState extends State<MenuStation> {
         ];
         return Scaffold(
           appBar: AppBar(
-              title: Center(
-                  child: Text("${widget.name}")
-              ),
+              title: Text("${widget.name}"),
             backgroundColor: Color.fromRGBO(RGBStation[0],RGBStation[1],RGBStation[2],  1.0),
           ),
           drawer: UserAccount(),

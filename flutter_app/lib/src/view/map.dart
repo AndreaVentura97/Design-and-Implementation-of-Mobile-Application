@@ -20,8 +20,8 @@ class _MapState extends State<Map> {
   List stations = [];
   String mapStyle;
   var cameraPosition = CameraPosition(
-    target:  LatLng(45.456532, 9.125001),
-    zoom: 12.0,
+    target:  LatLng(45.463692, 9.190907),
+    zoom: 11.8,
   );
   var targetPosition;
   

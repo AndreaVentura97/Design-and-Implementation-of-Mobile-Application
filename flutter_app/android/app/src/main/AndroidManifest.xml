@@ -13,6 +13,14 @@
         android:label="MeMiQ"
         android:icon="@mipmap/ic_launcher">
 
+        <meta-data
+            android:name="com.google.firebase.messaging.default_notification_icon"
+            android:resource="@drawable/ic_stat_directions_transit"/>
+
+        <meta-data
+            android:name="com.google.firebase.messaging.default_notification_color"
+        android:resource="@color/colorPrimary" />
+
         <meta-data android:name="com.google.android.geo.API_KEY"
             android:value="AIzaSyAYTmP8yhjCWIkw0HUrKRNEDzI7AmAdZic"/>
 

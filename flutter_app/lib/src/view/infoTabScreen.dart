@@ -24,6 +24,10 @@ class InfoStationState extends State<InfoStation> {
   var avgDis;
   var avgSafety;
   var avgArea;
+  var busLinks;
+  var railwayLinks;
+  var tramLinks;
+  var services;
   String image = "";
   var valueDrop = "All";
   final myController = TextEditingController();
@@ -61,6 +65,24 @@ class InfoStationState extends State<InfoStation> {
       points = result;
     }));
   }
+
+  void takeLinks(){
+    getBusLinks(widget.station).then((result)=> setState((){
+      busLinks = result;
+    }));
+    getRailwayLinks(widget.station).then((result)=> setState((){
+      railwayLinks = result;
+    }));
+    getTramLinks(widget.station).then((result)=> setState((){
+      tramLinks = result;
+    }));
+  }
+
+  void takeServices(){
+    getServices(widget.station).then((result) => setState((){
+      services = result;
+    }));
+  }
   
   String checkLine(line){
     if (line=="Metro M1"){
@@ -96,6 +118,8 @@ class InfoStationState extends State<InfoStation> {
   @override
   void initState() {
     takeStationInformation();
+    takeLinks();
+    takeServices();
     super.initState();
   }
 
@@ -240,11 +264,11 @@ class InfoStationState extends State<InfoStation> {
                               thickness: 1.0,
                             ),
                             SizedBox(height: 10.0),
-                            Text('Railway:'),
+                            (railwayLinks!=null) ? Text('Railway: $railwayLinks') : Text('No Railway connections'),
                             SizedBox(height: 10.0),
-                            Text('Tram:'),
+                            (tramLinks!=null) ? Text('Tram: $tramLinks') : Text("No Tram connections"),
                             SizedBox(height: 10.0),
-                            Text('Bus:'),
+                            (busLinks!=null) ?  Text('Bus: ${busLinks.toString().replaceAll('[', '').replaceAll(']', '')}') : Text('No Bus connections'),
                             SizedBox(height: 10.0),
                           ],
                         ),
@@ -271,8 +295,10 @@ class InfoStationState extends State<InfoStation> {
                               ),
                             ),
                             Spacer(),
-                            Icon(Icons.elevator, size: 30.0),
-                            Icon(Icons.wc, size: 25.0)
+                            (services== null || services[0]==null || services[0] == false) ? Text('') : Icon(Icons.elevator, size: 30.0),
+                            (services==null || services[1]==null || services[1] == false) ? Text('') : Icon(Icons.wc, size: 25.0),
+                            (services==null || services[2]==null || services[2] == false) ? Text('') : Icon(Icons.title, size: 30.0),
+                            (services==null || services[3]==null || services[3] == false) ? Text('') : Icon(Icons.smoking_rooms, size: 30.0),
                           ],
                         ),
                       ),

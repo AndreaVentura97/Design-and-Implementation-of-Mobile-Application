@@ -1,3 +1,4 @@
+import 'package:delayed_display/delayed_display.dart';
 import 'package:device_apps/device_apps.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_app/src/services/stationServices.dart';
@@ -87,7 +88,7 @@ class InfoProfileState extends State<InfoProfile> {
           return Scaffold(
             resizeToAvoidBottomPadding: false,
             resizeToAvoidBottomInset: true,
-            backgroundColor: Colors.grey,
+            //backgroundColor: Colors.grey,
             appBar: AppBar(
               backgroundColor: Colors.blue[900],
               title: Row(
@@ -97,330 +98,333 @@ class InfoProfileState extends State<InfoProfile> {
               ),
             ),
             drawer: UserAccount(),
-            body: SingleChildScrollView(
-              child: Container(
-                  color: Colors.white,
-                  child: Column(
-                    children: [
-                      Container(
-                        //color: Colors.green,
-                        padding: EdgeInsets.fromLTRB(20, 10, 20, 0),
-                        child: Row(
-                          mainAxisAlignment: MainAxisAlignment.start,
-                          children: [
-                            Container(
-                              //color: Colors.yellow,
-                              child: InkWell(
-                                  child: new CircleAvatar(
-                                    backgroundImage: getPhoto(_viewModel.c.photo),
-                                    radius: 40,
-                                  ),
-                                  onTap: () {
-                                    showChoiceDialog(_viewModel, context);
-                                  }),
-                            ),
-                            SizedBox(width: 10,),
-                            Column(
-                              crossAxisAlignment: CrossAxisAlignment.start,
-                              children: [
-                                Row(children: [
-                                  Icon(
-                                    Icons.account_box,
-                                    color: Colors.black,
-                                  ),
-                                  SizedBox(
-                                    width: 10,
-                                  ),
-                                  Text(
-                                    "${_viewModel.c.name}",
-                                    style: TextStyle(
-                                      fontSize: 20,
-                                      //fontWeight: FontWeight.bold,
-                                    ),
-                                  ),
-                                ]),
-                                Row(children: [
-                                  Icon(
-                                    Icons.email,
-                                    color: Colors.black,
-                                  ),
-                                  SizedBox(
-                                    width: 10,
-                                  ),
-                                  Text(
-                                    "${_viewModel.c.email}",
-                                    style: TextStyle(
-                                      fontSize: 20,
-                                      //fontWeight: FontWeight.bold
-                                    ),
-                                  ),
-                                ]),
-                              ],
-                            ),
-                          ],
-                        ),
-                      ),
-                      Divider(
-                        color: Colors.black,
-                        thickness: 1.0,
-                        indent: 10,
-                        endIndent: 10,
-                      ),
-
-                      Container(
-                          //color: Colors.grey[300],
-                          child: Column(
+            body: DelayedDisplay(
+              delay: Duration(milliseconds:1500),
+              child: SingleChildScrollView(
+                child: Container(
+                    color: Colors.white,
+                    child: Column(
+                      children: [
+                        Container(
+                          //color: Colors.green,
+                          padding: EdgeInsets.fromLTRB(20, 10, 20, 0),
+                          child: Row(
+                            mainAxisAlignment: MainAxisAlignment.start,
                             children: [
-                              Card(
-                                elevation: 3.0,
-                                margin: EdgeInsets.fromLTRB(10.0, 10.0, 10.0, 0.0),
-                                shape: RoundedRectangleBorder(
-                                  borderRadius: BorderRadius.circular(10.0),
-                                  side: BorderSide(
-                                    color: Colors.blue[900],
-                                    width: 2.0,
-                                  ),
-                                ),
-                                child: Container(
-                                  padding: EdgeInsets.all(10),
-                                  child: Column(
-                                    crossAxisAlignment: CrossAxisAlignment.start,
-                                    children: [
-                                      Center(
-                                        child: Text('Main Activities',
-                                          style: TextStyle(
-                                            fontSize: 25,
-                                            fontWeight: FontWeight.w900,
-                                            color: Colors.blue[900]
-                                          ),
-                                        ),
-                                      ),
-                                      Divider(
-                                        color: Colors.blue[900],
-                                        thickness: 1,
-                                      ),
-                                      Container(
-                                        //color: Colors.green,
-                                        child: Column(
-                                          crossAxisAlignment: CrossAxisAlignment.start,
-                                          children: [
-                                            Row(
-                                              children: [
-                                                Icon(Icons.circle, size: 10),
-                                                Text(" Comments:", style: TextStyle( fontSize: 20))
-                                            ]),
-                                            Container(
-                                              padding: EdgeInsets.symmetric(horizontal: 5),
-                                              child: Column(
-                                                children: [
-                                                  Container(
-                                              child: Row(
-                                                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                                                children: [
-                                                Text("Total Comment:",
-                                                    style: TextStyle(
-                                                      fontSize: 16.0,
-                                                    ),
-                                                  ),
-                                                  Text("$numberComments",
-                                                    style: TextStyle(
-                                                      fontSize: 22.0
-                                                    ),
-                                                  )
-                                                ],
-                                              ),
-                                            ),
-                                                  Container(
-                                              child: Column(
-                                                crossAxisAlignment: CrossAxisAlignment.start,
-                                                children: [
-                                                  Row(
-                                                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                                                    children: [
-                                                      Text('Most liked:',
-                                                        style: TextStyle(fontSize: 16.0)
-                                                      ),
-                                                      Container(
-                                                        child: Row(
-                                                          children: [
-                                                            Icon(Icons.thumb_up, color: Colors.green, size:20),
-                                                            (commentMostLike == null) ? Text('(-)', style: TextStyle(fontSize: 22.0))
-                                                              : Text('(${commentMostLike['nl']})', style: TextStyle(fontSize: 22.0))
-                                                          ],
-                                                        ),
-                                                      ),
-                                                    ],
-                                                  ),
-                                                  (commentMostLike == null)
-                                                      ? Text("You don't have comment")
-                                                      : Text("  ${commentMostLike['station']} - '${commentMostLike['text']}' ",
-                                                    style: TextStyle(
-                                                      color: Colors.grey[600],
-                                                      fontSize: 14
-                                                    ),
-                                                  ),
-                                                ],
-                                              ),
-                                            ),
-                                                  Container(
-                                              child: Column(
-                                                crossAxisAlignment: CrossAxisAlignment.start,
-                                                children: [
-                                                  Row(
-                                                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                                                    children: [
-                                                      Text('Most unliked:',
-                                                          style: TextStyle(fontSize: 16.0)
-                                                      ),
-                                                      Container(
-                                                        child: Row(
-                                                          children: [
-                                                            Icon(Icons.thumb_down, color: Colors.red, size:20),
-                                                            (commentMostUnLike == null) ? Text('(-)', style: TextStyle(fontSize: 22.0))
-                                                                : Text('(${commentMostUnLike['nu']})', style: TextStyle(fontSize: 22.0))
-                                                          ],
-                                                        ),
-                                                      ),
-                                                    ],
-                                                  ),
-                                                  (commentMostUnLike == null)
-                                                      ? Text("You don't have comment")
-                                                      : Text("  ${commentMostUnLike['station']} - '${commentMostUnLike['text']}' ",
-                                                    style: TextStyle(
-                                                        color: Colors.grey[600],
-                                                        fontSize: 14
-                                                    ),
-                                                  ),
-                                                ],
-                                              ),
-                                            ),
-                                                ]))
-                                          ],
-                                        ),
-                                      ),
-                                      SizedBox(height: 10),
-                                      Container(
-                                        //color: Colors.green,
-                                        child: Column(
-                                          crossAxisAlignment: CrossAxisAlignment.start,
-                                          children: [
-                                            Row(
-                                                children: [
-                                                  Icon(Icons.circle, size: 10),
-                                                  Text(" Interactions:", style: TextStyle( fontSize: 20))
-                                                ]),
-                                            Container(
-                                                padding: EdgeInsets.symmetric(horizontal: 15),
-                                                child: Row(
-                                                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                                                    children: [
-                                                      Container(
-                                                        child: Column(
-                                                          children: [
-                                                            new CircularPercentIndicator(
-                                                              radius: 130.0,
-                                                              animation: true,
-                                                              animationDuration: 500,
-                                                              lineWidth: 15.0,
-                                                              percent: totalUnlikes/ (totalLikes + totalUnlikes),
-                                                              center: Container(
-                                                                child: Column(
-                                                                  mainAxisAlignment: MainAxisAlignment.center,
-                                                                  children: [
-                                                                    Row(
-                                                                      mainAxisAlignment: MainAxisAlignment.center,
-                                                                      children: [
-                                                                        Column(
-                                                                            children:[
-                                                                              Icon(Icons.thumb_up, color: Colors.green),
-                                                                              Text('($totalLikes)', style: TextStyle(fontWeight: FontWeight.bold, fontSize: 15),)
-                                                                            ]
-                                                                        ),
-                                                                        Text(" | ", style: TextStyle(fontSize: 40),),
-                                                                        Column(
-                                                                            children:[
-                                                                              Icon(Icons.thumb_down, color: Colors.red),
-                                                                              Text('($totalUnlikes)', style: TextStyle(fontWeight: FontWeight.bold, fontSize: 15),)
-                                                                            ]
-                                                                        ),
-                                                                      ],
-                                                                    ),
-                                                                  ],
-                                                                ),
-                                                              ),
-                                                              circularStrokeCap: CircularStrokeCap.butt,
-                                                              backgroundColor: Colors.green,
-                                                              progressColor: Colors.red,
-                                                            ),
-                                                            Text("Received", style: TextStyle(fontSize: 20, fontWeight: FontWeight.w700))
-                                                          ]
-                                                        )
-                                                      ),
-                                                      Container(
-                                                          child: Column(
-                                                              children: [
-                                                                new CircularPercentIndicator(
-                                                                  radius: 130.0,
-                                                                  animation: true,
-                                                                  animationDuration: 1200,
-                                                                  lineWidth: 15.0,
-                                                                  percent: totalUnlikesGiven/ (totalLikesGiven + totalUnlikesGiven),
-                                                                  center: Container(
-                                                                    child: Column(
-                                                                      mainAxisAlignment: MainAxisAlignment.center,
-                                                                      children: [
-                                                                        Row(
-                                                                          mainAxisAlignment: MainAxisAlignment.center,
-                                                                          children: [
-                                                                            Column(
-                                                                                children:[
-                                                                                  Icon(Icons.thumb_up, color: Colors.green),
-                                                                                  Text('($totalLikesGiven)', style: TextStyle(fontWeight: FontWeight.bold, fontSize: 15),)
-                                                                                ]
-                                                                            ),
-                                                                            Text(" | ", style: TextStyle(fontSize: 40),),
-                                                                            Column(
-                                                                                children:[
-                                                                                  Icon(Icons.thumb_down, color: Colors.red),
-                                                                                  Text('($totalUnlikesGiven)', style: TextStyle(fontWeight: FontWeight.bold, fontSize: 15),)
-                                                                                ]
-                                                                            ),
-                                                                          ],
-                                                                        ),
-                                                                      ],
-                                                                    ),
-                                                                  ),
-                                                                  circularStrokeCap: CircularStrokeCap.butt,
-                                                                  backgroundColor: Colors.green,
-                                                                  progressColor: Colors.red,
-                                                                ),
-                                                                Text("Given", style: TextStyle(fontSize: 20, fontWeight: FontWeight.w700),)
-                                                              ]
-                                                          )
-                                                      )
-                                                    ]
-                                                )
-                                            )
-                                          ],
-                                        ),
-                                      ),
-                                    ],
-                                  ),
-                                ),
+                              Container(
+                                //color: Colors.yellow,
+                                child: InkWell(
+                                    child: new CircleAvatar(
+                                      backgroundImage: getPhoto(_viewModel.c.photo),
+                                      radius: 40,
+                                    ),
+                                    onTap: () {
+                                      showChoiceDialog(_viewModel, context);
+                                    }),
                               ),
-
-                              Text(
-                                  "If the difference between your likes and your don't like is greater than 50 you win a ticket!!!"),
-                              (totalLikes - totalUnlikes >= 50)
-                                  ? Text("You have won a ticket!! Get it")
-                                  : Text(
-                                      "You miss ${50 - (totalLikes - totalUnlikes)} likes to win!!"),
+                              SizedBox(width: 10,),
+                              Column(
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                                children: [
+                                  Row(children: [
+                                    Icon(
+                                      Icons.account_box,
+                                      color: Colors.black,
+                                    ),
+                                    SizedBox(
+                                      width: 10,
+                                    ),
+                                    Text(
+                                      "${_viewModel.c.name}",
+                                      style: TextStyle(
+                                        fontSize: 20,
+                                        //fontWeight: FontWeight.bold,
+                                      ),
+                                    ),
+                                  ]),
+                                  Row(children: [
+                                    Icon(
+                                      Icons.email,
+                                      color: Colors.black,
+                                    ),
+                                    SizedBox(
+                                      width: 10,
+                                    ),
+                                    Text(
+                                      "${_viewModel.c.email}",
+                                      style: TextStyle(
+                                        fontSize: 20,
+                                        //fontWeight: FontWeight.bold
+                                      ),
+                                    ),
+                                  ]),
+                                ],
+                              ),
                             ],
                           ),
                         ),
-                    ],
+                        Divider(
+                          color: Colors.black,
+                          thickness: 1.0,
+                          indent: 10,
+                          endIndent: 10,
+                        ),
+
+                        Container(
+                            //color: Colors.grey[300],
+                            child: Column(
+                              children: [
+                                Card(
+                                  elevation: 3.0,
+                                  margin: EdgeInsets.fromLTRB(10.0, 10.0, 10.0, 0.0),
+                                  shape: RoundedRectangleBorder(
+                                    borderRadius: BorderRadius.circular(10.0),
+                                    side: BorderSide(
+                                      color: Colors.blue[900],
+                                      width: 2.0,
+                                    ),
+                                  ),
+                                  child: Container(
+                                    padding: EdgeInsets.all(10),
+                                    child: Column(
+                                      crossAxisAlignment: CrossAxisAlignment.start,
+                                      children: [
+                                        Center(
+                                          child: Text('Main Activities',
+                                            style: TextStyle(
+                                              fontSize: 25,
+                                              fontWeight: FontWeight.w900,
+                                              color: Colors.blue[900]
+                                            ),
+                                          ),
+                                        ),
+                                        Divider(
+                                          color: Colors.blue[900],
+                                          thickness: 1,
+                                        ),
+                                        Container(
+                                          //color: Colors.green,
+                                          child: Column(
+                                            crossAxisAlignment: CrossAxisAlignment.start,
+                                            children: [
+                                              Row(
+                                                children: [
+                                                  Icon(Icons.circle, size: 10),
+                                                  Text(" Comments:", style: TextStyle( fontSize: 20))
+                                              ]),
+                                              Container(
+                                                padding: EdgeInsets.symmetric(horizontal: 5),
+                                                child: Column(
+                                                  children: [
+                                                    Container(
+                                                child: Row(
+                                                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                                  children: [
+                                                  Text("Total Comment:",
+                                                      style: TextStyle(
+                                                        fontSize: 16.0,
+                                                      ),
+                                                    ),
+                                                    Text("$numberComments",
+                                                      style: TextStyle(
+                                                        fontSize: 22.0
+                                                      ),
+                                                    )
+                                                  ],
+                                                ),
+                                              ),
+                                                    Container(
+                                                child: Column(
+                                                  crossAxisAlignment: CrossAxisAlignment.start,
+                                                  children: [
+                                                    Row(
+                                                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                                      children: [
+                                                        Text('Most liked:',
+                                                          style: TextStyle(fontSize: 16.0)
+                                                        ),
+                                                        Container(
+                                                          child: Row(
+                                                            children: [
+                                                              Icon(Icons.thumb_up, color: Colors.green, size:20),
+                                                              (commentMostLike == null) ? Text('(-)', style: TextStyle(fontSize: 22.0))
+                                                                : Text('(${commentMostLike['nl']})', style: TextStyle(fontSize: 22.0))
+                                                            ],
+                                                          ),
+                                                        ),
+                                                      ],
+                                                    ),
+                                                    (commentMostLike == null)
+                                                        ? Text("You don't have comment")
+                                                        : Text("  ${commentMostLike['station']} - '${commentMostLike['text']}' ",
+                                                      style: TextStyle(
+                                                        color: Colors.grey[600],
+                                                        fontSize: 14
+                                                      ),
+                                                    ),
+                                                  ],
+                                                ),
+                                              ),
+                                                    Container(
+                                                child: Column(
+                                                  crossAxisAlignment: CrossAxisAlignment.start,
+                                                  children: [
+                                                    Row(
+                                                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                                      children: [
+                                                        Text('Most unliked:',
+                                                            style: TextStyle(fontSize: 16.0)
+                                                        ),
+                                                        Container(
+                                                          child: Row(
+                                                            children: [
+                                                              Icon(Icons.thumb_down, color: Colors.red, size:20),
+                                                              (commentMostUnLike == null) ? Text('(-)', style: TextStyle(fontSize: 22.0))
+                                                                  : Text('(${commentMostUnLike['nu']})', style: TextStyle(fontSize: 22.0))
+                                                            ],
+                                                          ),
+                                                        ),
+                                                      ],
+                                                    ),
+                                                    (commentMostUnLike == null)
+                                                        ? Text("You don't have comment")
+                                                        : Text("  ${commentMostUnLike['station']} - '${commentMostUnLike['text']}' ",
+                                                      style: TextStyle(
+                                                          color: Colors.grey[600],
+                                                          fontSize: 14
+                                                      ),
+                                                    ),
+                                                  ],
+                                                ),
+                                              ),
+                                                  ]))
+                                            ],
+                                          ),
+                                        ),
+                                        SizedBox(height: 10),
+                                        Container(
+                                          //color: Colors.green,
+                                          child: Column(
+                                            crossAxisAlignment: CrossAxisAlignment.start,
+                                            children: [
+                                              Row(
+                                                  children: [
+                                                    Icon(Icons.circle, size: 10),
+                                                    Text(" Interactions:", style: TextStyle( fontSize: 20))
+                                                  ]),
+                                              Container(
+                                                  padding: EdgeInsets.symmetric(horizontal: 15),
+                                                  child: Row(
+                                                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                                      children: [
+                                                        Container(
+                                                          child: Column(
+                                                            children: [
+                                                              new CircularPercentIndicator(
+                                                                radius: 130.0,
+                                                                animation: true,
+                                                                animationDuration: 500,
+                                                                lineWidth: 15.0,
+                                                                percent: totalUnlikes/ (totalLikes + totalUnlikes),
+                                                                center: Container(
+                                                                  child: Column(
+                                                                    mainAxisAlignment: MainAxisAlignment.center,
+                                                                    children: [
+                                                                      Row(
+                                                                        mainAxisAlignment: MainAxisAlignment.center,
+                                                                        children: [
+                                                                          Column(
+                                                                              children:[
+                                                                                Icon(Icons.thumb_up, color: Colors.green),
+                                                                                Text('($totalLikes)', style: TextStyle(fontWeight: FontWeight.bold, fontSize: 15),)
+                                                                              ]
+                                                                          ),
+                                                                          Text(" | ", style: TextStyle(fontSize: 40),),
+                                                                          Column(
+                                                                              children:[
+                                                                                Icon(Icons.thumb_down, color: Colors.red),
+                                                                                Text('($totalUnlikes)', style: TextStyle(fontWeight: FontWeight.bold, fontSize: 15),)
+                                                                              ]
+                                                                          ),
+                                                                        ],
+                                                                      ),
+                                                                    ],
+                                                                  ),
+                                                                ),
+                                                                circularStrokeCap: CircularStrokeCap.butt,
+                                                                backgroundColor: Colors.green,
+                                                                progressColor: Colors.red,
+                                                              ),
+                                                              Text("Received", style: TextStyle(fontSize: 20, fontWeight: FontWeight.w700))
+                                                            ]
+                                                          )
+                                                        ),
+                                                        Container(
+                                                            child: Column(
+                                                                children: [
+                                                                  new CircularPercentIndicator(
+                                                                    radius: 130.0,
+                                                                    animation: true,
+                                                                    animationDuration: 1200,
+                                                                    lineWidth: 15.0,
+                                                                    percent: totalUnlikesGiven/ (totalLikesGiven + totalUnlikesGiven),
+                                                                    center: Container(
+                                                                      child: Column(
+                                                                        mainAxisAlignment: MainAxisAlignment.center,
+                                                                        children: [
+                                                                          Row(
+                                                                            mainAxisAlignment: MainAxisAlignment.center,
+                                                                            children: [
+                                                                              Column(
+                                                                                  children:[
+                                                                                    Icon(Icons.thumb_up, color: Colors.green),
+                                                                                    Text('($totalLikesGiven)', style: TextStyle(fontWeight: FontWeight.bold, fontSize: 15),)
+                                                                                  ]
+                                                                              ),
+                                                                              Text(" | ", style: TextStyle(fontSize: 40),),
+                                                                              Column(
+                                                                                  children:[
+                                                                                    Icon(Icons.thumb_down, color: Colors.red),
+                                                                                    Text('($totalUnlikesGiven)', style: TextStyle(fontWeight: FontWeight.bold, fontSize: 15),)
+                                                                                  ]
+                                                                              ),
+                                                                            ],
+                                                                          ),
+                                                                        ],
+                                                                      ),
+                                                                    ),
+                                                                    circularStrokeCap: CircularStrokeCap.butt,
+                                                                    backgroundColor: Colors.green,
+                                                                    progressColor: Colors.red,
+                                                                  ),
+                                                                  Text("Given", style: TextStyle(fontSize: 20, fontWeight: FontWeight.w700),)
+                                                                ]
+                                                            )
+                                                        )
+                                                      ]
+                                                  )
+                                              )
+                                            ],
+                                          ),
+                                        ),
+                                      ],
+                                    ),
+                                  ),
+                                ),
+
+                                Text(
+                                    "If the difference between your likes and your don't like is greater than 50 you win a ticket!!!"),
+                                (totalLikes - totalUnlikes >= 50)
+                                    ? Text("You have won a ticket!! Get it")
+                                    : Text(
+                                        "You miss ${50 - (totalLikes - totalUnlikes)} likes to win!!"),
+                              ],
+                            ),
+                          ),
+                      ],
+                    ),
                   ),
-                ),
+              ),
             ),
           );
         });

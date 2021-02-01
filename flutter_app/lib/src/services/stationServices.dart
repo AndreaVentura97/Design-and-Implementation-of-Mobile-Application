@@ -241,3 +241,23 @@ searchStationByLine(String line) async {
   var response = await DB.getDB().collection('markers').find({'line':line}).toList();
   return response;
 }
+
+getBusLinks(station) async {
+  var response = await DB.getDB().collection('markers').findOne({'name':station});
+  return response['bus'];
+}
+
+getRailwayLinks(station) async {
+  var response = await DB.getDB().collection('markers').findOne({'name':station});
+  return response['railway'];
+}
+
+getTramLinks(station) async {
+  var response = await DB.getDB().collection('markers').findOne({'name':station});
+  return response['tram'];
+}
+
+getServices(station) async {
+  var response = await DB.getDB().collection('markers').findOne({'name':station});
+  return response['services'];
+}

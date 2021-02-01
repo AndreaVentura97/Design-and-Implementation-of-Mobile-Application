@@ -80,7 +80,7 @@ class UserAccountState extends State<UserAccount> {
                             ),
                           ]),
                           currentAccountPicture: Container(
-                            color: Colors.yellow,
+                            //color: Colors.yellow,
                             child: InkWell(
                                 child: new CircleAvatar(
                                   backgroundImage: getPhoto(_viewModel.c.photo),
@@ -144,13 +144,18 @@ class UserAccountState extends State<UserAccount> {
                         ),
 
                       ),
-
-                      //new ListTile(
-                      //  title: Text("Buy a ticket"),
-                      //  onTap: () {
-                      //   openApp();
-                      // }
-                      // ),
+                      new ListTile(
+                          title: Row(
+                            mainAxisAlignment: MainAxisAlignment.start,
+                            children: [
+                              Icon(Icons.account_balance_wallet, color: Colors.blue[900],),
+                              Text(" Buy a ticket", style: TextStyle( color: Colors.blue[900], fontSize: 18),),
+                            ],
+                          ),
+                          onTap: () {
+                            openApp();
+                          }
+                      ),
 
 
                       // new ListTile(
@@ -211,30 +216,54 @@ class UserAccountState extends State<UserAccount> {
 
 
 
-  Future<void> showChoiceDialog (_viewModel,BuildContext context){
-    return showDialog (context:context, builder: (BuildContext context) {
-      return AlertDialog(
-          title: Text("Make a choice"),
-          content: SingleChildScrollView(
-              child: ListBody(
-                  children: <Widget>[
+  Future<void> showChoiceDialog(_viewModel, BuildContext context) {
+    return showDialog(
+        context: context,
+        builder: (BuildContext context) {
+          return AlertDialog(
+              title: Text("Make a choice",
+                style: TextStyle(
+                  fontSize: 24,
+                  fontWeight: FontWeight.bold,
+                ),
+              ),
+              content: SingleChildScrollView(
+                  child: ListBody(children: <Widget>[
                     GestureDetector(
-                        child: Text("Gallery"),
-                        onTap: (){
-                          _openGallery(_viewModel,context);
-                        }
-                    ),
+                        child: Row(
+                          children: [
+                            Icon(Icons.image_outlined,
+                              size: 25,
+                            ),
+                            Text(" Gallery",
+                              style: TextStyle(
+                                fontSize: 18,
+                              ),
+                            ),
+                          ],
+                        ),
+                        onTap: () {
+                          _openGallery(_viewModel, context);
+                        }),
+                    SizedBox(height: 5,),
                     GestureDetector(
-                        child: Text("Camera"),
-                        onTap: (){
-                          _openCamera(_viewModel,context);
-                        }
-                    )
-                  ]
-              )
-          )
-      );
-    });
+                        child: Row(
+                          children: [
+                            Icon(Icons.camera_alt_outlined,
+                              size: 25,
+                            ),
+                            Text(" Camera",
+                              style: TextStyle(
+                                fontSize: 18,
+                              ),
+                            ),
+                          ],
+                        ),
+                        onTap: () {
+                          _openCamera(_viewModel, context);
+                        })
+                  ])));
+        });
   }
 
   _openCamera(_viewModel, BuildContext context) async {
