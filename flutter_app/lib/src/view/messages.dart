@@ -80,9 +80,7 @@ class MessagesState extends State<Messages> {
         converter: (store) => createViewModel(store),
         onInit: (store) => retrieveMyPreference(store.state.customer.email),
         builder: (context, _viewModel) {
-          return Scaffold(
-            backgroundColor: Colors.grey[300],
-              body: Column(
+          return Column(
                 children: [
                   Container(
                     color: Colors.white,
@@ -589,7 +587,7 @@ class MessagesState extends State<Messages> {
                     ),
                   ),
                 ],
-              ));
+              );
         });
   }
 

@@ -136,9 +136,7 @@ class InfoStationState extends State<InfoStation> {
             }
             return list;
         }
-        return Scaffold(
-          backgroundColor: Colors.grey[300],
-            body: SingleChildScrollView(
+        return SingleChildScrollView(
               child: Column (
                 mainAxisAlignment: MainAxisAlignment.center,
                   children:[
@@ -416,7 +414,7 @@ class InfoStationState extends State<InfoStation> {
                   ]
               ),
             )
-        );
+        ;
       },
     );
   }

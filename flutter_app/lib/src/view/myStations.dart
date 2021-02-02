@@ -84,106 +84,129 @@ class MyStationsState extends State<MyStations> {
             drawer: UserAccount(),
         body: DelayedDisplay(
               delay: Duration(seconds: 1),
-              child: ListView.builder(
-                //shrinkWrap: true,
-                itemCount: myFullStations.length,
-                itemBuilder: (BuildContext context, int index) {
-                  return GestureDetector(
-                      onTap: (){
-                        Navigator.push(context, MaterialPageRoute(builder:(context)=>MenuStation(name:myFullStations[index]['name'])));
-                      },
-                      child: Card(
-                        margin: EdgeInsets.fromLTRB(10.0, 10.0, 10.0, 0.0),
-                        elevation: 3.0,
-                        shape: RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(10.0),
-                          side: BorderSide(
-                            color: Colors.blue[900],
-                            width: 2.0,
+              child: Stack(
+                children: [
+                  Stack(children: [
+                    Container(
+                      color: Colors.white,
+                      child: Center(
+                        child: Container(
+                          height: 300,
+                          width: 200,
+                          child: FittedBox(
+                            child: Image.asset(
+                              'assets/Logo_Name.jpeg',
+                            ),
                           ),
                         ),
-                        //color: Colors.grey[400],
-                        child:Container(
-                          margin: EdgeInsets.all(10.0),
-                          //color: Colors.blue,
-                          child: Column(
-                            mainAxisSize: MainAxisSize.max,
-                            children: [
-                              ListTile(
-                                contentPadding: EdgeInsets.fromLTRB(10.0, 0.0, 0.0, 0.0),
-                                title: Row(
-                                        //mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                                        crossAxisAlignment: CrossAxisAlignment.center,
-                                        children: [
-                                          Container(
-                                            child: DelayedDisplay(
-                                              delay: Duration(milliseconds: 500),
-                                              child: Image(
-                                                image: AssetImage(getAsset(myFullStations[index]['line'])),
-                                                height: 40.0,
-                                                width: 60.0,
-                                              ),
-                                            ),
-
-                                          ),
-                                          SizedBox(width: 10.0,),
-                                          Flexible(
-                                            child: Container(
-                                                //color: Colors.green,
-                                                child: Column(
-                                                  crossAxisAlignment: CrossAxisAlignment.start,
-                                                  children: [
-                                                    Text(myFullStations[index]['name'],
-                                                        style: TextStyle(
-                                                            fontSize: 25.0,
-                                                            fontWeight: FontWeight.w500,
-                                                            color: Colors.black
-                                                        )
-                                                    ),
-                                                    // Text("${widget.station}",
-                                                    //   style: TextStyle(
-                                                    //     fontSize: 25.0,
-                                                    //     color: Colors.black,
-                                                    //   ),
-                                                    // ),
-                                                    // Text("$line",
-                                                    //   style: TextStyle(
-                                                    //     fontSize: 16.0,
-                                                    //     color: Colors.grey,
-                                                    //   ),
-                                                    // ),
-                                                    // Text("$address",
-                                                    //   style: TextStyle(
-                                                    //     fontSize: 16.0,
-                                                    //     color: Colors.grey,
-                                                    //   ),
-                                                    // ),
-                                                  ],
-                                                ),
-                                              ),
-                                          ),
-                                        ],
-                                      ),
-                                trailing: IconButton(
-                                  icon: Icon(Icons.favorite,
-                                    size: 20.0,
-                                  ),
-                                  onPressed: () {
-                                    deleteMyStations(widget.email, myFullStations[index]['name']);
-                                    setState(() {
-                                      myFullStations.remove(myFullStations[index]);
-                                    });
-                                     },
-
-                                ),
-                              ),
-                            ],
-                          )
-                        ),
                       ),
-                    );
+                    ),
+                    Container(
+                      color: Color.fromRGBO(255, 255, 255, 0.3),
+                    )
+                  ]),
+                  ListView.builder(
+                    //shrinkWrap: true,
+                    itemCount: myFullStations.length,
+                    itemBuilder: (BuildContext context, int index) {
+                      return GestureDetector(
+                          onTap: (){
+                            Navigator.push(context, MaterialPageRoute(builder:(context)=>MenuStation(name:myFullStations[index]['name'])));
+                          },
+                          child: Card(
+                            margin: EdgeInsets.fromLTRB(10.0, 10.0, 10.0, 0.0),
+                            elevation: 3.0,
+                            shape: RoundedRectangleBorder(
+                              borderRadius: BorderRadius.circular(10.0),
+                              side: BorderSide(
+                                color: Colors.blue[900],
+                                width: 2.0,
+                              ),
+                            ),
+                            //color: Colors.grey[400],
+                            child:Container(
+                              margin: EdgeInsets.all(10.0),
+                              //color: Colors.blue,
+                              child: Column(
+                                mainAxisSize: MainAxisSize.max,
+                                children: [
+                                  ListTile(
+                                    contentPadding: EdgeInsets.fromLTRB(10.0, 0.0, 0.0, 0.0),
+                                    title: Row(
+                                            //mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                            crossAxisAlignment: CrossAxisAlignment.center,
+                                            children: [
+                                              Container(
+                                                child: DelayedDisplay(
+                                                  delay: Duration(milliseconds: 500),
+                                                  child: Image(
+                                                    image: AssetImage(getAsset(myFullStations[index]['line'])),
+                                                    height: 40.0,
+                                                    width: 60.0,
+                                                  ),
+                                                ),
 
-                },
+                                              ),
+                                              SizedBox(width: 10.0,),
+                                              Flexible(
+                                                child: Container(
+                                                    //color: Colors.green,
+                                                    child: Column(
+                                                      crossAxisAlignment: CrossAxisAlignment.start,
+                                                      children: [
+                                                        Text(myFullStations[index]['name'],
+                                                            style: TextStyle(
+                                                                fontSize: 25.0,
+                                                                fontWeight: FontWeight.w500,
+                                                                color: Colors.black
+                                                            )
+                                                        ),
+                                                        // Text("${widget.station}",
+                                                        //   style: TextStyle(
+                                                        //     fontSize: 25.0,
+                                                        //     color: Colors.black,
+                                                        //   ),
+                                                        // ),
+                                                        // Text("$line",
+                                                        //   style: TextStyle(
+                                                        //     fontSize: 16.0,
+                                                        //     color: Colors.grey,
+                                                        //   ),
+                                                        // ),
+                                                        // Text("$address",
+                                                        //   style: TextStyle(
+                                                        //     fontSize: 16.0,
+                                                        //     color: Colors.grey,
+                                                        //   ),
+                                                        // ),
+                                                      ],
+                                                    ),
+                                                  ),
+                                              ),
+                                            ],
+                                          ),
+                                    trailing: IconButton(
+                                      icon: Icon(Icons.favorite,
+                                        size: 20.0,
+                                      ),
+                                      onPressed: () {
+                                        deleteMyStations(widget.email, myFullStations[index]['name']);
+                                        setState(() {
+                                          myFullStations.remove(myFullStations[index]);
+                                        });
+                                         },
+
+                                    ),
+                                  ),
+                                ],
+                              )
+                            ),
+                          ),
+                        );
+
+                    },
+                  ),
+                ],
               ),
             )
     );

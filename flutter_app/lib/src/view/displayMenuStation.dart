@@ -125,6 +125,8 @@ class _MenuStationState extends State<MenuStation> with SingleTickerProviderStat
             animation:_animationController,
               builder : (context,child){
                 return Scaffold(
+                  resizeToAvoidBottomPadding: false,
+                  resizeToAvoidBottomInset: true,
                   appBar: AppBar(
                     title: Text("${widget.name}"),
                     centerTitle: true,
@@ -132,7 +134,30 @@ class _MenuStationState extends State<MenuStation> with SingleTickerProviderStat
                     backgroundColor: _colorTween.value
                   ),
                   drawer: UserAccount(),
-                  body: tabs[_currentIndex],
+                  body: Stack(
+                    children: [
+                      Stack(children: [
+                        Container(
+                          color: Colors.white,
+                          child: Center(
+                            child: Container(
+                              height: 300,
+                              width: 200,
+                              child: FittedBox(
+                                child: Image.asset(
+                                  'assets/Logo_Name.jpeg',
+                                ),
+                              ),
+                            ),
+                          ),
+                        ),
+                        Container(
+                          color: Color.fromRGBO(255, 255, 255, 0.3),
+                        )
+                      ]),
+                      tabs[_currentIndex],
+                    ],
+                  ),
                   bottomNavigationBar: BottomNavigationBar(
                     currentIndex: _currentIndex,
                     //type: BottomNavigationBarType.fixed,

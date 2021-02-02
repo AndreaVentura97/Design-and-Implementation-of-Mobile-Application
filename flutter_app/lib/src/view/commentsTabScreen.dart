@@ -30,9 +30,8 @@ class _CommentsState extends State<Comments> {
             // DefaultTabController(
             // //length: 2,
             // child:
-            Scaffold(
-              body: Messages(station: widget.station),
-            );
+            Messages(station: widget.station);
+            //);
           //);
         });
         }

@@ -87,11 +87,7 @@ class VotingState extends State<Voting> {
       converter: (store) => createViewModel(store),
       onInit: (store) => retrieveMyVotes(store.state.customer.email),
       builder: (context, _viewModel) {
-        return Scaffold(
-            resizeToAvoidBottomPadding: false,
-            resizeToAvoidBottomInset: true,
-            //backgroundColor: Colors.green,
-            body: SingleChildScrollView(
+        return SingleChildScrollView(
               child: Column(
                 //mainAxisSize: MainAxisSize.min,
                   children: [
@@ -677,7 +673,7 @@ class VotingState extends State<Voting> {
                       ),
                     ),
                   ]),
-            ));
+            );
       },
     );
   }
