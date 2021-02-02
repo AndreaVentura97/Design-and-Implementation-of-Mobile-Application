@@ -4,8 +4,14 @@ import 'package:flutter/material.dart';
 import 'package:flutter/gestures.dart';
 import 'package:auto_size_text/auto_size_text.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:google_maps_flutter/google_maps_flutter.dart';
+import '../services/service.dart';
+import 'package:location/location.dart';
+import 'package:flutter/services.dart' show rootBundle;
+import '../services/stationServices.dart';
 import 'MapWidget.dart';
 import 'tabDrawerWidget.dart';
+import 'tabProfilePage.dart';
 //import '../view/InfoProfileScreen.dart';
 
 class HomeTab extends StatefulWidget {
@@ -13,177 +19,83 @@ class HomeTab extends StatefulWidget {
 }
 
 class HomeTabState extends State<HomeTab> {
-  @override
+  Set<Marker> _markers;
+  GoogleMapController mapController;
+  final TextEditingController _controller= TextEditingController();
+  List stations = [];
+  String mapStyle;
+  var cameraPosition = CameraPosition(
+    target:  LatLng(45.456532, 9.125001),
+    zoom: 12.0,
+  );
+  var targetPosition;
+
+
+  void _onMapCreated(GoogleMapController controller) {
+    mapController = controller;
+    mapController.setMapStyle(mapStyle);
+  }
+
+  void setMarkers() async {
+    var response = await retrieveMarkers();
+    buildTabMarkers(response, context).then((result) => setState((){
+      _markers = result;
+    }));
+  }
+
+  String checkLine(station){
+    if (station['line']=="Metro M1"){
+      return "assets/M1.jpeg";
+    }
+    if (station['line']=="Metro M2"){
+      return "assets/M2.jpeg";
+    }
+    if (station['line']=="Metro M3"){
+      return "assets/M3.jpeg";
+    }
+    if (station['line']=="Metro M5"){
+      return "assets/M5.jpeg";
+    }
+  }
+
+  void _getLocationPermission() async {
+    var location = new Location();
+    try {
+      location.requestPermission();
+    } on Exception catch (_) {
+      print('There was a problem allowing location access');
+    }
+  }
+
+  void updateStations(String search) {
+    searchStationByName(search).then((netStations) => setState(() {
+      stations = netStations;
+    }));
+  }
+
+
+
   void initState() {
     HomeTabState();
     super.initState();
+    setMarkers();
+    rootBundle.loadString('assets/mapStyle.txt').then((string) {
+      mapStyle = string;
+    });
+    _getLocationPermission();
   }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      resizeToAvoidBottomInset: false,
       body: SafeArea(
         child: Row(
           children: [
             Flexible(
               flex: 4,
-              child: Scaffold(
-                appBar: AppBar(
-                  backgroundColor: Colors.blue[900],
-                ),
-                drawer: TabDrawer(),
-                body: Stack(
-                  children: [
-                    Stack(
-                          children: [
-                            Center(
-                              child: Container(
-                              height: 300,
-                              width: 200,
-                              child: FittedBox(
-                                child: Image.asset(
-                                  'assets/Logo_Name.jpeg',
-                                ),
-                              ),
-                          ),
-                            ),
-                            Container(color: Color.fromRGBO(255, 255, 255, 0.5),)
-                          ]
-                        ),
-
-
-                    // Positioned(
-                    //   top: 10.0,
-                    //   left: 15.0,
-                    //   right: 60.0,
-                    //   child: Container(
-                    //     padding: EdgeInsets.all(3.5),
-                    //     decoration: BoxDecoration(
-                    //       color: Colors.white,
-                    //       border: Border.all(
-                    //         color: Colors.blue[900],
-                    //         width: 2.0,
-                    //       ),
-                    //       borderRadius: BorderRadius.circular(10.0),
-                    //     ),
-                    //     child: Column(
-                    //       children: [
-                    //         Row(
-                    //           mainAxisSize: MainAxisSize.min,
-                    //           children: [
-                    //             Flexible(
-                    //               child: TextField(
-                    //                 controller: _controller,
-                    //                 textAlign: TextAlign.start,
-                    //                 style: TextStyle(
-                    //                     fontSize: 18,
-                    //                     fontWeight: FontWeight.w500,
-                    //                     color: Colors.black),
-                    //                 decoration: InputDecoration(
-                    //                   contentPadding: EdgeInsets.symmetric(vertical: 5.0, horizontal: 10),
-                    //                   isDense: true,
-                    //                   fillColor: Colors.white,
-                    //                   filled: true,
-                    //                   hintText: 'Search Station',
-                    //                   hintStyle: TextStyle(color: Colors.grey, fontSize: 18),
-                    //                   enabledBorder:
-                    //                   // UnderlineInputBorder(
-                    //                   //   borderSide: BorderSide(
-                    //                   //     color: Colors.blue[900],
-                    //                   //     width: 2.0,
-                    //                   //   ),
-                    //                   //   //borderRadius: BorderRadius.circular(10.0),
-                    //                   // ),
-                    //                   InputBorder.none,
-                    //                   focusedBorder:
-                    //                   // UnderlineInputBorder(
-                    //                   //   borderSide: BorderSide(
-                    //                   //     color: Colors.blue[900],
-                    //                   //     width: 2.0,
-                    //                   //   ),
-                    //                   //   //borderRadius: BorderRadius.circular(10.0),
-                    //                   // ),
-                    //                   InputBorder.none,
-                    //                 ),
-                    //                 onChanged: updateStations,
-                    //               ),
-                    //             ),
-                    //             IconButton(
-                    //               icon: Icon(
-                    //                 Icons.clear,
-                    //                 size: 16.0,
-                    //               ),
-                    //               padding: EdgeInsets.zero,
-                    //               constraints: BoxConstraints(),
-                    //               onPressed: () {
-                    //                 _controller.clear();
-                    //                 updateStations('null');
-                    //               },
-                    //             ),
-                    //           ],
-                    //         ),
-                    //
-                    //
-                    //         ConstrainedBox(
-                    //           constraints: BoxConstraints(
-                    //             maxHeight: 200,
-                    //           ),
-                    //           child: ListView.separated(
-                    //             shrinkWrap: true,
-                    //             itemCount: stations.length,
-                    //             itemBuilder: (BuildContext context, int index) {
-                    //               return ListTile(
-                    //                 tileColor: Colors.white,
-                    //                 contentPadding:
-                    //                 EdgeInsets.symmetric(horizontal: 5.0),
-                    //                 leading: Container(
-                    //                   child: Image(
-                    //                     image: AssetImage(checkLine(stations[index])),
-                    //                     height: 30.0,
-                    //                     width: 45.0,
-                    //                   ),
-                    //                 ),
-                    //                 title: Text(stations[index]["name"],
-                    //                     style: TextStyle(
-                    //                         fontSize: 20,
-                    //                         fontWeight: FontWeight.w500,
-                    //                         color: Colors.black)),
-                    //                 onTap: () => {
-                    //                   setState((){
-                    //                     targetPosition = CameraPosition(
-                    //                         target: LatLng(stations[index]['latitude'],stations[index]['longitude']),
-                    //                         zoom: 16.5);
-                    //                     CameraUpdate update =CameraUpdate.newCameraPosition(targetPosition);
-                    //                     //mapController.moveCamera(update);
-                    //                     mapController.animateCamera(update);
-                    //                     //_controller.clear();
-                    //                     stations.clear();
-                    //                   })},
-                    //                 onLongPress: () => {
-                    //                   Navigator.push(
-                    //                       context,
-                    //                       MaterialPageRoute(
-                    //                           builder: (context) => MenuStation(
-                    //                               name: stations[index]['name'])))
-                    //                 },
-                    //
-                    //
-                    //                 dense: true,
-                    //               );
-                    //             },
-                    //             separatorBuilder: (BuildContext context, int index) {
-                    //               return Divider(color: Colors.grey, thickness: 1);
-                    //             },
-                    //           ),
-                    //         ),
-                    //       ],
-                    //     ),
-                    //   ),
-                    // ),
-                    // ]
-                    // )
-                  ],
-                ),
+              child: MaterialApp(
+                  home: TabProfile(),
               ),
             ),
             Flexible(
@@ -192,7 +104,20 @@ class HomeTabState extends State<HomeTab> {
                   decoration: BoxDecoration(
                     border: Border.all(color: Colors.white, width: 2),
                   ),
-                  child: MapWidget()),
+                  child: Scaffold(
+                    resizeToAvoidBottomPadding: false,
+                    resizeToAvoidBottomInset: false,
+                    //drawer: UserAccount(),
+                    body: //Stack(children: [
+                    GoogleMap(
+                      onMapCreated: _onMapCreated,
+                      initialCameraPosition: cameraPosition,
+                      markers: _markers,
+                      myLocationEnabled: true,
+                      myLocationButtonEnabled: true,
+                    ),
+                  )
+              ),
             ),
           ],
         ),

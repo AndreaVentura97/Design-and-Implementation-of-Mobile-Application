@@ -13,16 +13,15 @@ import '../db.dart' as DB;
 import 'package:flutter_app/src/view/viewModel.dart';
 import 'package:flutter_redux/flutter_redux.dart';
 import 'package:url_launcher/url_launcher.dart';
-import '../view/profile.dart';
 import '../checkLogin.dart';
-
-//import 'login.dart';
-//import '../view/InfoProfileScreen.dart';
-import '../view/myCommentsScreen.dart';
-import '../view/myStations.dart';
-import '../view/notificationScreen.dart' as not;
-import '../view/notificationWidget.dart';
 import 'package:image_picker/image_picker.dart';
+
+import 'tabProfilePage.dart';
+import 'tabMyStationPage.dart';
+import 'tabSearchPage.dart';
+import 'tabMyCommentsPage.dart';
+import 'tabLogin.dart';
+
 
 class TabDrawer extends StatefulWidget {
   @override
@@ -48,66 +47,61 @@ class TabDrawerState extends State<TabDrawer> {
                          Icon(
                           Icons.account_box_outlined,
                           color: Colors.white,
+                           size: 35,
                          ),
                          SizedBox(
-                          width: 10,
+                          width: 5,
                          ),
                         Text("${_viewModel.c.name}",
                           style: TextStyle(
-                            fontSize: 16,
+                            fontSize: 20,
                           ),
                         ),
                        ]),
-                      accountEmail: Row(children: [
+                       accountEmail: Row(children: [
                     Icon(
                       Icons.email,
                       color: Colors.white,
+                      size: 35,
                     ),
                     SizedBox(
-                      width: 10,
+                      width: 5,
                     ),
                     Text(
                       "${_viewModel.c.email}",
                       style: TextStyle(
-                        fontSize: 16,
+                        fontSize: 20,
                       ),
                     ),
                   ]),
-                      currentAccountPicture: Container(
-                        color: Colors.yellow,
-                        child: new CircleAvatar(
+                       currentAccountPicture: new CircleAvatar(
                             backgroundImage: getPhoto(_viewModel.c.photo),
+                            radius: 60,
                           ),
-                      ),
+
                 ),
                 onTap: () {
-                  // Navigator.pushReplacement(
-                  //     context,
-                  //     MaterialPageRoute(
-                  //         builder: (BuildContext context) =>
-                  //             InfoProfile(email: _viewModel.c.email)));
+                  Navigator.pushReplacement(
+                      context,
+                      MaterialPageRoute(
+                          builder: (BuildContext context) =>
+                              TabProfile(email: _viewModel.c.email)));
                 },
               ),
-              new ListTile(
+                  new ListTile(
                   title: Row(
                     mainAxisAlignment: MainAxisAlignment.start,
                     children: [
-                      Icon(
-                        Icons.train,
-                        color: Colors.blue[900],
-                      ),
-                      Text(
-                        " My Stations",
-                        style: TextStyle(color: Colors.blue[900], fontSize: 18),
-                      ),
+                      Icon(Icons.train, color: Colors.blue[900], size: 30,),
+                      Text(" My Stations", style: TextStyle(color: Colors.blue[900], fontSize: 22),),
                     ],
                   ),
                   onTap: () {
-                    // Navigator.push(
-                    //     context,
-                    //     MaterialPageRoute(
-                    //         builder: (context) =>
-                    //             MyStations(email: _viewModel.c.email)));
+                    Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                            builder: (context) =>
+                                TabMyStations(email: _viewModel.c.email)));
                   }),
                   new ListTile(
                       title: Row(
@@ -116,54 +110,43 @@ class TabDrawerState extends State<TabDrawer> {
                           Icon(
                             Icons.search,
                             color: Colors.blue[900],
+                            size: 30,
                           ),
                           Text(
                             " Search Stations",
-                            style: TextStyle(color: Colors.blue[900], fontSize: 18),
+                            style: TextStyle(color: Colors.blue[900], fontSize: 22),
                           ),
                         ],
                       ),
                       onTap: () {
-                        // Navigator.push(
-                        //     context,
-                        //     MaterialPageRoute(
-                        //         builder: (context) =>
-                        //             MyStations(email: _viewModel.c.email)));
+                        Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                                builder: (context) =>
+                                    TabSearch()));
                       }),
-              new ListTile(
+                  new ListTile(
                   title: Row(
                     mainAxisAlignment: MainAxisAlignment.start,
                     children: [
-                      Icon(
-                        Icons.comment,
-                        color: Colors.blue[900],
-                      ),
-                      Text(
-                        " My Comments",
-                        style: TextStyle(color: Colors.blue[900], fontSize: 18),
-                      ),
+                      Icon(Icons.comment, color: Colors.blue[900], size: 30,),
+                      Text(" My Comments", style: TextStyle(color: Colors.blue[900], fontSize: 22),),
                     ],
                   ),
                   onTap: () {
-                    // Navigator.push(context,
-                    //     MaterialPageRoute(builder: (context) => MyComments()));
+                    Navigator.push(context,
+                        MaterialPageRoute(builder: (context) => TabMyComments()));
                   }),
               //     new ListTile(
               //   title:
               //       Row(children: [Text("Notification"), NotificationWidget()]),
               // ),
-              new ListTile(
+                  new ListTile(
                   title: Row(
                     mainAxisAlignment: MainAxisAlignment.start,
                     children: [
-                      Icon(
-                        Icons.refresh,
-                        color: Colors.blue[900],
-                      ),
-                      Text(
-                        " Reconnect",
-                        style: TextStyle(color: Colors.blue[900], fontSize: 18),
-                      ),
+                      Icon(Icons.refresh, color: Colors.blue[900], size: 30,),
+                      Text(" Reconnect", style: TextStyle(color: Colors.blue[900], fontSize: 22),),
                     ],
                   ),
                   onTap: () {
@@ -171,25 +154,25 @@ class TabDrawerState extends State<TabDrawer> {
                           print("reconnected to mongoDb");
                         }));
                   }),
-              new ListTile(
+                  new ListTile(
                   title: Text("Buy a ticket"),
                   onTap: () {
                     openApp();
                   }),
 
-              new ListTile(
+                  new ListTile(
                 title: Row(
                   mainAxisAlignment: MainAxisAlignment.start,
                   children: [
-                    Icon(Icons.exit_to_app, color: Colors.blue[900],),
-                    Text(" Logout", style: TextStyle( color: Colors.blue[900], fontSize: 18),),
+                    Icon(Icons.exit_to_app, color: Colors.blue[900], size: 30),
+                    Text(" Logout", style: TextStyle( color: Colors.blue[900], fontSize: 22),),
                   ],
                 ),
-              //   onTap: () {
-              //     setLogged(false);
-              //     Navigator.pushReplacement(context, MaterialPageRoute(
-              //         builder: (BuildContext context) => Login()));
-              //   },
+                onTap: () {
+                  setLogged(false);
+                  Navigator.pushAndRemoveUntil(context, MaterialPageRoute(
+                      builder: (BuildContext context) => TabLogin()), ModalRoute.withName('/'));
+                },
               ),
 
             ]));
