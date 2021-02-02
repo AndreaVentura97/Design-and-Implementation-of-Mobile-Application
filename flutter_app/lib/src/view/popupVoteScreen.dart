@@ -98,7 +98,7 @@ class PopupVoteState extends State<PopupVote> {
             children: [
               Text(Title,
                 style: TextStyle(
-                  //fontWeight: FontWeight.bold
+                  letterSpacing: 0.2,
                 ),
               ),
               SizedBox(
@@ -122,7 +122,8 @@ class PopupVoteState extends State<PopupVote> {
                     style: TextStyle(
                       color: Colors.black,
                       fontSize: 16,
-                      fontWeight: FontWeight.bold,
+                      fontWeight: FontWeight.w500,
+                      letterSpacing: 0.3
                     ),
                   ) :
                   Text("--",
@@ -156,14 +157,13 @@ class PopupVoteState extends State<PopupVote> {
             mainAxisSize: MainAxisSize.min,
             children: [
               Container(
-                padding: EdgeInsets.symmetric(horizontal: 10),
+                padding: EdgeInsets.all(10),
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
                     Container(
-                      color: Colors.blue,
-                      height: 30,
-                      width: 30,
+                      height: 60,
+                      width: 60,
                       child: new CircleAvatar(
                         backgroundImage: getPhoto(widget.photo),
                         radius: 40,
@@ -177,32 +177,21 @@ class PopupVoteState extends State<PopupVote> {
                           Row(children: [
                             Icon(
                               Icons.account_box,
-                              color: Colors.black,
+                              color: Colors.blue[900],
                             ),
                             SizedBox(
-                              width: 10,
+                              width: 5,
                             ),
-                            Text(
-                              "${widget.name}",
-                              style: TextStyle(
-                                fontSize: 20,
-                                //fontWeight: FontWeight.bold,
-                              ),
-                            ),
-                          ]),
-                          Row(children: [
-                            Icon(
-                              Icons.email,
-                              color: Colors.black,
-                            ),
-                            SizedBox(
-                              width: 10,
-                            ),
-                            Text(
-                              "${widget.email}",
-                              style: TextStyle(
-                                fontSize: 20,
-                                //fontWeight: FontWeight.bold
+                            Flexible(
+                              child: Text(
+                                "${widget.name}",
+                                style: TextStyle(
+                                  color: Colors.blue [900],
+                                  fontWeight: FontWeight.w500,
+                                  letterSpacing: 0.5,
+                                  fontSize: 20,
+                                  //fontWeight: FontWeight.bold,
+                                ),
                               ),
                             ),
                           ]),
@@ -212,6 +201,7 @@ class PopupVoteState extends State<PopupVote> {
                               Text("Total comments:",
                                 style: TextStyle(
                                     color: Colors.grey,
+                                    letterSpacing: 0.3,
                                     fontSize: 16.0,
                                     fontWeight: FontWeight.w400
                                 ),
@@ -230,24 +220,6 @@ class PopupVoteState extends State<PopupVote> {
                               ),
                             ],
                           ),
-                          Row(
-                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                            children: [
-                              Text("Total Interactions:",
-                                style: TextStyle(
-                                    color: Colors.grey,
-                                    fontSize: 16.0,
-                                    fontWeight: FontWeight.w400
-                                ),
-                              ),
-                              Text("20",//"$numberComments",
-                                style: TextStyle(
-                                    color: Colors.grey,
-                                    fontSize: 18.0
-                                ),
-                              )
-                            ],
-                          ),
                         ],
                       ),
                     ),
@@ -262,7 +234,7 @@ class PopupVoteState extends State<PopupVote> {
               ),
               Container(
                 padding: EdgeInsets.all(10),
-                color: Colors.grey[200],
+                //color: Colors.grey[200],
                 child: Column(
                   children: [
                     Column(
@@ -270,7 +242,8 @@ class PopupVoteState extends State<PopupVote> {
                       children: [
                         Text("${widget.station}",
                           style: TextStyle(
-                              fontSize: 18,
+                              fontSize: 25,
+                              letterSpacing: 0.5,
                               fontWeight: FontWeight.w700
                           ),
                         ),
@@ -310,24 +283,7 @@ class PopupVoteState extends State<PopupVote> {
                             ),
                           ],
                         ),
-                        /*
-                          Row(
-                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                            children: [
-                              Text(" Interactions for this station:",
-                                style: TextStyle(
-                                    fontSize: 18.0,
-                                    fontWeight: FontWeight.w700
-                                ),
-                              ),
-                              Text("$interactionsThisStation",//"$numberComments",
-                                style: TextStyle(
-                                    fontSize: 20.0
-                                ),
-                              )
-                            ],
-                          ),
-                          */
+
                       ],
                     )
 
@@ -339,61 +295,6 @@ class PopupVoteState extends State<PopupVote> {
         ),
       ),
     );
-
-
-
-
-
-
-    Scaffold(
-      resizeToAvoidBottomPadding: false,
-      resizeToAvoidBottomInset: true,
-      //backgroundColor: Colors.green,
-      body: Column(
-        children: [
-          Text("Cleaning"),
-          (voting[0]==true) ? Slider(
-            value: cleaning,
-            min: 0,
-            max: 100,
-            divisions: 100,
-            label: cleaning.round().toString(),
-            activeColor: Colors.green,
-          ) : Text('No vote for cleaning'),
-          Text("Voce 2"),
-          (voting[1]==true) ? Slider(
-            value: dis,
-            min: 0,
-            max: 100,
-            divisions: 100,
-            label: cleaning.round().toString(),
-            activeColor: Colors.green,
-          ) : Text('No vote for voce 2'),
-          Text("Voce 3"),
-          (voting[2]==true) ? Slider(
-            value: safety,
-            min: 0,
-            max: 100,
-            divisions: 100,
-            label: cleaning.round().toString(),
-            activeColor: Colors.green,
-          ) : Text('No vote for voce 3'),
-          Text("Voce 4"),
-          (voting[3]==true) ? Slider(
-            value: area,
-            min: 0,
-            max: 100,
-            divisions: 100,
-            label: cleaning.round().toString(),
-            activeColor: Colors.green,
-          ) : Text('No vote for voce 4')
-        ],
-      ),
-    );
-
-
-
-
   }
 }
 

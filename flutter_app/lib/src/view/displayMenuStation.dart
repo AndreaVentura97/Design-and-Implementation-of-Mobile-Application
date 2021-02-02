@@ -170,6 +170,8 @@ class _MenuStationState extends State<MenuStation> with SingleTickerProviderStat
                         title: Text("Info Station",
                           style: TextStyle(
                               fontSize: 16.0,
+                              fontWeight: FontWeight.w700,
+                              letterSpacing: 0.3,
                               color: Colors.blue[900]
                           ),
                         ),
@@ -181,6 +183,8 @@ class _MenuStationState extends State<MenuStation> with SingleTickerProviderStat
                         title: Text("Comments",
                           style: TextStyle(
                             fontSize: 16.0,
+                            fontWeight: FontWeight.w700,
+                            letterSpacing: 0.3,
                             color: Colors.blue[900],
                           ),
                         ),
@@ -192,6 +196,8 @@ class _MenuStationState extends State<MenuStation> with SingleTickerProviderStat
                         title: Text("Voting",
                           style: TextStyle(
                               fontSize: 16.0,
+                              fontWeight: FontWeight.w700,
+                              letterSpacing: 0.3,
                               color: Colors.blue[900]
                           ),
                         ),
