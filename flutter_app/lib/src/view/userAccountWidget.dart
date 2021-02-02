@@ -100,6 +100,7 @@ class UserAccountState extends State<UserAccount> {
                           title: Row(
                             mainAxisAlignment: MainAxisAlignment.start,
                             children: [
+                              Text("    "),
                               Icon(Icons.location_on, color: Colors.blue[900],),
                               Text(" Map", style: TextStyle( color: Colors.blue[900], fontSize: 18),),
                             ],
@@ -112,6 +113,7 @@ class UserAccountState extends State<UserAccount> {
                           title: Row(
                             mainAxisAlignment: MainAxisAlignment.start,
                             children: [
+                              Text("    "),
                               Icon(Icons.train, color: Colors.blue[900],),
                               Text(" My Stations", style: TextStyle( color: Colors.blue[900], fontSize: 18),),
                             ],
@@ -124,6 +126,7 @@ class UserAccountState extends State<UserAccount> {
                           title: Row(
                             mainAxisAlignment: MainAxisAlignment.start,
                             children: [
+                              Text("    "),
                               Icon(Icons.comment, color: Colors.blue[900],),
                               Text(" My Comments ", style: TextStyle( color: Colors.blue[900], fontSize: 18),),
                             ],
@@ -137,7 +140,7 @@ class UserAccountState extends State<UserAccount> {
                           mainAxisAlignment: MainAxisAlignment.start,
                           children: [
                             NotificationWidget(),
-                            Text(" Notifications ", style: TextStyle( color: Colors.blue[900], fontSize: 18),),
+                            Text("Notifications ", style: TextStyle( color: Colors.blue[900], fontSize: 18),),
 
 
                           ],
@@ -148,6 +151,7 @@ class UserAccountState extends State<UserAccount> {
                           title: Row(
                             mainAxisAlignment: MainAxisAlignment.start,
                             children: [
+                              Text("    "),
                               Icon(Icons.account_balance_wallet, color: Colors.blue[900],),
                               Text(" Buy a ticket", style: TextStyle( color: Colors.blue[900], fontSize: 18),),
                             ],
@@ -170,6 +174,7 @@ class UserAccountState extends State<UserAccount> {
                         title: Row(
                           mainAxisAlignment: MainAxisAlignment.start,
                           children: [
+                            Text("    "),
                             Icon(Icons.exit_to_app, color: Colors.blue[900],),
                             Text(" Logout", style: TextStyle( color: Colors.blue[900], fontSize: 18),),
                           ],

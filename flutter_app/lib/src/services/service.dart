@@ -75,7 +75,7 @@ buildMarkers (response, context) async {
 }
 
 buildTabMarkers (response, context) async {
-  Set<Marker> _markers = Set <Marker>();
+  final Set<Marker> _markers = Set <Marker>();
   for (int i=0; i<response.length; i++){
     String id = i.toString();
     var lat = response[i]['latitude'];

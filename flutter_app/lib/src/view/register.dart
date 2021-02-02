@@ -243,12 +243,10 @@ class _RegisterState extends State<Register> {
                                     },
                                   ),
                                 ),
-
-
-                              Container(
+                                Container(
                                 padding: const EdgeInsets.symmetric(vertical: 16.0),
                                 alignment: Alignment.center,
-                                child: OutlineButton(
+                                 child: OutlineButton(
                                   child: Text("Register"),
                                   onPressed: () async {
                                     // if (_formKey.currentState.validate()) {

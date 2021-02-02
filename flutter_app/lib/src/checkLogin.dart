@@ -8,12 +8,14 @@ checkSession (name,email,photo) async {
   SharedPreferences prefs = await SharedPreferences.getInstance();
   prefs.setString("name", name);
   prefs.setString("email", email);
-  if (photo!=null) prefs.setString("photo", photo);
+  if (photo!=null) {prefs.setString("photo", photo);};
   name = prefs.getString("name");
   email = prefs.getString("email");
   photo = prefs.getString("photo");
   prefs.setBool("log", true);
-
+  print('$name');
+  print('checckata');
+  print(prefs.getBool('log'));
   return true;
 }
 
@@ -53,6 +55,8 @@ setLogged(flag) async {
   prefs.setBool("log", flag);
   //ToCheck
   prefs.setString("photo", null);
+  //prefs.setString("name", null);
+  //prefs.setString("email", null);
 }
 
 setPhoto(photo) async {

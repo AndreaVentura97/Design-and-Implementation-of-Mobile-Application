@@ -76,18 +76,18 @@ class MyCommentsState extends State<MyComments> {
     super.dispose();
   }
 
-  AssetImage buildAsset(name){
+  String buildAsset(name){
     if (name == "Metro M1"){
-      return AssetImage("assets/M1.jpeg");
+      return "assets/M1.jpeg";
     }
     if (name == "Metro M2"){
-      return AssetImage("assets/M2.jpeg");
+      return "assets/M2.jpeg";
     }
     if (name == "Metro M3"){
-      return AssetImage("assets/M3.jpeg");
+      return "assets/M3.jpeg";
     }
     if (name == "Metro M5"){
-      return AssetImage("assets/M5.jpeg");
+      return "assets/M5.jpeg";
     }
   }
 
@@ -104,7 +104,7 @@ class MyCommentsState extends State<MyComments> {
                 ),
                 drawer: UserAccount(),
                 body: DelayedDisplay(
-                  delay: Duration(milliseconds:2500),
+                  delay: Duration(milliseconds:2000),
                   child: Stack(
                     children: [
                       Stack(children: [
@@ -213,12 +213,15 @@ class MyCommentsState extends State<MyComments> {
                                                                     children: [
                                                                        Container(
                                                                         child: DelayedDisplay(
-                                                                          delay: Duration(seconds:1),
+                                                                          delay: Duration(milliseconds:1000),
                                                                           child: InkWell(
-                                                                            child: Image(
-                                                                              image: buildAsset(myComments[index]['_id']),
-                                                                              height: 30.0,
-                                                                              width: 45.0,
+                                                                            child: DelayedDisplay(
+                                                                              delay: Duration(milliseconds:1000),
+                                                                              child: Image(
+                                                                                image: (buildAsset(myComments[index]['_id'])!=null) ? AssetImage(buildAsset(myComments[index]['_id'])) : AssetImage('assets/loading.jpeg'),
+                                                                                height: 30.0,
+                                                                                width: 45.0,
+                                                                              ),
                                                                             ),
                                                                               onTap: (){
                                                                                 Navigator.push(context, MaterialPageRoute(builder:(context)=>MenuStation(name:myComments[index]['station'])));
@@ -355,7 +358,7 @@ class MyCommentsState extends State<MyComments> {
                                                             delay: Duration(seconds:1),
                                                             child: InkWell(
                                                                 child: Image(
-                                                                  image: buildAsset(myCommentsInteractions[index]['_id']),
+                                                                  image: AssetImage(buildAsset(myCommentsInteractions[index]['_id'])),
                                                                   height: 30.0,
                                                                   width: 45.0,
                                                                 ),

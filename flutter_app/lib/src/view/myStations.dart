@@ -5,6 +5,7 @@ import 'package:flutter_app/src/services/stationServices.dart';
 import 'package:flutter_app/src/view/userAccountWidget.dart';
 import '../services/userService.dart';
 import 'displayMenuStation.dart';
+import 'package:auto_size_text/auto_size_text.dart';
 import 'notificationWidget.dart';
 
 class MyStations extends StatefulWidget {
@@ -21,6 +22,7 @@ class MyStationsState extends State<MyStations> {
   //bool _favStation = false;
   String line;
   String address;
+  bool show = false;
 
 
 
@@ -42,7 +44,7 @@ class MyStationsState extends State<MyStations> {
 
   String getAsset(name){
     if (name == "Metro M1"){
-      return "assets/M1.jpeg";
+      return "assets/M1-M2.jpg";
     }
     if (name == "Metro M2"){
       return "assets/M2.jpeg";
@@ -105,10 +107,12 @@ class MyStationsState extends State<MyStations> {
                       color: Color.fromRGBO(255, 255, 255, 0.3),
                     )
                   ]),
+
                   ListView.builder(
                     //shrinkWrap: true,
                     itemCount: myFullStations.length,
                     itemBuilder: (BuildContext context, int index) {
+
                       return GestureDetector(
                           onTap: (){
                             Navigator.push(context, MaterialPageRoute(builder:(context)=>MenuStation(name:myFullStations[index]['name'])));
@@ -130,6 +134,7 @@ class MyStationsState extends State<MyStations> {
                               child: Column(
                                 mainAxisSize: MainAxisSize.max,
                                 children: [
+
                                   ListTile(
                                     contentPadding: EdgeInsets.fromLTRB(10.0, 0.0, 0.0, 0.0),
                                     title: Row(
@@ -193,7 +198,9 @@ class MyStationsState extends State<MyStations> {
                                         deleteMyStations(widget.email, myFullStations[index]['name']);
                                         setState(() {
                                           myFullStations.remove(myFullStations[index]);
+                                          show = true;
                                         });
+
                                          },
 
                                     ),
@@ -213,36 +220,38 @@ class MyStationsState extends State<MyStations> {
   }
 
   Widget showAlert() {
-  //   if (_error != null)
-  //     return Container(
-  //       color: Colors.amber,
-  //       width: double.infinity,
-  //       padding: EdgeInsets.all(8.0),
-  //       child: Row(
-  //         children: [
-  //           Padding(
-  //             padding: const EdgeInsets.only(right: 8.0),
-  //             child: Icon(Icons.error_outline),
-  //           ),
-  //           Expanded(
-  //             child: AutoSizeText(
-  //               "$_error",
-  //               maxLines: 3,
-  //             ),
-  //           ),
-  //           IconButton(
-  //               icon: Icon(Icons.close),
-  //               onPressed: () {
-  //                 setState(() {
-  //                   _error = null;
-  //                 });
-  //               })
-  //         ],
-  //       ),
-  //     );
-  //   return SizedBox(
-  //     height: 0.0,
-  //   );
-   }
+    if (show){
+      return Container(
+        color: Colors.amber,
+        width: double.infinity,
+        padding: EdgeInsets.all(8.0),
+        child: Row(
+          children: [
+            Padding(
+              padding: const EdgeInsets.only(right: 8.0),
+              child: Icon(Icons.error_outline),
+            ),
+            Expanded(
+              child: AutoSizeText(
+                "Removed from your stations",
+                maxLines: 3,
+              ),
+            ),
+            IconButton(
+                icon: Icon(Icons.close),
+                onPressed: () {
+                  setState(() {
+                    show = false;
+                  });
+                })
+          ],
+        ),
+      );
+    }
+    else {
+      return SizedBox(
+        height: 0.0,
+      );
+}}
 
 }

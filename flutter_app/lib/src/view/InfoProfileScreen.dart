@@ -50,6 +50,7 @@ class InfoProfileState extends State<InfoProfile> {
   var win;
   var totalLikesGiven = 0;
   var totalUnlikesGiven = 0;
+  bool ready = false;
 
   void takeMyStatistics() async {
     getNumberOfMyComments(widget.email).then((result) => setState(() {
@@ -66,6 +67,9 @@ class InfoProfileState extends State<InfoProfile> {
         }));
     getCommentWithMostUnLike(widget.email).then((result) => setState(() {
           commentMostUnLike = result;
+          setState(() {
+            ready = true;
+          });
         }));
     getLikesGiven(widget.email).then((result) => setState((){
       totalLikesGiven = result;
@@ -78,6 +82,7 @@ class InfoProfileState extends State<InfoProfile> {
   @override
   void initState() {
     takeMyStatistics();
+
     super.initState();
   }
 
@@ -85,6 +90,7 @@ class InfoProfileState extends State<InfoProfile> {
     return new StoreConnector<AppState, ViewModel>(
         converter: (store) => createViewModel(store),
         builder: (context, _viewModel) {
+          final photo = getPhoto(_viewModel.c.photo);
           return Scaffold(
             resizeToAvoidBottomPadding: false,
             resizeToAvoidBottomInset: true,
@@ -115,7 +121,7 @@ class InfoProfileState extends State<InfoProfile> {
                                 //color: Colors.yellow,
                                 child: InkWell(
                                     child: new CircleAvatar(
-                                      backgroundImage: getPhoto(_viewModel.c.photo),
+                                      backgroundImage: (ready) ? photo : null,
                                       radius: 40,
                                     ),
                                     onTap: () {
@@ -425,7 +431,7 @@ class InfoProfileState extends State<InfoProfile> {
                     ),
                   ),
               ),
-            ),
+            )
           );
         });
   }

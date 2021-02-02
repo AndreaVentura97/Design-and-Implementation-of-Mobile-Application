@@ -36,6 +36,7 @@ class _LoginState extends State<Login> {
             isLogged = false;
           }
         }));
+    print(isLogged);
 
   }
 
@@ -269,7 +270,6 @@ class _LoginState extends State<Login> {
       margin: EdgeInsets.all(8.0),
       child: Form(
         key: _formKey,
-
         child: Column(
           //mainAxisAlignment: MainAxisAlignment.spaceEvenly,
           mainAxisSize: MainAxisSize.max,
@@ -427,6 +427,7 @@ class _LoginState extends State<Login> {
                           _emailController.text, _passwordController.text)
                       .then((value) => setState(() {
                             _error = value;
+                            isLogged = true;
                           }));
                 }
               },
