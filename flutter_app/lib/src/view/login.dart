@@ -36,6 +36,7 @@ class _LoginState extends State<Login> {
             isLogged = false;
           }
         }));
+
   }
 
   void initState() {

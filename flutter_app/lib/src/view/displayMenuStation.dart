@@ -127,6 +127,7 @@ class _MenuStationState extends State<MenuStation> with SingleTickerProviderStat
                 return Scaffold(
                   appBar: AppBar(
                     title: Text("${widget.name}"),
+                    centerTitle: true,
                     //backgroundColor: Color.fromRGBO(RGBStation[0],RGBStation[1],RGBStation[2],  1.0),
                     backgroundColor: _colorTween.value
                   ),

@@ -13,6 +13,7 @@ checkSession (name,email,photo) async {
   email = prefs.getString("email");
   photo = prefs.getString("photo");
   prefs.setBool("log", true);
+
   return true;
 }
 

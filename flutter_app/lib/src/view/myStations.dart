@@ -73,6 +73,7 @@ class MyStationsState extends State<MyStations> {
     return Scaffold(
             appBar: AppBar(
               backgroundColor: Colors.blue[900],
+              centerTitle: true,
               title: Row(
                 children: [
                   Text("My Stations"),

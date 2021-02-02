@@ -42,7 +42,7 @@ class NotificationState extends State<Notification> {
                   contentPadding: EdgeInsets.all(10.0),
                   title: (widget.notifications!=null) ? Text(widget.notifications[index],
                       style: TextStyle(
-                          fontSize: 10,
+                          fontSize: 15,
                           fontWeight: FontWeight.w500,
                           color: Colors.black)) : null,
                 );

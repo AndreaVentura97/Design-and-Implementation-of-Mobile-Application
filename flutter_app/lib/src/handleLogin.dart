@@ -10,7 +10,7 @@ import 'package:http/http.dart' as http;
 import 'package:google_sign_in/google_sign_in.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
-import 'view/profile.dart';
+import 'view/login.dart';
 import 'view/adminScreen.dart';
 
 
@@ -109,12 +109,12 @@ loginWithGoogle(context) async {
         checkSession(user.displayName, user.email, null);
         StoreProvider.of<AppState>(context).dispatch(updateCustomer(name:user.displayName, email:user.email,photo:null,notification: false));
       }
-
       String tk = await _firebaseMessaging.getToken();
       us.insertUser(user.email, user.displayName,tk);
       Navigator.of(context).pushReplacement(MaterialPageRoute(builder: (_) {
-        return Profile();
+        return Login();
       }));
+      return true;
     }
   } catch (e) {
     await setLogged(false);

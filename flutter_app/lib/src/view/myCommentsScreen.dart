@@ -104,7 +104,7 @@ class MyCommentsState extends State<MyComments> {
                 ),
                 drawer: UserAccount(),
                 body: DelayedDisplay(
-                  delay: Duration(milliseconds:1000),
+                  delay: Duration(milliseconds:2500),
                   child: Column(
                     children: [
                       Container(
@@ -125,11 +125,17 @@ class MyCommentsState extends State<MyComments> {
                          value: valueDrop,
                          items: [
                           DropdownMenuItem(
-                             child: Text("Date"),
+                             child: Text("   Date",
+                               style: TextStyle(
+                                   fontSize: 22
+                               )),
                              value: "Date",
                            ),
                            DropdownMenuItem(
-                             child: Text("Interactions"),
+                             child: Text("   Interactions",
+                               style: TextStyle(
+                                   fontSize: 22
+                               ),),
                              value: "Interactions",
                            ),
                          ],
