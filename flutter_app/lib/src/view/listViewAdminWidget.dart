@@ -71,62 +71,75 @@ class ListViewAdState extends State<ListViewAd> {
                               contentPadding: EdgeInsets.all(0.0),
                               title: Row(
                                 children: [
-                                  CircleAvatar(
-                                    //backgroundColor: Colors.blue[900],
-                                    backgroundImage: new NetworkImage(suggestions[index]['photo']),
-                                    radius: 15.0,
-                                  ),
-                                  SizedBox(width: 10.0,),
-                                  IntrinsicWidth(
+
+                                  Flexible(
                                     child: Column(
                                       crossAxisAlignment: CrossAxisAlignment.start,
                                       children: [
-                                        InkWell(
-                                            child: Text(suggestions[index]['name'],
-                                                style: TextStyle(
-                                                    fontSize: 18.0,
-                                                    fontWeight: FontWeight.w500,
-                                                    color: Colors.black)),
-                                            onTap: (){
-                                              showDialog(
-                                                  context: context,
-                                                  builder: (BuildContext context) {
-                                                    //return PopupVote(email: messages[index]['email'], station: widget.station);
-                                                  });
-                                            }
-                                        ),
-                                        Container(
-                                          color: Colors.black,
-                                          child: Text(suggestions[index]['date'],
-                                            style: TextStyle(
-                                              fontSize: 15.0,
-                                              color: Colors.grey,
-                                            ),
+                                        // InkWell(
+                                      //     child:
+                                      Row(
+                                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                        children: [
+                                          Text(suggestions[index]['name'],
+                                                    style: TextStyle(
+                                                        fontSize: 20,
+                                                        fontWeight: FontWeight.w500,
+                                                        color: Colors.black)
                                           ),
+                                          Icon(Icons.close)
+                                        ],
+                                      ),
+                                            // onTap: (){
+                                            //   showDialog(
+                                            //       context: context,
+                                            //       builder: (BuildContext context) {
+                                            //         //return PopupVote(email: messages[index]['email'], station: widget.station);
+                                            //       });
+                                            // }
+                                        //),
+                                        Row(
+                                          children: [
+                                            Text(' (',
+                                              style: TextStyle(
+                                                fontSize: 12.0,
+                                                color: Colors.grey,
+                                              ),
+                                            ),
+                                            Text(suggestions[index]['date'],
+                                                style: TextStyle(
+                                                  fontSize: 12.0,
+                                                  color: Colors.grey,
+                                                ),
+                                              ),
+                                            Text(')',
+                                              style: TextStyle(
+                                                fontSize: 12.0,
+                                                color: Colors.grey,
+                                              ),
+                                            ),
+                                          ],
                                         ),
+
 
                                       ],
                                     ),
                                   ),
                                 ],
                               ),
-                              trailing: SmoothStarRating(
-                                rating: 5,
-                                starCount: 5,
-                                isReadOnly: true,
-                                color: Colors.amber,
-                              )
                           ),
                         ),
                         Container(
-                          color: Colors.green[100],
-                          child: InkWell(
-                            child: Text(suggestions[index]['text'],
+                          //color: Colors.green[100],
+                          child: Text(suggestions[index]['text'],
                                 style: TextStyle(
-                                    fontSize: 15,
-                                    fontWeight: FontWeight.w500,
-                                    color: Colors.black)),
+                                    fontSize: 18,
+                                    fontWeight: FontWeight.w400,
+                                    color: Colors.black,
+                                  letterSpacing: 0.1
+                                )
                           ),
+
 
                         ),
                       ],

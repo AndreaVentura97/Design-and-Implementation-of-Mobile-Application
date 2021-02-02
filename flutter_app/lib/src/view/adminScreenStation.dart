@@ -41,47 +41,125 @@ class AdminScreenStationState extends State<AdminScreenStation> {
     return MaterialApp(
       home: Scaffold(
           appBar: AppBar(
-            title: Text("Station"),
+            centerTitle: true,
+            title: Text("<Station>"),
+            backgroundColor: Colors.blue[900],
           ),
           body: Center(
               child: Column (
-                  children: [ Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  mainAxisSize: MainAxisSize.min,
                   children: [
-                    Text ("${widget.name}"),
-                    DropdownButton(
-                      value: _value,
-                      items: [
-                      DropdownMenuItem(
-                        child: Text("True"),
-                        value: true,
-                    ),
-                        DropdownMenuItem(
-                          child: Text("False"),
-                          value: false,
+                    Container(
+                      color: Colors.grey[300],
+                    child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    mainAxisSize: MainAxisSize.min,
+                    children: [
+                      Card(
+                        margin: EdgeInsets.fromLTRB(10.0, 10.0, 10.0, 0.0),
+                        elevation: 3.0,
+                        shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(10.0),
+                          side: BorderSide(
+                            color: Colors.blue[900],
+                            width: 2.0,
+                          ),
                         ),
-                    ],
-                      onChanged: (value) {
-                        setState(() {
-                          _value = value;
-                        });
+                        child: Container(
+                          padding: EdgeInsets.all(10),
+                          child: Column(
+                            children: [
+                              Row( mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                children: [
+                                  Text ("Status:",
+                                    style: TextStyle(
+                                      fontSize: 22,
+                                      fontWeight: FontWeight.w600,
+                                      color: Colors.blue[900]
+                                    ),
+                                  ),
+                                  DropdownButton(
+                                    value: _value,
+                                    items: [
+                                    DropdownMenuItem(
+                                      child: Row(
+                                        children: [
+                                          Icon(Icons.circle, color: Colors.green,size: 15,),
+                                          Text(" Active")
+                                        ],
+                                      ),
+                                      value: true,
+                                  ),
+                                      DropdownMenuItem(
+                                        child: Row(
+                                          children: [
+                                            Icon(Icons.circle, color: Colors.red,size:15),
+                                            Text(" Inactive")
+                                          ],
+                                        ),
+                                        value: false,
+                                      ),
+                                  ],
+                                    onChanged: (value) {
+                                      setState(() {
+                                        _value = value;
+                                      });
+                                    }),
 
-                      }),
-                    OutlineButton(
-                      child: Text("Submit"),
-                      onPressed: () {
-                        setStatus(widget.name,_value);
-                        if (_value == true){
-                          sendNotification2(widget.name, "ok");
-                        }
-                        else {
-                          sendNotification2(widget.name, "late");
-                        }
-                        },
-                    ),
-                  ]
+                                ],
+                              ),
+                              FlatButton(
+                                shape: RoundedRectangleBorder(
+                                  borderRadius: BorderRadius.circular(10.0),
+                                ),
+                                color: Colors.blue[900],
+                                child: Text(
+                                  "Submit change",
+                                  style: TextStyle(
+                                    color: Colors.white,
+                                    fontSize: 18.0,
+                                  ),
+                                ),
+                                onPressed: () {
+                                  setStatus(widget.name,_value);
+                                  if (_value == true){
+                                    sendNotification2(widget.name, "ok");
+                                  }
+                                  else {
+                                    sendNotification2(widget.name, "late");
+                                  }
+                                },
+                              ),
+                            ],
+                          ),
+                        ),
+                      ),
+                      Container(
+                          //color: Colors.grey[300],
+                          child:Column(
+                            crossAxisAlignment: CrossAxisAlignment.center,
+                              children: [
+                                Container(
+                                  //color: Colors.red,
+                                  padding: EdgeInsets.fromLTRB(10,10,10,10),
+                                  child: Text("Reports",
+                                        style: TextStyle(
+                                            fontSize: 22,
+                                          color: Colors.blue[900],
+                                          fontWeight: FontWeight.w700
+                                        ),
+                                      ),
+                                ),
+                                Divider(
+                                  thickness: 2.0,
+                                  height: 1,
+                                  color: Colors.black,
+                                ),
+                              ]
+                          )
+                      ),
+                    ]
               ),
+                  ),
                ListViewAd(name:widget.name),
 
 
