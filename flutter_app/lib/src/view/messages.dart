@@ -83,36 +83,42 @@ class MessagesState extends State<Messages> {
           return Column(
                 children: [
                   Container(
-                    color: Colors.white,
+                    color: Colors.grey[300],
                     //padding: EdgeInsets.fromLTRB(0,10,0,0),
                     child: Column(
                       children: [
                         Container(
                           margin: EdgeInsets.fromLTRB(10, 10, 10, 10),
                           child: Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
                             children: [
                               Text("Sorted by:",
                                 style: TextStyle(
                                     fontSize: 22
                                 ),
                               ),
-                              DropdownButton(
-                                  value: valueDrop,
-                                  items: [
-                                    DropdownMenuItem(
-                                      child: Text("Date"),
-                                      value: "Date",
-                                    ),
-                                    DropdownMenuItem(
-                                      child: Text("Interactions"),
-                                      value: "Interactions",
-                                    ),
-                                  ],
-                                  onChanged: (value) {
-                                    setState(() {
-                                      valueDrop = value;
-                                    });
-                                  })
+                              Container(
+                                width: 150,
+                                child: DropdownButton(
+                                    value: valueDrop,
+                                    isExpanded: true,
+                                    items: [
+                                      DropdownMenuItem(
+                                        child: Text("Date", style: TextStyle(fontSize: 22),),
+                                        value: "Date",
+                                      ),
+                                      DropdownMenuItem(
+                                        child: Text("Interactions", style: TextStyle(fontSize: 22),),
+                                        value: "Interactions",
+                                      ),
+                                    ],
+                                    icon: Icon(Icons.arrow_drop_down, size: 30,),
+                                    onChanged: (value) {
+                                      setState(() {
+                                        valueDrop = value;
+                                      });
+                                    }),
+                              )
                             ],
                           ),
                         ),
