@@ -56,7 +56,7 @@ dependencies:
   path_provider: ^1.4.4
   delayed_display: ^1.1.0
   percent_indicator: ^2.1.9
-
+  flutter_spinkit: ^4.1.2+1
 
 
 
@@ -72,7 +72,7 @@ dev_dependencies:
 flutter_icons:
   android: true
   ios: true
-  image_path: "assets/Logo_Name.jpeg"
+  image_path: "assets/Logo_MeMiQ2.png"
 
 # For information on the generic Dart part of this file, see the
 # following page: https://dart.dev/tools/pub/pubspec

@@ -57,43 +57,33 @@ class _RegisterState extends State<Register> {
                   //color: Colors.red,
                   child: Stack(
                   children: [
-                    showAlert(),
                     Column(
                     crossAxisAlignment: CrossAxisAlignment.center,
                     mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                     mainAxisSize: MainAxisSize.max,
                     children: [
+                      SizedBox(height: 2,),
 
-                      //Box Logo
                       Container(
-                        color: Colors.black,
-                        width: 200.0,
-                        height: 200.0,
-                        //margin: EdgeInsets.symmetric(vertical: 20.0),
-                        child: Column(
-                            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                            mainAxisSize: MainAxisSize.max,
-                            crossAxisAlignment: CrossAxisAlignment.center,
-                            children: [
-                              Container(
-                                width: 100.0,
-                                height: 100.0,
-                                color: Colors.grey,
-                              ),
-                              Text('Nome applicazione',
-                                  style: TextStyle(
-                                    fontSize: 15.0,
-                                    color: Colors.grey,
-                                  )),
-                            ]),
+                        height: 200,
+                        width: 160,
+                        child: FittedBox(
+                          child: Image.asset(
+                            'assets/Logo_MeMiQ_2.png',
+                          ),
+                        ),
                       ),
+
+                      SizedBox(height: 5,),
                       Text(
                         'Registration',
                         style: TextStyle(
                           color: Colors.white,
-                          fontSize: 25.0,
+                          fontSize: 30.0,
+                          fontWeight: FontWeight.w700,
                         ),
                       ),
+
                       Card(
                         color: Colors.white,
                         elevation: 5.0,
@@ -121,21 +111,21 @@ class _RegisterState extends State<Register> {
                                       contentPadding: EdgeInsets.zero,
                                       prefixIcon: Icon(
                                         Icons.person,
-                                        color: Colors.blue,
+                                        color: Colors.blue[900],
                                       ),
                                       labelText: 'Full Name',
                                       labelStyle: TextStyle(
-                                        color: Colors.blue,
-                                        fontSize: 16.0,
+                                        color: Colors.blue[900],
+                                        fontSize: 18.0,
                                       ),
                                       enabledBorder: OutlineInputBorder(
                                         borderSide: BorderSide(
-                                            color: Colors.blue, width: 2.0),
+                                            color: Colors.blue[900], width: 2.0),
                                         borderRadius: BorderRadius.circular(10.0),
                                       ),
                                       focusedBorder: OutlineInputBorder(
                                         borderSide: BorderSide(
-                                          color: Colors.blue,
+                                          color: Colors.blue[900],
                                           width: 2.0,
                                         ),
                                         borderRadius: BorderRadius.circular(10.0),
@@ -162,21 +152,21 @@ class _RegisterState extends State<Register> {
                                       contentPadding: EdgeInsets.zero,
                                       prefixIcon: Icon(
                                         Icons.mail,
-                                        color: Colors.blue,
+                                        color: Colors.blue[900],
                                       ),
                                       labelText: 'Email',
                                       labelStyle: TextStyle(
-                                        color: Colors.blue,
-                                        fontSize: 16.0,
+                                        color: Colors.blue[900],
+                                        fontSize: 18.0,
                                       ),
                                       enabledBorder: OutlineInputBorder(
                                         borderSide: BorderSide(
-                                            color: Colors.blue, width: 2.0),
+                                            color: Colors.blue[900], width: 2.0),
                                         borderRadius: BorderRadius.circular(10.0),
                                       ),
                                       focusedBorder: OutlineInputBorder(
                                         borderSide: BorderSide(
-                                          color: Colors.blue,
+                                          color: Colors.blue[900],
                                           width: 2.0,
                                         ),
                                         borderRadius: BorderRadius.circular(10.0),
@@ -204,17 +194,23 @@ class _RegisterState extends State<Register> {
                                       contentPadding: EdgeInsets.zero,
                                       prefixIcon: Icon(
                                         Icons.lock,
-                                        color: Colors.blue,
+                                        color: Colors.blue[900],
                                       ),
                                       labelText: 'Password',
                                       labelStyle: TextStyle(
-                                        color: Colors.blue,
-                                        fontSize: 16.0,
+                                        color: Colors.blue[900],
+                                        fontSize: 18.0,
                                       ),
                                       suffixIcon: IconButton(
-                                        icon: Icon(_secText
-                                            ? Icons.remove_red_eye
-                                            : Icons.remove_red_eye_outlined),
+                                        icon: (_secText) ?
+                                          Icon(Icons.remove_red_eye,
+                                            size: 25,
+                                            color: Colors.blue[900],
+                                          )
+                                          : Icon(Icons.remove_red_eye_outlined,
+                                              size: 25,
+                                              color: Colors.blue[900],
+                                            ),
                                         onPressed: () {
                                           setState(() {
                                             _secText = !_secText;
@@ -223,12 +219,12 @@ class _RegisterState extends State<Register> {
                                       ),
                                       enabledBorder: OutlineInputBorder(
                                         borderSide: BorderSide(
-                                            color: Colors.blue, width: 2.0),
+                                            color: Colors.blue[900], width: 2.0),
                                         borderRadius: BorderRadius.circular(10.0),
                                       ),
                                       focusedBorder: OutlineInputBorder(
                                         borderSide: BorderSide(
-                                          color: Colors.blue,
+                                          color: Colors.blue[900],
                                           width: 2.0,
                                         ),
                                         borderRadius: BorderRadius.circular(10.0),
@@ -246,17 +242,41 @@ class _RegisterState extends State<Register> {
                                 Container(
                                 padding: const EdgeInsets.symmetric(vertical: 16.0),
                                 alignment: Alignment.center,
-                                 child: OutlineButton(
-                                  child: Text("Register"),
-                                  onPressed: () async {
-                                    // if (_formKey.currentState.validate()) {
-                                    ControllerRegistration.registerAccount(_displayName.text,_emailController.text,_passwordController.text,context)
-                                            .then((result) => setState(() {
-                                                _error=result;
-                                        }));
-                                    showAlert();
-                                        }
-                                )),
+                                 child: FlatButton(
+                                     color: Colors.blue[900],
+                                     shape: RoundedRectangleBorder(
+                                         borderRadius: BorderRadius.circular(15)
+                                     ),
+                                     child: Row(
+                                       mainAxisSize: MainAxisSize.min,
+                                       children: [
+                                         Text("Register",
+                                           style: TextStyle(
+                                               color: Colors.white,
+                                               fontWeight: FontWeight.bold,
+                                               fontSize: 18
+                                           ),
+                                         ),
+                                         SizedBox(
+                                             width: 20,
+                                             height: 40,
+                                             child: Icon(Icons.check,size: 25, color: Colors.white,))
+                                       ],
+                                     ),
+                                     onPressed: () async {
+                                       // if (_formKey.currentState.validate()) {
+                                       ControllerRegistration
+                                           .registerAccount(
+                                           _displayName.text,
+                                           _emailController.text,
+                                           _passwordController
+                                               .text,
+                                           context)
+                                           .then((result) => setState(() {
+                                         _error = result;
+                                       }));
+                                       showAlert();
+                                     })),
 
 
                               ],
@@ -265,7 +285,9 @@ class _RegisterState extends State<Register> {
                         ),
                       ),
                     ],
-                  )],
+                  ),
+                    showAlert(),
+                  ],
                   )
                 ),
               ),
@@ -281,15 +303,15 @@ class _RegisterState extends State<Register> {
   Widget showAlert() {
     if (_error != null)
       return Container(
+        height: 50,
         color: Colors.amber,
         width: double.infinity,
-        padding: EdgeInsets.all(8.0),
+        padding: EdgeInsets.fromLTRB(8, 8, 0, 8),
         child: Row(
+          mainAxisSize: MainAxisSize.max,
           children: [
-            Padding(
-              padding: const EdgeInsets.only(right: 8.0),
-              child: Icon(Icons.error_outline),
-            ),
+            Icon(Icons.error_outline),
+            SizedBox(width: 5,),
             Expanded(
               child: AutoSizeText(
                 "$_error",
