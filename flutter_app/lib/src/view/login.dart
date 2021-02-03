@@ -93,31 +93,40 @@ class _LoginState extends State<Login> {
                                   mainAxisSize: MainAxisSize.max,
                                   children: [
                                 //Box Logo
-                                Container(
-                                  color: Colors.black,
-                                  width: 200.0,
-                                  height: 200.0,
-                                  child: Column(
-                                      mainAxisAlignment:
-                                          MainAxisAlignment.spaceEvenly,
-                                      mainAxisSize: MainAxisSize.max,
-                                      crossAxisAlignment:
-                                          CrossAxisAlignment.center,
-                                      children: [
-                                        Container(
-                                          width: 100.0,
-                                          height: 100.0,
-                                          color: Colors.grey,
-                                        ),
-                                        Text('Nome applicazione',
-                                            style: TextStyle(
-                                              fontSize: 15.0,
-                                              color: Colors.grey,
-                                            )),
-                                      ]),
-                                ),
+                                // Container(
+                                //   color: Colors.black,
+                                //   width: 200.0,
+                                //   height: 200.0,
+                                //   child: Column(
+                                //       mainAxisAlignment:
+                                //           MainAxisAlignment.spaceEvenly,
+                                //       mainAxisSize: MainAxisSize.max,
+                                //       crossAxisAlignment:
+                                //           CrossAxisAlignment.center,
+                                //       children: [
+                                //         Container(
+                                //           width: 100.0,
+                                //           height: 100.0,
+                                //           color: Colors.grey,
+                                //         ),
+                                //         Text('Nome applicazione',
+                                //             style: TextStyle(
+                                //               fontSize: 15.0,
+                                //               color: Colors.grey,
+                                //             )),
+                                //       ]),
+                                // ),
 
                                 //LogIn
+                                    Container(
+                                      height: 300,
+                                      width: 200,
+                                      child: FittedBox(
+                                        child: Image.asset(
+                                          'assets/Logo_MeMiQ_2.png',
+                                        ),
+                                      ),
+                                    ),
                                 Card(
                                   elevation: 5.0,
                                   shape: RoundedRectangleBorder(
@@ -281,7 +290,7 @@ class _LoginState extends State<Login> {
                 autovalidateMode: AutovalidateMode.onUserInteraction,
                 controller: _emailController,
                 decoration: InputDecoration(
-                  fillColor: Colors.grey[200],
+                  fillColor: Colors.white,
                   filled: true,
                   prefixIcon: Icon(
                     Icons.mail,
@@ -292,7 +301,7 @@ class _LoginState extends State<Login> {
                   labelText: 'Email',
                   labelStyle: TextStyle(
                     color: Colors.blue[900],
-                    fontSize: 16.0,
+                    fontSize: 18.0,
                   ),
                   enabledBorder: OutlineInputBorder(
                     borderSide: BorderSide(
@@ -345,26 +354,32 @@ class _LoginState extends State<Login> {
 
             Container(
               margin: EdgeInsets.fromLTRB(0.0, 5.0, 0.0, 5.0),
-              color: Colors.grey[400],
               child: TextFormField(
                 controller: _passwordController,
                 decoration: InputDecoration(
+                  fillColor: Colors.white,
+                  filled: true,
                   contentPadding: EdgeInsets.zero,
                   prefixIcon: Icon(
                     Icons.lock,
-                    color: Colors.white,
+                    color: Colors.blue[900],
                     //size: 25.0,
                   ),
                   hintText: 'Password',
                   labelText: 'Password',
                   labelStyle: TextStyle(
-                    color: Colors.white,
+                    color: Colors.blue[900],
                     fontSize: 16.0,
                   ),
                   suffixIcon: IconButton(
-                    icon: Icon(_secText
-                        ? Icons.remove_red_eye
-                        : Icons.remove_red_eye_outlined),
+                    icon: (_secText) ? Icon(Icons.remove_red_eye,
+                      size: 25,
+                      color: Colors.blue[900],
+                    )
+                        : Icon(Icons.remove_red_eye_outlined,
+                      size: 25,
+                      color: Colors.blue[900],
+                    ),
                     onPressed: () {
                       setState(() {
                         _secText = !_secText;
@@ -376,7 +391,7 @@ class _LoginState extends State<Login> {
                       color: Colors.blue[900],
                       width: 2.0,
                     ),
-                    borderRadius: BorderRadius.circular(15.0),
+                    borderRadius: BorderRadius.circular(10.0),
                   ),
                   focusedBorder: OutlineInputBorder(
                     borderSide: BorderSide(

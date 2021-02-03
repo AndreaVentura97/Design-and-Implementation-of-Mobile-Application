@@ -81,14 +81,9 @@ class UserAccountState extends State<UserAccount> {
                           ]),
                           currentAccountPicture: Container(
                             //color: Colors.yellow,
-                            child: InkWell(
-                                child: new CircleAvatar(
+                            child: new CircleAvatar(
                                   backgroundImage: getPhoto(_viewModel.c.photo),
                                 ),
-                                onTap: () {
-                                  showChoiceDialog(_viewModel, context);
-                                }
-                            ),
                           ),
                         ),
                         onTap: () {
@@ -102,7 +97,7 @@ class UserAccountState extends State<UserAccount> {
                             children: [
                               Text("    "),
                               Icon(Icons.location_on, color: Colors.blue[900],),
-                              Text(" Map", style: TextStyle( color: Colors.blue[900], fontSize: 18),),
+                              Text("   Map", style: TextStyle( color: Colors.blue[900], fontSize: 18),),
                             ],
                           ),
                           onTap: () {
@@ -115,7 +110,7 @@ class UserAccountState extends State<UserAccount> {
                             children: [
                               Text("    "),
                               Icon(Icons.train, color: Colors.blue[900],),
-                              Text(" My Stations", style: TextStyle( color: Colors.blue[900], fontSize: 18),),
+                              Text("   My Stations", style: TextStyle( color: Colors.blue[900], fontSize: 18),),
                             ],
                           ),
                           onTap: () {
@@ -128,7 +123,7 @@ class UserAccountState extends State<UserAccount> {
                             children: [
                               Text("    "),
                               Icon(Icons.comment, color: Colors.blue[900],),
-                              Text(" My Comments ", style: TextStyle( color: Colors.blue[900], fontSize: 18),),
+                              Text("   My Comments ", style: TextStyle( color: Colors.blue[900], fontSize: 18),),
                             ],
                           ),
                           onTap: () {
@@ -153,7 +148,7 @@ class UserAccountState extends State<UserAccount> {
                             children: [
                               Text("    "),
                               Icon(Icons.account_balance_wallet, color: Colors.blue[900],),
-                              Text(" Buy a ticket", style: TextStyle( color: Colors.blue[900], fontSize: 18),),
+                              Text("   Buy a ticket", style: TextStyle( color: Colors.blue[900], fontSize: 18),),
                             ],
                           ),
                           onTap: () {
@@ -176,7 +171,7 @@ class UserAccountState extends State<UserAccount> {
                           children: [
                             Text("    "),
                             Icon(Icons.exit_to_app, color: Colors.blue[900],),
-                            Text(" Logout", style: TextStyle( color: Colors.blue[900], fontSize: 18),),
+                            Text("   Logout", style: TextStyle( color: Colors.blue[900], fontSize: 18),),
                           ],
                         ),
                         onTap: () {

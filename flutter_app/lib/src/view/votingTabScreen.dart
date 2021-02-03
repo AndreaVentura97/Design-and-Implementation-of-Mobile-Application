@@ -83,7 +83,7 @@ class VotingState extends State<Voting> {
 
   @override
   Widget build(BuildContext context) {
-    return new StoreConnector<AppState, ViewModel>(
+      return new StoreConnector<AppState, ViewModel>(
       converter: (store) => createViewModel(store),
       onInit: (store) => retrieveMyVotes(store.state.customer.email),
       builder: (context, _viewModel) {
@@ -596,7 +596,7 @@ class VotingState extends State<Voting> {
                     ),
                     Card(
                       //color: Colors.blue,
-                      margin: EdgeInsets.all(10.0),
+                      margin: EdgeInsets.fromLTRB(10, 10, 10, 0),
                       elevation: 3.0,
                       shape: RoundedRectangleBorder(
                         borderRadius: BorderRadius.circular(10.0),
@@ -618,34 +618,38 @@ class VotingState extends State<Voting> {
                           SizedBox(
                             height: 15.0,
                           ),
-                          TextFormField(
-                              decoration: InputDecoration(
-                                hintText: 'Enter a comment',
-                                hintStyle: TextStyle(
-                                  fontSize: 16.0,
-                                  color: Colors.grey,
-                                ),
-                                // labelText: 'Enter a comment',
-                                // labelStyle: TextStyle(
-                                //   fontSize: 10.0,
-                                //   color: Colors.grey[700]
-                                // ),
-                                enabledBorder: OutlineInputBorder(
-                                  borderSide: BorderSide(
-                                    color: Colors.blue[900],
-                                    width: 2.0,
+                          Container(
+                            padding: EdgeInsets.symmetric(horizontal: 10),
+                            child: TextFormField(
+                                decoration: InputDecoration(
+                                  isDense: true,
+                                  hintText: 'Enter a comment',
+                                  hintStyle: TextStyle(
+                                    fontSize: 16.0,
+                                    color: Colors.grey,
                                   ),
-                                  borderRadius: BorderRadius.circular(10.0),
-                                ),
-                                focusedBorder: OutlineInputBorder(
-                                  borderSide: BorderSide(
-                                    color: Colors.blue[900],
-                                    width: 2.0,
+                                  // labelText: 'Enter a comment',
+                                  // labelStyle: TextStyle(
+                                  //   fontSize: 10.0,
+                                  //   color: Colors.grey[700]
+                                  // ),
+                                  enabledBorder: OutlineInputBorder(
+                                    borderSide: BorderSide(
+                                      color: Colors.blue[900],
+                                      width: 2.0,
+                                    ),
+                                    borderRadius: BorderRadius.circular(10.0),
                                   ),
-                                  borderRadius: BorderRadius.circular(10.0),
+                                  focusedBorder: OutlineInputBorder(
+                                    borderSide: BorderSide(
+                                      color: Colors.blue[900],
+                                      width: 2.0,
+                                    ),
+                                    borderRadius: BorderRadius.circular(10.0),
+                                  ),
                                 ),
-                              ),
-                              controller: myController),
+                                controller: myController),
+                          ),
                           SizedBox(height: 10.0),
                           FlatButton(
                             shape: RoundedRectangleBorder(
@@ -672,9 +676,91 @@ class VotingState extends State<Voting> {
                         ]),
                       ),
                     ),
+                    Card(
+                      //color: Colors.blue,
+                      margin: EdgeInsets.all(10.0),
+                      elevation: 3.0,
+                      shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(10.0),
+                        side: BorderSide(
+                          color: Colors.blue[900],
+                          width: 2.0,
+                        ),
+                      ),
+                      child: Container(
+                        margin: EdgeInsets.all(10.0),
+                        child: Column(children: [
+                          Text(
+                            'Report',
+                            style: TextStyle(
+                              fontSize: 25.0,
+                              fontWeight: FontWeight.bold,
+                            ),
+                          ),
+                          SizedBox(
+                            height: 15.0,
+                          ),
+                          Container(
+                            padding: EdgeInsets.symmetric(horizontal: 10),
+                            child: TextFormField(
+                                decoration: InputDecoration(
+                                  isDense: true,
+                                  hintText: 'Enter a report',
+                                  hintStyle: TextStyle(
+                                    fontSize: 16.0,
+                                    color: Colors.grey,
+                                  ),
+                                  // labelText: 'Enter a comment',
+                                  // labelStyle: TextStyle(
+                                  //   fontSize: 10.0,
+                                  //   color: Colors.grey[700]
+                                  // ),
+                                  enabledBorder: OutlineInputBorder(
+                                    borderSide: BorderSide(
+                                      color: Colors.blue[900],
+                                      width: 2.0,
+                                    ),
+                                    borderRadius: BorderRadius.circular(10.0),
+                                  ),
+                                  focusedBorder: OutlineInputBorder(
+                                    borderSide: BorderSide(
+                                      color: Colors.blue[900],
+                                      width: 2.0,
+                                    ),
+                                    borderRadius: BorderRadius.circular(10.0),
+                                  ),
+                                ),
+                                controller: myController),
+                          ),
+                          SizedBox(height: 10.0),
+                          FlatButton(
+                            shape: RoundedRectangleBorder(
+                              borderRadius: BorderRadius.circular(15.0),
+                            ),
+                            color: Colors.blue[900],
+                            child: Text(
+                              "Send report",
+                              style: TextStyle(
+                                color: Colors.white,
+                                fontSize: 15.0,
+                              ),
+                            ),
+                            onPressed: () {
+                              var name = _viewModel.c.name;
+                              var email = _viewModel.c.email;
+                              var photo = _viewModel.c.photo;
+                              saveSuggestion(email, name, myController.text, photo, widget.station);
+                              myController.clear();
+                              myController.clear();
+                            },
+                          ),
+                        ]),
+                      ),
+                    )
                   ]),
             );
       },
     );
+
   }
 }

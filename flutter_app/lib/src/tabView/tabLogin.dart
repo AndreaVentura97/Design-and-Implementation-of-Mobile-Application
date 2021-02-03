@@ -281,7 +281,7 @@ class TabLoginState extends State<TabLogin> {
                 autovalidateMode: AutovalidateMode.onUserInteraction,
                 controller: _emailController,
                 decoration: InputDecoration(
-                  fillColor: Colors.grey[200],
+                  fillColor: Colors.white,
                   filled: true,
                   prefixIcon: Icon(
                     Icons.mail,
@@ -345,6 +345,8 @@ class TabLoginState extends State<TabLogin> {
               child: TextFormField(
                 controller: _passwordController,
                 decoration: InputDecoration(
+                  fillColor: Colors.white,
+                  filled: true,
                   contentPadding: EdgeInsets.zero,
                   prefixIcon: Icon(
                     Icons.lock,
