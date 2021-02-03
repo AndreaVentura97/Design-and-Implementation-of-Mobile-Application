@@ -5,6 +5,24 @@ retrieveStations () async {
   return stations;
 }
 
+retrieveStations2 () async {
+  var stations = await DB.getDB().collection('markers').find().toList();
+  for (int i = 0; i < stations.length;i++){
+    var result = await checkSuggestions(stations[i]['name']);
+    stations[i]['_id'] = result;
+  }
+  return stations;
+}
+checkSuggestions(station) async {
+  var response = await DB.getDB().collection('suggestions').find({'station': station}).toList();
+  if (response.length!=0){
+    return true;
+  }
+  else {
+    return false;
+  }
+}
+
 setStatus (name, value) async {
   await DB.getDB().collection('markers').update({'name': name}, {"\$set": {"status":value}});
 }

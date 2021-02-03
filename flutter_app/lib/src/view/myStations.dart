@@ -43,8 +43,11 @@ class MyStationsState extends State<MyStations> {
 
 
   String getAsset(name){
+    if (name == "Metro M1-M2"){
+      return "assets/M1-M2.jpeg";
+    }
     if (name == "Metro M1"){
-      return "assets/M1-M2.jpg";
+      return "assets/M1.jpeg";
     }
     if (name == "Metro M2"){
       return "assets/M2.jpeg";
@@ -54,6 +57,12 @@ class MyStationsState extends State<MyStations> {
     }
     if (name == "Metro M5"){
       return "assets/M5.jpeg";
+    }
+    if (name == "Metro M1-M3"){
+      return "assets/M1-M3.jpeg";
+    }
+    if (name == "Metro M2-M3"){
+      return "assets/M2-M3.jpeg";
     }
   }
 
@@ -107,12 +116,10 @@ class MyStationsState extends State<MyStations> {
                       color: Color.fromRGBO(255, 255, 255, 0.3),
                     )
                   ]),
-
                   ListView.builder(
                     //shrinkWrap: true,
                     itemCount: myFullStations.length,
                     itemBuilder: (BuildContext context, int index) {
-
                       return GestureDetector(
                           onTap: (){
                             Navigator.push(context, MaterialPageRoute(builder:(context)=>MenuStation(name:myFullStations[index]['name'])));
@@ -213,6 +220,7 @@ class MyStationsState extends State<MyStations> {
 
                     },
                   ),
+                  showAlert(),
                 ],
               ),
             )
@@ -222,29 +230,33 @@ class MyStationsState extends State<MyStations> {
   Widget showAlert() {
     if (show){
       return Container(
-        color: Colors.amber,
-        width: double.infinity,
         padding: EdgeInsets.all(8.0),
-        child: Row(
-          children: [
-            Padding(
-              padding: const EdgeInsets.only(right: 8.0),
-              child: Icon(Icons.error_outline),
-            ),
-            Expanded(
-              child: AutoSizeText(
-                "Removed from your stations",
-                maxLines: 3,
+        child: Container(
+          color: Colors.amber,
+          width: double.infinity,
+          height: 50.0,
+          padding: EdgeInsets.all(8.0),
+          child: Row(
+            children: [
+              Padding(
+                padding: const EdgeInsets.only(right: 8.0),
+                child: Icon(Icons.error_outline),
               ),
-            ),
-            IconButton(
-                icon: Icon(Icons.close),
-                onPressed: () {
-                  setState(() {
-                    show = false;
-                  });
-                })
-          ],
+              Expanded(
+                child: AutoSizeText(
+                  "Removed from your stations",
+                  maxLines: 3,
+                ),
+              ),
+              IconButton(
+                  icon: Icon(Icons.close),
+                  onPressed: () {
+                    setState(() {
+                      show = false;
+                    });
+                  })
+            ],
+          ),
         ),
       );
     }

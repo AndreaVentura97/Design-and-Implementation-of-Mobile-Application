@@ -442,7 +442,9 @@ class _LoginState extends State<Login> {
                           _emailController.text, _passwordController.text)
                       .then((value) => setState(() {
                             _error = value;
-                            isLogged = true;
+                            if(_error==null){
+                              isLogged = true;
+                            }
                           }));
                 }
               },

@@ -31,12 +31,5 @@ void main() {
     expect(find.text('Facebook'), findsOneWidget);
     final grandChildFinder4 = find.descendant(of: find.byWidget(login), matching: find.byType(TextSpan));
     expect(grandChildFinder4, findsNWidgets(0));
-    // Tap the '+' icon and trigger a frame.
-    //await tester.tap(find.byIcon(Icons.add));
-    //await tester.pump();
-
-    // Verify that our counter has incremented.
-    //expect(find.text('0'), findsNothing);
-    //expect(find.text('1'), findsOneWidget);
   });
 }

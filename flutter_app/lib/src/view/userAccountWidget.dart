@@ -36,11 +36,35 @@ class UserAccountState extends State<UserAccount> {
   var flag=false;
   var package;
   File imageFile;
+  var photo;
+
+  @override
+  void initState() {
+    super.initState();
+  }
+
+  ImageProvider getPhoto (photo){
+    if(photo == null){
+      return NetworkImage("https://loverary.files.wordpress.com/2013/10/facebook-default-no-profile-pic.jpg?w=619&zoom=2");
+    }
+    if(photo is String && photo.length > 200) {
+      return new MemoryImage(base64Decode(photo));
+
+    }
+    else {
+      return new NetworkImage(photo);
+    }
+
+  }
+
+
+
   @override
   Widget build(BuildContext context) {
     return new StoreConnector <AppState,ViewModel>(
         converter : (store) => createViewModel(store),
         builder : (context, _viewModel) {
+
           return
             new Drawer(
                 child: ListView(
@@ -288,16 +312,5 @@ class UserAccountState extends State<UserAccount> {
 
   }
 
-  ImageProvider getPhoto (photo){
-    if(photo == null){
-      return NetworkImage("https://loverary.files.wordpress.com/2013/10/facebook-default-no-profile-pic.jpg?w=619&zoom=2");
-    }
-    if(photo is String && photo.length > 200) {
-      return new MemoryImage(base64Decode(photo));
-    }
-    else {
-      return new NetworkImage(photo);
-    }
 
-  }
 }

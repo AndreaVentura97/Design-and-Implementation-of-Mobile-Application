@@ -30,6 +30,7 @@ class VotingState extends State<Voting> {
 
   //bool voting = false;
   final myController = TextEditingController();
+  final myController2 = TextEditingController();
 
   void takeStationInformation() {
     informationStation(widget.station).then((information) => setState(() {
@@ -730,7 +731,7 @@ class VotingState extends State<Voting> {
                                     borderRadius: BorderRadius.circular(10.0),
                                   ),
                                 ),
-                                controller: myController),
+                                controller: myController2),
                           ),
                           SizedBox(height: 10.0),
                           FlatButton(
@@ -749,9 +750,9 @@ class VotingState extends State<Voting> {
                               var name = _viewModel.c.name;
                               var email = _viewModel.c.email;
                               var photo = _viewModel.c.photo;
-                              saveSuggestion(email, name, myController.text, photo, widget.station);
-                              myController.clear();
-                              myController.clear();
+                              saveSuggestion(email, name, myController2.text, photo, widget.station);
+                              myController2.clear();
+
                             },
                           ),
                         ]),

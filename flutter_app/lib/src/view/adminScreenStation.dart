@@ -1,11 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_app/src/services/sendNotification.dart';
 import 'package:flutter_app/src/view/listViewAdminWidget.dart';
-import '../services/service.dart';
-import '../checkLogin.dart';
-import 'messages.dart';
-import '../services/userService.dart';
-import '../checkLogin.dart';
+
 import '../services/adminService.dart';
 import 'listViewAdminWidget.dart';
 
@@ -42,7 +38,7 @@ class AdminScreenStationState extends State<AdminScreenStation> {
       home: Scaffold(
           appBar: AppBar(
             centerTitle: true,
-            title: Text("<Station>"),
+            title: Text("${widget.name}"),
             backgroundColor: Colors.blue[900],
           ),
           body: Center(

@@ -111,13 +111,15 @@ loginWithGoogle(context) async {
       }
       String tk = await _firebaseMessaging.getToken();
       us.insertUser(user.email, user.displayName,tk);
+      print('here I am');
       //Navigator.of(context).pushReplacement(MaterialPageRoute(builder: (_) {
         //return Login();
       //}));
       return null;
     }
   } catch (e) {
-    //await setLogged(false);
+    print('ritornando errore');
+    await setLogged(false);
     return e.message;
   }
 }

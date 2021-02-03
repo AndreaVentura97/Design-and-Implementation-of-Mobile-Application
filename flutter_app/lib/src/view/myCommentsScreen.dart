@@ -6,6 +6,7 @@ import 'package:flutter_app/src/view/viewModel.dart';
 import 'package:flutter_app/src/services/stationServices.dart';
 import 'displayMenuStation.dart';
 import '../services/service.dart';
+import 'package:auto_size_text/auto_size_text.dart';
 import '../services/messagesService.dart';
 import '../services/userService.dart';
 import '../services/stationServices.dart';
@@ -31,7 +32,7 @@ class MyComments extends StatefulWidget {
 class MyCommentsState extends State<MyComments> {
   List myComments = [];
   List myCommentsInteractions = [];
-
+  bool show = false;
   var valueDrop = "Date";
 
 
@@ -88,6 +89,15 @@ class MyCommentsState extends State<MyComments> {
     }
     if (name == "Metro M5"){
       return "assets/M5.jpeg";
+    }
+    if (name == "Metro M1-M2"){
+      return "assets/M1-M2.jpeg";
+    }
+    if (name == "Metro M1-M3"){
+      return "assets/M1-M3.jpeg";
+    }
+    if (name == "Metro M2-M3"){
+      return "assets/M2-M3.jpeg";
     }
   }
 
@@ -174,6 +184,7 @@ class MyCommentsState extends State<MyComments> {
                                   height: 1,
                                   color: Colors.black,
                                 ),
+
                               ]
                             )
                           ),
@@ -275,6 +286,7 @@ class MyCommentsState extends State<MyComments> {
                                                                     setState(() {
                                                                       myCommentsInteractions = removeFromList(myCommentsInteractions,myComments[index]['text'], myComments[index]['station'], myComments[index]['email']);
                                                                       myComments.remove(myComments[index]);
+                                                                      show = true;
 
                                                                     });
                                                                   }),
@@ -414,6 +426,7 @@ class MyCommentsState extends State<MyComments> {
                                                     setState(() {
                                                       myComments = removeFromList(myComments,myCommentsInteractions[index]['text'], myCommentsInteractions[index]['station'], myCommentsInteractions[index]['email']);
                                                       myCommentsInteractions.remove(myCommentsInteractions[index]);
+                                                      show = true;
                                                     });
                                                   }),
                                                 ),
@@ -477,35 +490,35 @@ class MyCommentsState extends State<MyComments> {
   }
 
 Widget showAlert() {
-//   if (_error != null)
-//     return Container(
-//       color: Colors.amber,
-//       width: double.infinity,
-//       padding: EdgeInsets.all(8.0),
-//       child: Row(
-//         children: [
-//           Padding(
-//             padding: const EdgeInsets.only(right: 8.0),
-//             child: Icon(Icons.error_outline),
-//           ),
-//           Expanded(
-//             child: AutoSizeText(
-//               "$_error",
-//               maxLines: 3,
-//             ),
-//           ),
-//           IconButton(
-//               icon: Icon(Icons.close),
-//               onPressed: () {
-//                 setState(() {
-//                   _error = null;
-//                 });
-//               })
-//         ],
-//       ),
-//     );
-//   return SizedBox(
-//     height: 0.0,
-//   );
+   if (show)
+     return Container(
+       color: Colors.amber,
+       width: double.infinity,
+       padding: EdgeInsets.all(8.0),
+       child: Row(
+         children: [
+           Padding(
+             padding: const EdgeInsets.only(right: 8.0),
+             child: Icon(Icons.error_outline),
+           ),
+           Expanded(
+             child: AutoSizeText(
+               "Comment deleted",
+               maxLines: 3,
+             ),
+           ),
+           IconButton(
+               icon: Icon(Icons.close),
+               onPressed: () {
+                 setState(() {
+                   show = false;
+                 });
+               })
+         ],
+       ),
+     );
+   return SizedBox(
+     height: 0.0,
+  );
 }
 }

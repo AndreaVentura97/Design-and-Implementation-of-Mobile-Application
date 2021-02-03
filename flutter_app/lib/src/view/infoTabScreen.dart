@@ -28,11 +28,13 @@ class InfoStationState extends State<InfoStation> {
   var railwayLinks;
   var tramLinks;
   var services;
+  var status = true;
   String image = "";
   var valueDrop = "All";
   final myController = TextEditingController();
   void takeStationInformation (){
     informationStation(widget.station).then((information) => setState(() {
+      status = information['status'];
       line = information['line'];
       address = information['address'];
       if(information['avgClean']==null){
@@ -103,6 +105,11 @@ class InfoStationState extends State<InfoStation> {
     if (line=="Metro M5"){
       setState(() {
         image = "assets/M5.jpeg";
+      });
+    }
+    if (line=="Metro M1-M2"){
+      setState(() {
+        image = "assets/M1-M2.jpeg";
       });
     }
   }
@@ -184,7 +191,7 @@ class InfoStationState extends State<InfoStation> {
                                                 ),
                                                 SizedBox(width: 5.0,),
                                                 Icon(Icons.circle,
-                                                  color: Colors.green,
+                                                  color: (status) ? Colors.green : Colors.red,
                                                   size: 15,
                                                 ),
                                                 Spacer(),

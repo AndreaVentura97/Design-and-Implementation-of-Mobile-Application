@@ -40,13 +40,13 @@ class _NotificationWidgetState extends State<NotificationWidget> {
       }, onResume: (Map<String, dynamic> message) async {
       print('on resume $message');
       setState(() => messages.add(message["notification"]["body"]));
-      store.dispatch(updateCustomer(name:store.state.customer.name, email:store.state.customer.email, photo: store.state.customer.photo,notification: true));
-      setState(() => yes = true);
+      //store.dispatch(updateCustomer(name:store.state.customer.name, email:store.state.customer.email, photo: store.state.customer.photo,notification: true));
+      //setState(() => yes = true);
     }, onLaunch: (Map<String, dynamic> message) async {
       print('on launch $message');
       setState(() => messages.add(message["notification"]["body"]));
-      store.dispatch(updateCustomer(name:store.state.customer.name, email:store.state.customer.email, photo: store.state.customer.photo,notification: true));
-      setState(() => yes = true);
+      //store.dispatch(updateCustomer(name:store.state.customer.name, email:store.state.customer.email, photo: store.state.customer.photo,notification: true));
+      //setState(() => yes = true);
 
     },
     );

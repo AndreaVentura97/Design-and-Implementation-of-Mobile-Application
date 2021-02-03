@@ -16,9 +16,12 @@ retrieveMessages(station) async {
 
 retrieveSuggestions(station) async {
   var response = await DB.getDB().collection('suggestions').find({'station': station}).toList();
-  print("aaa $response");
   return response;
 }
+
+
+
+
 
 retrieveMarkers () async {
   var response = await DB.getDB().collection('markers').find().toList();
@@ -46,6 +49,15 @@ buildMarkers (response, context) async {
     }
     if (line=="Metro M5"){
       image = "assets/M5.jpeg";
+    }
+    if (line=="Metro M1-M2"){
+      image = "assets/M1-M2.jpeg";
+    }
+    if (line=="Metro M2-M3"){
+      image = "assets/M2-M3.jpeg";
+    }
+    if (line=="Metro M1-M3"){
+      image = "assets/M1-M3.jpeg";
     }
 
     Future<Uint8List> getBytesFromAsset(String path, int width) async{
@@ -93,9 +105,19 @@ buildTabMarkers (response, context) async {
     if (line == "Metro M3"){
       image = "assets/M3.jpeg";
     }
-    if (line=="Metro M5"){
+    if (line == "Metro M5"){
       image = "assets/M5.jpeg";
     }
+    if (line == "Metro M1-M2"){
+      image = "assets/M1-M2.jpeg";
+    }
+    if (line == "Metro M2-M3"){
+      image = "assets/M2-M3.jpeg";
+    }
+    if (line == "Metro M1-M3"){
+      image = "assets/M1-M3.jpeg";
+    }
+
 
     Future<Uint8List> getBytesFromAsset(String path, int width) async{
       ByteData data = await rootBundle.load(path);

@@ -70,6 +70,10 @@ class _MenuStationState extends State<MenuStation> with SingleTickerProviderStat
         RGBStation = [154, 140, 195];
       });
     }
+    if (line=="Metro M1-M2"){
+      //colore neutro TODO
+      RGBStation = [0, 0, 0];
+    }
   }
 
   Animatable<Color> background = TweenSequence<Color>([
