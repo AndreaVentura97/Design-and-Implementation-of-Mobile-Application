@@ -116,7 +116,7 @@ class TabLoginState extends State<TabLogin> {
                                 width: 200,
                                 child: FittedBox(
                                   child: Image.asset(
-                                    'assets/Logo_Name.jpeg',
+                                    'assets/Logo_MeMiQ_2.jpeg',
                                   ),
                                 ),
                             ),

@@ -5,6 +5,7 @@ import 'package:flutter_app/src/services/stationServices.dart';
 import 'package:flutter_app/src/view/userAccountWidget.dart';
 import '../services/userService.dart';
 import 'displayMenuStation.dart';
+import 'package:gradient_app_bar/gradient_app_bar.dart';
 import 'package:auto_size_text/auto_size_text.dart';
 import 'notificationWidget.dart';
 
@@ -91,8 +92,9 @@ class MyStationsState extends State<MyStations> {
 
   Widget build(BuildContext context) {
     return Scaffold(
-            appBar: AppBar(
-              backgroundColor: Colors.blue[900],
+            appBar:
+            GradientAppBar(
+              gradient: LinearGradient(colors: [Colors.red, Colors.green]),
               centerTitle: true,
               title: Row(
                 children: [
@@ -171,16 +173,17 @@ class MyStationsState extends State<MyStations> {
                                               Flexible(
                                                 child: Container(
                                                     //color: Colors.green,
-                                                    child: Column(
-                                                      crossAxisAlignment: CrossAxisAlignment.start,
+                                                    child: Row(
+                                                      mainAxisAlignment: MainAxisAlignment.start,
                                                       children: [
                                                         Text(myFullStations[index]['name'],
                                                             style: TextStyle(
-                                                                fontSize: 25.0,
+                                                                fontSize: 22.0,
                                                                 fontWeight: FontWeight.w500,
                                                                 color: Colors.black
                                                             )
                                                         ),
+                                                        SizedBox(width: 5,),
                                                         Icon(
                                                           Icons.circle,
                                                           color: (getColor2(myFullStations[index]['status'])) ? Colors.green : Colors.red,

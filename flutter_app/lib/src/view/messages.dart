@@ -92,7 +92,7 @@ class MessagesState extends State<Messages> {
                           child: Row(
                             mainAxisAlignment: MainAxisAlignment.spaceBetween,
                             children: [
-                              Text("Sorted by:",
+                              Text("  Sorted by:",
                                 style: TextStyle(
                                     fontSize: 22
                                 ),
@@ -241,8 +241,8 @@ class MessagesState extends State<Messages> {
                                         //color: Colors.green[100],
                                           child: Text(messages[index]['text'],
                                               style: TextStyle(
-                                                  fontSize: 15,
-                                                  fontWeight: FontWeight.w500,
+                                                  fontSize: 18,
+                                                  fontWeight: FontWeight.w400,
                                                   color: Colors.black)),
                                       ),
                                       Container(
@@ -252,7 +252,7 @@ class MessagesState extends State<Messages> {
                                           children: [
                                             IconButton(
                                                 icon: Icon(Icons.thumb_up,
-                                                    size: 20.0,
+                                                    size: 25.0,
                                                     color: ((checkLike(
                                                         messages[index]['_id'])))
                                                         ? Colors.green
@@ -299,7 +299,7 @@ class MessagesState extends State<Messages> {
                                                         messages[index]['nl'] - 1;
                                                   }
                                                 }),
-                                            Text("${messages[index]['nl']}"),
+                                            Text("${messages[index]['nl']}", style: TextStyle(fontSize: 18)),
                                             IconButton(
                                                 icon: Icon(Icons.thumb_down,
                                                     size: 25.0,
@@ -349,7 +349,7 @@ class MessagesState extends State<Messages> {
                                                         messages[index]['nu'] - 1;
                                                   }
                                                 }),
-                                            Text("${messages[index]['nu']}"),
+                                            Text("${messages[index]['nu']}", style: TextStyle(fontSize: 18)),
                                           ],
                                         ),
                                       ),

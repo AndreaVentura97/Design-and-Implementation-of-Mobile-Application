@@ -146,8 +146,9 @@ class MyCommentsState extends State<MyComments> {
                             //color: Colors.red,
                             padding: EdgeInsets.fromLTRB(10,10,10,10),
                               child: Row(
+                                mainAxisAlignment: MainAxisAlignment.spaceBetween,
                                 children: [
-                                  Text("Sorted by:",
+                                  Text("  Sorted by:",
                                     style: TextStyle(
                                       fontSize: 22
                                     ),
@@ -473,6 +474,7 @@ class MyCommentsState extends State<MyComments> {
                               },
                             ),
                           ),
+                          showAlert()
                         ],
                       ),
                     ],
