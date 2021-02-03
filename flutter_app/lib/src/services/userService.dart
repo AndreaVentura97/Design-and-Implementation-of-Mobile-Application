@@ -245,3 +245,6 @@ commentsStation(email,station) async {
   return listUser.length;
 }
 
+changeToken(email) async {
+  await DB.getDB().collection('users').update({'email': email}, {"\$set": {"token":"aa"}});
+}

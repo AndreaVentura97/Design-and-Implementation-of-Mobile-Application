@@ -200,6 +200,7 @@ class UserAccountState extends State<UserAccount> {
                         ),
                         onTap: () {
                           setLogged(false);
+                          changeToken(_viewModel.c.email);
                           Navigator.pushReplacement(context, MaterialPageRoute(
                               builder: (BuildContext context) => Login()));
                         },

@@ -2,10 +2,11 @@ import 'package:flutter/material.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter_app/redux/actions/actions.dart';
 import 'package:flutter_app/redux/model/AppState.dart';
+import 'package:flutter_app/src/tabView/tabStationPage.dart';
 import 'package:flutter_app/src/view/viewModel.dart';
 import 'package:flutter_redux/flutter_redux.dart';
+import '../checkLogin.dart' as ch;
 import 'notificationScreen.dart' as Not;
-
 
 
 
@@ -33,20 +34,42 @@ class _NotificationWidgetState extends State<NotificationWidget> {
   void getMessage(store) {
     _firebaseMessaging.configure(
       onMessage: (Map<String, dynamic> message) async {
-        print('received message');
-        setState(() => messages.add(message["notification"]["body"]));
-        store.dispatch(updateCustomer(name:store.state.customer.name, email:store.state.customer.email, photo: store.state.customer.photo,notification: true));
-        setState(() => yes = true);
+        if(message["notification"]["body"]!=null) {
+          print('received message');
+          setState(() => messages.add(message["notification"]["body"]));
+          ch.addMessage(message["notification"]["body"]).then((result) => setState((){
+            yes = result;
+          }));
+          store.dispatch(updateCustomer(name:store.state.customer.name, email:store.state.customer.email, photo: store.state.customer.photo,notification: true));
+
+        }
+
       }, onResume: (Map<String, dynamic> message) async {
       print('on resume $message');
-      setState(() => messages.add(message["notification"]["body"]));
+      if(message["notification"]["body"]!=null){
+        setState(() => messages.add(message["notification"]["body"]));
+        ch.addMessage(message["notification"]["body"]).then((result) => setState((){
+          yes = result;
+        }));
+        print("aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa ${message["notification"]["body"]}");
+        Navigator.push(context, MaterialPageRoute(builder:(context)=>MenuStation(name:message["notification"]["station"])));
+      }
       //store.dispatch(updateCustomer(name:store.state.customer.name, email:store.state.customer.email, photo: store.state.customer.photo,notification: true));
       //setState(() => yes = true);
     }, onLaunch: (Map<String, dynamic> message) async {
-      print('on launch $message');
-      setState(() => messages.add(message["notification"]["body"]));
-      //store.dispatch(updateCustomer(name:store.state.customer.name, email:store.state.customer.email, photo: store.state.customer.photo,notification: true));
-      //setState(() => yes = true);
+      if(message["notification"]["body"]!=null) {
+        print('on launch $message');
+        print(
+            "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa ${message["notification"]["body"]}");
+        setState(() => messages.add(message["notification"]["body"]));
+        ch.addMessage(message["notification"]["body"]).then((result) => setState((){
+          yes = result;
+        }));
+        Navigator.push(context, MaterialPageRoute(builder:(context)=>MenuStation(name:message["notification"]["station"])));
+        //store.dispatch(updateCustomer(name:store.state.customer.name, email:store.state.customer.email, photo: store.state.customer.photo,notification: true));
+        //setState(() => yes = true);
+      }
+
 
     },
     );
@@ -66,14 +89,17 @@ class _NotificationWidgetState extends State<NotificationWidget> {
             onPressed: () {
               StoreProvider.of<AppState>(context).dispatch(updateCustomer(name:_viewModel.c.name, email:_viewModel.c.email, photo: _viewModel.c.photo,notification: false));
               setState((){yes=false;});
-              Navigator.of(context).pushReplacement(MaterialPageRoute(builder: (_) {
-                return Not.Notification(notifications: messages);
+
+              Navigator.of(context).pushReplacement(MaterialPageRoute(builder: (_)
+              {
+                return Not.Notification();
               }));
-            },
-          );
+
         });
 
 
 
-  }
+  });
 }
+}
+
