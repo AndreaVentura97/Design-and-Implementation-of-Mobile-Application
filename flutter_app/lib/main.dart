@@ -11,6 +11,7 @@ import 'package:redux/redux.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'src/checkLogin.dart';
 import 'redux/model/customer.dart';
+import 'src/view/loadingTab.dart';
 
 final server = new Sevr();
 const port = 8081;
@@ -88,7 +89,7 @@ class MyAppState extends State<MyApp> {
             primarySwatch: Colors.blue,
             visualDensity: VisualDensity.adaptivePlatformDensity,
           ),
-          home: (ready) ? Login() : Center(child: Text("Loading")),
+          home: (ready) ? Login(): Loading() ,
           debugShowCheckedModeBanner: false),
     );
   }

@@ -89,6 +89,7 @@ class TabRegisterState extends State<TabRegister> {
                             fontSize: 25.0,
                           ),
                         ),
+
                         Card(
                           color: Colors.white,
                           elevation: 5.0,
