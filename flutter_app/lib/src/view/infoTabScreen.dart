@@ -112,6 +112,11 @@ class InfoStationState extends State<InfoStation> {
         image = "assets/M1-M2.jpeg";
       });
     }
+    if (line=="Metro M2-M3"){
+      setState(() {
+        image = "assets/M2-M3.jpeg";
+      });
+    }
   }
 
   updateFav(email,station){
@@ -223,12 +228,15 @@ class InfoStationState extends State<InfoStation> {
 
                                               ],
                                             ),
-                                            Text("$address",
+                                            (address!=null) ? Text("$address",
                                               style: TextStyle(
                                                 fontSize: 16.0,
                                                 color: Colors.grey,
                                               ),
-                                            ),
+                                            ) : Text("Loading", style: TextStyle(
+                                              fontSize: 16.0,
+                                              color: Colors.grey,
+                                            ),),
                                           ],
                                         ),
                                       ),

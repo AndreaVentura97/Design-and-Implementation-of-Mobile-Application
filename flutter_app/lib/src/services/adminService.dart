@@ -32,3 +32,7 @@ retrieveStatus (name) async {
   var status = station['status'];
   return status;
 }
+
+removeSuggestion(id) async {
+  await DB.getDB().collection('suggestions').remove({'_id': id});
+}

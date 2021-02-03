@@ -41,6 +41,15 @@ class MyStationsState extends State<MyStations> {
 
     }
 
+  getColor2(stat){
+    if (stat == true){
+      return true;
+    }
+    else {
+      return false;
+    }
+  }
+
 
   String getAsset(name){
     if (name == "Metro M1-M2"){
@@ -141,7 +150,6 @@ class MyStationsState extends State<MyStations> {
                               child: Column(
                                 mainAxisSize: MainAxisSize.max,
                                 children: [
-
                                   ListTile(
                                     contentPadding: EdgeInsets.fromLTRB(10.0, 0.0, 0.0, 0.0),
                                     title: Row(
@@ -173,24 +181,11 @@ class MyStationsState extends State<MyStations> {
                                                                 color: Colors.black
                                                             )
                                                         ),
-                                                        // Text("${widget.station}",
-                                                        //   style: TextStyle(
-                                                        //     fontSize: 25.0,
-                                                        //     color: Colors.black,
-                                                        //   ),
-                                                        // ),
-                                                        // Text("$line",
-                                                        //   style: TextStyle(
-                                                        //     fontSize: 16.0,
-                                                        //     color: Colors.grey,
-                                                        //   ),
-                                                        // ),
-                                                        // Text("$address",
-                                                        //   style: TextStyle(
-                                                        //     fontSize: 16.0,
-                                                        //     color: Colors.grey,
-                                                        //   ),
-                                                        // ),
+                                                        Icon(
+                                                          Icons.circle,
+                                                          color: (getColor2(myFullStations[index]['status'])) ? Colors.green : Colors.red,
+                                                          size: 15,
+                                                        ),
                                                       ],
                                                     ),
                                                   ),

@@ -1,5 +1,6 @@
 import 'package:device_apps/device_apps.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_app/src/services/adminService.dart';
 import 'package:flutter_app/src/services/service.dart';
 import 'package:flutter_app/src/services/stationServices.dart';
 import 'package:flutter_app/src/view/userAccountWidget.dart';
@@ -87,16 +88,20 @@ class ListViewAdState extends State<ListViewAd> {
                                                         fontWeight: FontWeight.w500,
                                                         color: Colors.black)
                                           ),
-                                          Icon(Icons.close)
+                                          IconButton(
+                                            icon: Icon(Icons.close,),
+                                            onPressed: () {
+                                              removeSuggestion(suggestions[index]['_id']);
+                                              setState(() {
+                                                suggestions.remove(suggestions[index]);
+                                              });
+
+                                            },
+
+                                          ),
                                         ],
                                       ),
-                                            // onTap: (){
-                                            //   showDialog(
-                                            //       context: context,
-                                            //       builder: (BuildContext context) {
-                                            //         //return PopupVote(email: messages[index]['email'], station: widget.station);
-                                            //       });
-                                            // }
+
                                         //),
                                         Row(
                                           children: [

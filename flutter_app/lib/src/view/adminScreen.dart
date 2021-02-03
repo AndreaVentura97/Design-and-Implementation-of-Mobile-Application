@@ -129,8 +129,7 @@ class AdminScreenState extends State<AdminScreen> {
                                 ),
                                 Icon(
                                   Icons.circle,
-                                  color: (getColor2(stations[index]['status'])) ? Colors
-                                      .green : Colors.red,
+                                  color: (getColor2(stations[index]['status'])) ? Colors.green : Colors.red,
                                   size: 15,
                                 ),
                               ],
