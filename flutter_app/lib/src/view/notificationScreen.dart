@@ -17,6 +17,7 @@ class NotificationState extends State<Notification> {
     getMessages().then((result) => setState((){
       if (result!=null){
         widget.notifications = result;
+        widget.notifications = new List.from(widget.notifications.reversed);
       }
       else {
         widget.notifications = [];

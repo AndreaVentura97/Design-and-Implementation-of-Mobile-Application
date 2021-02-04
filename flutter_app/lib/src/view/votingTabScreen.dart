@@ -466,7 +466,7 @@ class VotingState extends State<Voting> {
                                               crossAxisAlignment: CrossAxisAlignment.start,
                                               children: [
                                                 Text(
-                                                  "Overall:",
+                                                  "Surrounding area:",
                                                   style: TextStyle(
                                                       fontSize: 18.0,
                                                       fontWeight: FontWeight.bold

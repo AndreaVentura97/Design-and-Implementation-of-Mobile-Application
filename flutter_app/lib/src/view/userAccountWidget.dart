@@ -36,7 +36,7 @@ class UserAccountState extends State<UserAccount> {
   var flag=false;
   var package;
   File imageFile;
-  var photo;
+
 
   @override
   void initState() {

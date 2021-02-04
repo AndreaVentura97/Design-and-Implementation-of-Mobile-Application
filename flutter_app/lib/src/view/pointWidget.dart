@@ -118,7 +118,8 @@ class PointWidgetState extends State<PointWidget>{
                           ),
                           Container(
                             //color: Colors.green[200],
-                            child: Text('Distance from the station: $distance km', style:TextStyle(color: Colors.black,)),
+                            child: (distance!=null) ? Text('Distance from the station: $distance km', style:TextStyle(color: Colors.black,))
+                              : Text('Distance from the station: Loading', style:TextStyle(color: Colors.black,))
                           ),
                           Container(
                             //color: Colors.green[200],
