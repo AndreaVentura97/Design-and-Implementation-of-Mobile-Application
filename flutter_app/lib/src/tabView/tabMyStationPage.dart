@@ -92,6 +92,13 @@ class TabMyStationsState extends State<TabMyStations> {
     if (name == "Metro M5"){
       return "assets/M5.jpeg";
     }
+    if (name=="Metro M1-M2"){
+      return "assets/M1-M2.jpeg";
+    }if (name=="Metro M1-M3"){
+      return "assets/M1-M3.jpeg";
+    }if (name=="Metro M2-M3"){
+      return "assets/M2-M3.jpeg";
+    }
   }
 
   void updateStations(String search) {
@@ -148,7 +155,7 @@ class TabMyStationsState extends State<TabMyStations> {
                               width: 200,
                               child: FittedBox(
                                 child: Image.asset(
-                                  'assets/Logo_Name.jpeg',
+                                  'assets/Logo_MeMiQ_2.png',
                                 ),
                               ),
                             ),

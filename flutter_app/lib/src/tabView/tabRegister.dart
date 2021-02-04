@@ -1,5 +1,6 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/gestures.dart';
 import 'tabLogin.dart';
 import 'package:auto_size_text/auto_size_text.dart';
 import '../services/userService.dart';
@@ -60,33 +61,21 @@ class TabRegisterState extends State<TabRegister> {
                       mainAxisSize: MainAxisSize.max,
                       children: [
                         //Box Logo
-                        Container(
-                          color: Colors.black,
-                          width: 200.0,
-                          height: 200.0,
-                          //margin: EdgeInsets.symmetric(vertical: 20.0),
-                          child: Column(
-                              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                              mainAxisSize: MainAxisSize.max,
-                              crossAxisAlignment: CrossAxisAlignment.center,
-                              children: [
-                                Container(
-                                  width: 100.0,
-                                  height: 100.0,
-                                  color: Colors.grey,
-                                ),
-                                Text('Nome applicazione',
-                                    style: TextStyle(
-                                      fontSize: 15.0,
-                                      color: Colors.grey,
-                                    )),
-                              ]),
+                      Container(
+                      height: 200,
+                      width: 160,
+                      child: FittedBox(
+                        child: Image.asset(
+                          'assets/Logo_MeMiQ_2.png',
                         ),
+                      ),
+                    ),
+
                         Text(
                           'Registration',
                           style: TextStyle(
                             color: Colors.white,
-                            fontSize: 25.0,
+                            fontSize: 30.0,
                           ),
                         ),
 
@@ -299,6 +288,33 @@ class TabRegisterState extends State<TabRegister> {
                             ),
                           ),
                         ),
+
+                        Align(
+                          alignment: Alignment.bottomCenter,
+                          child: RichText(
+                            text: TextSpan(
+                                text: "Go back to ",
+                                style: TextStyle(
+                                  color: Colors.white,
+                                  fontSize: 22.0,
+                                ),
+                                children: [
+                                  TextSpan(
+                                    text: 'Login',
+                                    style: TextStyle(
+                                      color: Colors.blue,
+                                      decoration:
+                                      TextDecoration.underline,
+                                      fontSize: 22.0,
+                                    ),
+                                    recognizer: TapGestureRecognizer()
+                                      ..onTap = () async {
+                                        Navigator.pop(context);
+                                      },
+                                  )
+                                ]),
+                          ),
+                        )
                       ],
                     ),
                   ])),

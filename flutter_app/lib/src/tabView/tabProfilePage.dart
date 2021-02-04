@@ -186,7 +186,7 @@ class TabProfileState extends State<TabProfile> {
                                   width: 200,
                                   child: FittedBox(
                                     child: Image.asset(
-                                      'assets/Logo_Name.jpeg',
+                                      'assets/Logo_MeMiQ_2.png',
                                     ),
                                   ),
                                 ),

@@ -181,9 +181,6 @@ class tabMenuStationState extends State<tabMenuStation> with SingleTickerProvide
   }
 
 
-
-
-
   @override
   Widget build(BuildContext context) {
 
@@ -213,7 +210,30 @@ class tabMenuStationState extends State<tabMenuStation> with SingleTickerProvide
                         Flexible(
                           flex: 4,
                           child: Scaffold (
-                            body: tabs[_currentIndex],
+                            body: Stack(
+                              children: [
+                                Stack(children: [
+                                  Container(
+                                    color: Colors.white,
+                                    child: Center(
+                                      child: Container(
+                                        height: 300,
+                                        width: 200,
+                                        child: FittedBox(
+                                          child: Image.asset(
+                                            'assets/Logo_MeMiQ_2.png',
+                                          ),
+                                        ),
+                                      ),
+                                    ),
+                                  ),
+                                  Container(
+                                    color: Color.fromRGBO(255, 255, 255, 0.3),
+                                  )
+                                ]),
+                                tabs[_currentIndex],
+                              ],
+                            ),
                             bottomNavigationBar: BottomNavigationBar(
                               currentIndex: _currentIndex,
                               //type: BottomNavigationBarType.fixed,

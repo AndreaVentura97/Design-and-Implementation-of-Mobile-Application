@@ -156,8 +156,10 @@ class _MenuStationState extends State<MenuStation> with SingleTickerProviderStat
                       Color.fromRGBO(RGBStation_2[0],RGBStation_2[1],RGBStation_2[2],1)]),
                     centerTitle: true,
                     title: Text("${widget.name}"),
+                    leading: IconButton(icon: Icon(Icons.arrow_back_outlined, color: Colors.white), onPressed: (){Navigator.pop(context);}),
+
                   ),
-                  drawer: UserAccount(),
+                  //drawer: UserAccount(),
                   body: Stack(
                     children: [
                       Stack(children: [
@@ -169,7 +171,7 @@ class _MenuStationState extends State<MenuStation> with SingleTickerProviderStat
                               width: 200,
                               child: FittedBox(
                                 child: Image.asset(
-                                  'assets/Logo_Name.jpeg',
+                                  'assets/Logo_MeMiQ_2.png',
                                 ),
                               ),
                             ),

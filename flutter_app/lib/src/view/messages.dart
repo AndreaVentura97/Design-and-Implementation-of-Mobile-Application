@@ -484,7 +484,7 @@ class MessagesState extends State<Messages> {
                                           children: [
                                             IconButton(
                                                 icon: Icon(Icons.thumb_up,
-                                                    size: 20.0,
+                                                    size: 25.0,
                                                     color: ((checkLike(
                                                         messagesInteractions[index]['_id'])))
                                                         ? Colors.green
@@ -531,7 +531,7 @@ class MessagesState extends State<Messages> {
                                                         messagesInteractions[index]['nl'] - 1;
                                                   }
                                                 }),
-                                            Text("${messagesInteractions[index]['nl']}"),
+                                            Text("${messagesInteractions[index]['nl']}", style: TextStyle(fontSize: 18),),
                                             IconButton(
                                                 icon: Icon(Icons.thumb_down,
                                                     size: 25.0,
@@ -581,7 +581,7 @@ class MessagesState extends State<Messages> {
                                                         messagesInteractions[index]['nu'] - 1;
                                                   }
                                                 }),
-                                            Text("${messagesInteractions[index]['nu']}"),
+                                            Text("${messagesInteractions[index]['nu']}", style: TextStyle(fontSize: 18)),
                                           ],
                                         ),
                                       ),

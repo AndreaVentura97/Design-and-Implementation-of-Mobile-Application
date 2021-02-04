@@ -91,37 +91,13 @@ class TabLoginState extends State<TabLogin> {
                           mainAxisSize: MainAxisSize.max,
                           children: [
                             showAlert(),
-                            //Box Logo
-                            // Container(
-                            //   color: Colors.black,
-                            //   width: 200.0,
-                            //   height: 200.0,
-                            //   child: Column(
-                            //       mainAxisAlignment:
-                            //       MainAxisAlignment.spaceEvenly,
-                            //       mainAxisSize: MainAxisSize.max,
-                            //       crossAxisAlignment:
-                            //       CrossAxisAlignment.center,
-                            //       children: [
-                            //         Container(
-                            //           width: 100.0,
-                            //           height: 100.0,
-                            //           color: Colors.grey,
-                            //         ),
-                            //         Text('Nome applicazione',
-                            //             style: TextStyle(
-                            //               fontSize: 15.0,
-                            //               color: Colors.grey,
-                            //             )),
-                            //       ]),
-                            // ),
 
                             Container(
                                 height: 300,
                                 width: 200,
                                 child: FittedBox(
                                   child: Image.asset(
-                                    'assets/Logo_MeMiQ_2.jpeg',
+                                    'assets/Logo_MeMiQ_2.png',
                                   ),
                                 ),
                             ),

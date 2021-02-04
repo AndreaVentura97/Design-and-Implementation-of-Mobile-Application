@@ -211,6 +211,7 @@ class _MapState extends State<Map> {
                                 mapController.animateCamera(update);
                                 //_controller.clear();
                                 stations.clear();
+                                FocusScope.of(context).unfocus();
                               })},
                               onLongPress: () => {
                                 Navigator.push(

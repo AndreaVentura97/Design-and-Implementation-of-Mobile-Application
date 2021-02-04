@@ -102,6 +102,15 @@ class TabMyCommentsState extends State<TabMyComments> {
     if (name == "Metro M5"){
       return AssetImage("assets/M5.jpeg");
     }
+    if (name == "Metro M1-M2"){
+      return AssetImage("assets/M1-M2.jpeg");
+    }
+    if (name == "Metro M1-M3"){
+      return AssetImage("assets/M1-M3.jpeg");
+    }
+    if (name == "Metro M2-M3"){
+      return AssetImage("assets/M2-M3.jpeg");
+    }
   }
 
   void setMarkers() async {
@@ -165,7 +174,7 @@ class TabMyCommentsState extends State<TabMyComments> {
                                   width: 200,
                                   child: FittedBox(
                                     child: Image.asset(
-                                      'assets/Logo_Name.jpeg',
+                                      'assets/Logo_MeMiQ_2.png',
                                     ),
                                   ),
                                 ),

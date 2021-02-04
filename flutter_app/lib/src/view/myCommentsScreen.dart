@@ -127,7 +127,7 @@ class MyCommentsState extends State<MyComments> {
                               width: 200,
                               child: FittedBox(
                                 child: Image.asset(
-                                  'assets/Logo_Name.jpeg',
+                                  'assets/Logo_MeMiQ_2.png',
                                 ),
                               ),
                             ),
@@ -140,6 +140,7 @@ class MyCommentsState extends State<MyComments> {
                       Column(
                         children: [
                           Container(
+                            height: 69,
                             color: Colors.grey[300],
                             child:Column(
                               children: [
@@ -475,9 +476,10 @@ class MyCommentsState extends State<MyComments> {
                               },
                             ),
                           ),
-                          showAlert()
+
                         ],
                       ),
+                      showAlert()
                     ],
                   ),
 
@@ -491,31 +493,40 @@ class MyCommentsState extends State<MyComments> {
 
 Widget showAlert() {
    if (show)
-     return Container(
-       color: Colors.amber,
-       width: double.infinity,
-       padding: EdgeInsets.all(8.0),
-       child: Row(
-         children: [
-           Padding(
-             padding: const EdgeInsets.only(right: 8.0),
-             child: Icon(Icons.error_outline),
-           ),
-           Expanded(
-             child: AutoSizeText(
-               "Comment deleted",
-               maxLines: 3,
+     return Column(
+       children: [
+         SizedBox(height:70,),
+         Container(
+           padding: EdgeInsets.all(8),
+           child: Container(
+             color: Colors.amber,
+             width: double.infinity,
+             padding: EdgeInsets.all(8.0),
+             height: 50,
+             child: Row(
+               children: [
+                 Padding(
+                   padding: const EdgeInsets.only(right: 8.0),
+                   child: Icon(Icons.error_outline),
+                 ),
+                 Expanded(
+                   child: AutoSizeText(
+                     "Comment deleted",
+                     maxLines: 3,
+                   ),
+                 ),
+                 IconButton(
+                     icon: Icon(Icons.close),
+                     onPressed: () {
+                       setState(() {
+                         show = false;
+                       });
+                     })
+               ],
              ),
            ),
-           IconButton(
-               icon: Icon(Icons.close),
-               onPressed: () {
-                 setState(() {
-                   show = false;
-                 });
-               })
-         ],
-       ),
+         ),
+       ],
      );
    return SizedBox(
      height: 0.0,

@@ -171,12 +171,7 @@ class InfoProfileState extends State<InfoProfile> {
                           indent: 10,
                           endIndent: 10,
                         ),
-
-                        Container(
-                            //color: Colors.grey[300],
-                            child: Column(
-                              children: [
-                                Card(
+                        Card(
                                   elevation: 3.0,
                                   margin: EdgeInsets.fromLTRB(10.0, 10.0, 10.0, 0.0),
                                   shape: RoundedRectangleBorder(
@@ -413,16 +408,6 @@ class InfoProfileState extends State<InfoProfile> {
                                     ),
                                   ),
                                 ),
-
-                                Text(
-                                    "If the difference between your likes and your don't like is greater than 50 you win a ticket!!!"),
-                                (totalLikes - totalUnlikes >= 50)
-                                    ? Text("You have won a ticket!! Get it")
-                                    : Text(
-                                        "You miss ${50 - (totalLikes - totalUnlikes)} likes to win!!"),
-                              ],
-                            ),
-                          ),
                       ],
                     ),
                   ),

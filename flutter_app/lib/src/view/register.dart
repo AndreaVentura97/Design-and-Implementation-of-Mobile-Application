@@ -63,12 +63,6 @@ class _RegisterState extends State<Register> {
                     mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                     mainAxisSize: MainAxisSize.max,
                     children: [
-                      // Row(
-                      //   mainAxisAlignment: MainAxisAlignment.start,
-                      //   children: [
-                      //     IconButton(icon: Icon(Icons.arrow_back_outlined, color: Colors.white), onPressed: (){Navigator.pop(context);})
-                      //   ],
-                      // ),
 
                       Container(
                         height: 200,

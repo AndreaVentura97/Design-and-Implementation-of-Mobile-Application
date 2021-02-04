@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:delayed_display/delayed_display.dart';
 import 'package:flutter_app/src/services/service.dart';
+import 'package:flutter_app/src/view/loadingTab.dart';
 import '../services/adminService.dart';
 import 'adminScreenStation.dart';
 import 'login.dart';
@@ -20,11 +21,8 @@ class AdminScreenState extends State<AdminScreen> {
     retrieveStations2().then((netStations) =>
         setState(() {
           stations = netStations;
+          ready = true;
         }));
-    setState(() {
-      ready = true;
-    });
-
   }
 
   getColor2(stat){
@@ -156,7 +154,8 @@ class AdminScreenState extends State<AdminScreen> {
                         }),
                   );
                 },
-              ): null));
+              ): Loading()
+          ));
 
     }
   }

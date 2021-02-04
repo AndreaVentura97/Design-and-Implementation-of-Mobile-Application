@@ -58,7 +58,7 @@ class NotificationState extends State<Notification> {
                         color: Colors.white,
                         child: FittedBox(
                           child: Image.asset(
-                            'assets/Logo_Name.jpeg',
+                              'assets/Logo_MeMiQ_2.png',
                           ),
                         ),
                       ),
