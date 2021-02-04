@@ -222,21 +222,16 @@ class TabSearchState extends State<TabSearch> {
                                                       fontWeight: FontWeight.w500,
                                                       color: Colors.black)),
                                               onTap: () => {
-                                                setState((){
-                                                  targetPosition = CameraPosition(
-                                                      target: LatLng(stations[index]['latitude'],stations[index]['longitude']),
-                                                      zoom: 16.5);
-                                                  CameraUpdate update =CameraUpdate.newCameraPosition(targetPosition);
-                                                  //mapController.moveCamera(update);
-                                                  mapController.animateCamera(update);
-                                                  //_controller.clear();
-                                                  stations.clear();
-                                                }),
-                                              Navigator.push(
+
+                                              Navigator.pushReplacement(
                                                     context,
                                                     MaterialPageRoute(
                                                         builder: (context) => tabMenuStation(
-                                                            name: stations[index]['name'])))
+                                                            name:stations[index]["name"]))),
+                                                print('${stations[index]["name"]}'),
+                                              // setState((){
+                                              //     stations.clear();
+                                              //   }),
                                               },
 
 

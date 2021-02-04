@@ -6,6 +6,7 @@ import '../db.dart' as DB;
 import 'dart:ui' as ui;
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import '../view/displayMenuStation.dart';
+import '../tabView/tabStationPage.dart';
 
 
 
@@ -136,7 +137,7 @@ buildTabMarkers (response, context) async {
           title: name,
           snippet: line,
           onTap: (){
-            Navigator.push(context, MaterialPageRoute(builder:(context)=>MenuStation(name:name)));
+            Navigator.push(context, MaterialPageRoute(builder:(context)=>tabMenuStation(name:name)));
           }
       ),
 

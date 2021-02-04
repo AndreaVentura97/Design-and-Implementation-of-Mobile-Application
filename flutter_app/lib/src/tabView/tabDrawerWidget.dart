@@ -47,7 +47,7 @@ class TabDrawerState extends State<TabDrawer> {
                          Icon(
                           Icons.account_box_outlined,
                           color: Colors.white,
-                           size: 35,
+                           size: 30,
                          ),
                          SizedBox(
                           width: 5,
@@ -62,7 +62,7 @@ class TabDrawerState extends State<TabDrawer> {
                     Icon(
                       Icons.email,
                       color: Colors.white,
-                      size: 35,
+                      size: 30,
                     ),
                     SizedBox(
                       width: 5,
@@ -85,7 +85,7 @@ class TabDrawerState extends State<TabDrawer> {
                       context,
                       MaterialPageRoute(
                           builder: (BuildContext context) =>
-                              TabProfile(email: _viewModel.c.email)));
+                              TabProfile()));
                 },
               ),
                   new ListTile(
@@ -141,24 +141,20 @@ class TabDrawerState extends State<TabDrawer> {
               //   title:
               //       Row(children: [Text("Notification"), NotificationWidget()]),
               // ),
+
                   new ListTile(
-                  title: Row(
-                    mainAxisAlignment: MainAxisAlignment.start,
-                    children: [
-                      Icon(Icons.refresh, color: Colors.blue[900], size: 30,),
-                      Text(" Reconnect", style: TextStyle(color: Colors.blue[900], fontSize: 22),),
-                    ],
+                      title: Row(
+                        mainAxisAlignment: MainAxisAlignment.start,
+                        children: [
+
+                          Icon(Icons.account_balance_wallet, color: Colors.blue[900],size: 30),
+                          Text(" Buy a ticket", style: TextStyle( color: Colors.blue[900], fontSize: 22),),
+                        ],
+                      ),
+                      onTap: () {
+                        openApp();
+                      }
                   ),
-                  onTap: () {
-                    DB.start().then((result) => setState(() {
-                          print("reconnected to mongoDb");
-                        }));
-                  }),
-                  new ListTile(
-                  title: Text("Buy a ticket"),
-                  onTap: () {
-                    openApp();
-                  }),
 
                   new ListTile(
                 title: Row(

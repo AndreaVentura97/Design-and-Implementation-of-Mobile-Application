@@ -60,6 +60,15 @@ class HomeTabState extends State<HomeTab> {
     if (station['line']=="Metro M5"){
       return "assets/M5.jpeg";
     }
+    if (station['line']=="Metro M1-M2"){
+      return "assets/M1-M2.jpeg";
+    }
+    if (station['line']=="Metro M1-M3"){
+      return "assets/M1-M3.jpeg";
+    }
+    if (station['line']=="Metro M2-M3"){
+      return "assets/M2-M3.jpeg";
+    }
   }
 
   void _getLocationPermission() async {

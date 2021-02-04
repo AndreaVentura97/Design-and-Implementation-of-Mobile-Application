@@ -1,10 +1,13 @@
 import 'package:delayed_display/delayed_display.dart';
+import 'package:flutter_app/redux/model/AppState.dart';
+import 'package:flutter_redux/flutter_redux.dart';
+import 'package:flutter_app/src/view/viewModel.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/gestures.dart';
 import 'package:auto_size_text/auto_size_text.dart';
 import 'package:firebase_auth/firebase_auth.dart';
-import 'homeTab.dart';
+import 'tabProfilePage.dart';
 import '../handleLogin.dart' as handle;
 import '../checkLogin.dart';
 import 'tabRegister.dart';
@@ -51,7 +54,9 @@ class TabLoginState extends State<TabLogin> {
     var _blankFocusNode = new FocusNode();
     var height = MediaQuery.of(context).size.height;
     var padding = MediaQuery.of(context).padding;
-
+    return new StoreConnector<AppState, ViewModel>(
+        converter: (store) => createViewModel(store),
+        builder: (context, _viewModel) {
     return DelayedDisplay(
       delay: Duration(seconds: 1),
       child: (!isLogged)
@@ -259,8 +264,9 @@ class TabLoginState extends State<TabLogin> {
             ),
           ),
         ),
-      ) : HomeTab(),
+      ) : TabProfile(email: _viewModel.c.email),
     );
+  });
   }
 
   Widget withEmailPassword() {
