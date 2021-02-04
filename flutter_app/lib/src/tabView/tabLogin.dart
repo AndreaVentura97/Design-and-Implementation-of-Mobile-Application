@@ -429,7 +429,8 @@ class TabLoginState extends State<TabLogin> {
                       _emailController.text, _passwordController.text)
                       .then((value) => setState(() {
                     _error = value;
-                  }));
+                  isLogged = true;
+                      }));
                 }
               },
             ),

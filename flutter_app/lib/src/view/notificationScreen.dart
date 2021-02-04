@@ -72,14 +72,38 @@ class NotificationState extends State<Notification> {
                   //shrinkWrap: true,
                   itemCount: widget.notifications.length,
                   itemBuilder: (BuildContext context, int index) {
-                    return ListTile(
-                      contentPadding: EdgeInsets.all(10.0),
-                      title: (widget.notifications[index]!=null) ? Text(widget.notifications[index],
-                          style: TextStyle(
-                              fontSize: 15,
-                              fontWeight: FontWeight.w500,
-                              color: Colors.black)) : Text(''),
-                    );
+                    return (widget.notifications[index]!=null) ?
+                      Container(
+                        padding: EdgeInsets.symmetric(horizontal: 8),
+                        child: Card(
+                          margin: EdgeInsets.fromLTRB(10.0, 10.0, 10.0, 0.0),
+                          elevation: 3.0,
+                          shape: RoundedRectangleBorder(
+                            borderRadius: BorderRadius.circular(10.0),
+                            side: BorderSide(
+                              color: Colors.blue[900],
+                              width: 2.0,
+                            ),
+                          ),
+                          child: Container(
+                            margin: EdgeInsets.all(8),
+                            child: Row(
+                              mainAxisSize: MainAxisSize.max,
+                              children: [
+                                Flexible(
+                                  child: Text(widget.notifications[index],
+                                      style: TextStyle(
+                                          fontSize: 15,
+                                          fontWeight: FontWeight.w500,
+                                          color: Colors.black)),
+                                ),
+                                Container(width: 30, child: IconButton(icon: Icon(Icons.close), onPressed: null))
+                              ],
+                            ),
+                          ),
+                        ),
+                      ) 
+                          : Text('');
                   },
                 )
                     :  Center(

@@ -5,6 +5,7 @@ import 'package:flutter_app/redux/model/AppState.dart';
 import 'package:flutter_app/src/view/viewModel.dart';
 import 'package:flutter_app/src/services/stationServices.dart';
 import 'displayMenuStation.dart';
+import 'loadingTab.dart';
 import '../services/service.dart';
 import 'package:auto_size_text/auto_size_text.dart';
 import '../services/messagesService.dart';
@@ -106,14 +107,14 @@ class MyCommentsState extends State<MyComments> {
         converter : (store) => createViewModel(store),
         onInit: (store) => retrieveMyComments(store.state.customer.email),
         builder: (context,_viewModel) {
-          return (ready) ? Scaffold(
+          return Scaffold(
             backgroundColor: Colors.grey[300],
                 appBar: AppBar(
                   backgroundColor: Colors.blue[900],
                   title: Text("My Comments"),
                 ),
                 drawer: UserAccount(),
-                body: DelayedDisplay(
+                body: (ready) ? DelayedDisplay(
                   delay: Duration(milliseconds:2000),
                   child: Stack(
                     children: [
@@ -482,12 +483,9 @@ class MyCommentsState extends State<MyComments> {
 
 
 
-                ),
-          ) : Scaffold(
-              appBar: AppBar(
-              title: Text("My Comments"),
-          ),
-          drawer: UserAccount());
+                ): Loading(),
+          );
+
         });
   }
 

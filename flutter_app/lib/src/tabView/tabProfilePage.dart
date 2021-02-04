@@ -21,7 +21,7 @@ import 'package:url_launcher/url_launcher.dart';
 import '../checkLogin.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:percent_indicator/percent_indicator.dart ';
-
+import '../view/loadingTab.dart';
 import 'tabDrawerWidget.dart';
 
 class TabProfile extends StatefulWidget {
@@ -41,6 +41,7 @@ class TabProfileState extends State<TabProfile> {
   var win;
   var totalLikesGiven = 0;
   var totalUnlikesGiven = 0;
+  bool ready = false;
 
   void takeMyStatistics() async {
     getNumberOfMyComments(widget.email).then((result) => setState(() {
@@ -57,6 +58,7 @@ class TabProfileState extends State<TabProfile> {
         }));
     getCommentWithMostUnLike(widget.email).then((result) => setState(() {
           commentMostUnLike = result;
+          ready = true;
         }));
     getLikesGiven(widget.email).then((result) => setState(() {
           totalLikesGiven = result;
@@ -64,6 +66,9 @@ class TabProfileState extends State<TabProfile> {
     getUnlikesGiven(widget.email).then((result) => setState(() {
           totalUnlikesGiven = result;
         }));
+    // setState(() {
+    //   ready = true;
+    // });
   }
 
   @override
@@ -76,7 +81,7 @@ class TabProfileState extends State<TabProfile> {
     return new StoreConnector<AppState, ViewModel>(
         converter: (store) => createViewModel(store),
         builder: (context, _viewModel) {
-          return Scaffold(
+          return (ready) ? Scaffold(
             resizeToAvoidBottomPadding: false,
             resizeToAvoidBottomInset: true,
             backgroundColor: Colors.grey,
@@ -546,7 +551,7 @@ class TabProfileState extends State<TabProfile> {
                 ],
               ),
             ),
-          );
+          ): Loading();
         });
   }
 

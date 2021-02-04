@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_app/src/services/sendNotification.dart';
 import 'package:flutter_app/src/view/listViewAdminWidget.dart';
-
+import 'adminScreen.dart';
 import '../services/adminService.dart';
 import 'listViewAdminWidget.dart';
 
@@ -38,6 +38,9 @@ class AdminScreenStationState extends State<AdminScreenStation> {
       home: Scaffold(
           appBar: AppBar(
             centerTitle: true,
+            leading: IconButton(icon: Icon(Icons.arrow_back_outlined, color: Colors.white), onPressed: (){Navigator.of(context).pushReplacement(MaterialPageRoute(builder: (_) {
+              return AdminScreen();
+            }));}),
             title: Text("${widget.name}"),
             backgroundColor: Colors.blue[900],
           ),

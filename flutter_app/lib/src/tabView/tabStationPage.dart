@@ -1,8 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_app/redux/model/AppState.dart';
+import 'package:flutter_app/src/tabView/tabDrawerWidget.dart';
 import 'package:flutter_app/src/view/commentTabScreen.dart';
 import 'package:flutter_app/src/services/userService.dart';
 import 'package:flutter_app/src/view/pointWidget.dart';
+import 'package:google_maps_flutter/google_maps_flutter.dart';
+import '../services/service.dart';
+import 'package:location/location.dart';
+import 'package:flutter/services.dart' show rootBundle;
+import '../services/stationServices.dart';
 import 'package:flutter_app/src/view/infoTabScreen.dart';
 import 'package:flutter_app/src/view/userAccountWidget.dart';
 import 'package:flutter_app/src/view/viewModel.dart';
@@ -13,14 +19,14 @@ import '../view/commentsTabScreen.dart';
 import '../services/stationServices.dart';
 
 
-class MenuStation extends StatefulWidget {
+class tabMenuStation extends StatefulWidget {
   final String name;
   // String station;
-  MenuStation({Key key, this.name}) : super(key: key);
-  _MenuStationState createState() => _MenuStationState();
+  tabMenuStation({Key key, this.name}) : super(key: key);
+  tabMenuStationState createState() => tabMenuStationState();
 }
 
-class _MenuStationState extends State<MenuStation> with SingleTickerProviderStateMixin {
+class tabMenuStationState extends State<tabMenuStation> with SingleTickerProviderStateMixin {
   int _currentIndex = 0;
   String line;
   String address;
@@ -29,13 +35,49 @@ class _MenuStationState extends State<MenuStation> with SingleTickerProviderStat
   List RGBStation = [0, 0, 0];
   AnimationController _animationController;
   Animation _colorTween;
+  Set<Marker> _markers;
+  GoogleMapController mapController;
+  final TextEditingController _controller= TextEditingController();
+  List stations = [];
+  String mapStyle;
+  var cameraPosition = CameraPosition(
+    target:  LatLng(45.456532, 9.125001),
+    zoom: 12.0,
+  );
+  var targetPosition;
 
+
+  void _onMapCreated(GoogleMapController controller) {
+    mapController = controller;
+    mapController.setMapStyle(mapStyle);
+  }
+
+  void setMarkers() async {
+    var response = await retrieveMarkers();
+    buildTabMarkers(response, context).then((result) => setState((){
+      _markers = result;
+    }));
+  }
   @override
   void dispose() {
     super.dispose();
     _animationController.dispose();
   }
 
+  void _getLocationPermission() async {
+    var location = new Location();
+    try {
+      location.requestPermission();
+    } on Exception catch (_) {
+      print('There was a problem allowing location access');
+    }
+  }
+
+  void updateStations(String search) {
+    searchStationByName(search).then((netStations) => setState(() {
+      stations = netStations;
+    }));
+  }
 
   void takeStationInformation (){
     informationStation(widget.name).then((information) => setState(() {
@@ -99,6 +141,11 @@ class _MenuStationState extends State<MenuStation> with SingleTickerProviderStat
   @override
   void initState() {
     takeStationInformation ();
+    setMarkers();
+    rootBundle.loadString('assets/mapStyle.txt').then((string) {
+      mapStyle = string;
+    });
+    _getLocationPermission();
     super.initState();
     _animationController =
     AnimationController(vsync:this, duration: Duration(seconds: 3))..repeat();
@@ -125,58 +172,92 @@ class _MenuStationState extends State<MenuStation> with SingleTickerProviderStat
               animation:_animationController,
               builder : (context,child){
                 return Scaffold(
+                  resizeToAvoidBottomInset: false,
                   appBar: AppBar(
                       title: Text("${widget.name}"),
                       //backgroundColor: Color.fromRGBO(RGBStation[0],RGBStation[1],RGBStation[2],  1.0),
                       backgroundColor: _colorTween.value
                   ),
-                  drawer: UserAccount(),
-                  body: tabs[_currentIndex],
-                  bottomNavigationBar: BottomNavigationBar(
-                    currentIndex: _currentIndex,
-                    //type: BottomNavigationBarType.fixed,
-                    selectedFontSize: 15,
-                    items: [
-                      BottomNavigationBarItem(
-                        icon: Icon(Icons.home,
-                          color: Colors.blue[900],
-                        ),
-                        title: Text("Info Station",
-                          style: TextStyle(
-                              fontSize: 16.0,
-                              color: Colors.blue[900]
+                  drawer: TabDrawer(),
+                  body: SafeArea(
+                    child: Row(
+                      children: [
+                        Flexible(
+                          flex: 4,
+                          child: Scaffold (
+                            body: tabs[_currentIndex],
+                            bottomNavigationBar: BottomNavigationBar(
+                              currentIndex: _currentIndex,
+                              //type: BottomNavigationBarType.fixed,
+                              selectedFontSize: 15,
+                              items: [
+                                BottomNavigationBarItem(
+                                  icon: Icon(Icons.home,
+                                    color: Colors.blue[900],
+                                  ),
+                                  title: Text("Info Station",
+                                    style: TextStyle(
+                                        fontSize: 16.0,
+                                        color: Colors.blue[900]
+                                    ),
+                                  ),
+                                ),
+                                BottomNavigationBarItem(
+                                  icon: Icon(Icons.search,
+                                    color: Colors.blue[900],
+                                  ),
+                                  title: Text("Comments",
+                                    style: TextStyle(
+                                      fontSize: 16.0,
+                                      color: Colors.blue[900],
+                                    ),
+                                  ),
+                                ),
+                                BottomNavigationBarItem(
+                                  icon: Icon(Icons.how_to_vote_outlined,
+                                    color: Colors.blue[900],
+                                  ),
+                                  title: Text("Voting",
+                                    style: TextStyle(
+                                        fontSize: 16.0,
+                                        color: Colors.blue[900]
+                                    ),
+                                  ),
+                                ),
+                              ],
+                              onTap: (index){
+                                setState(() {
+                                  _currentIndex = index;
+                                });
+                              },
+                            ),
                           ),
                         ),
-                      ),
-                      BottomNavigationBarItem(
-                        icon: Icon(Icons.search,
-                          color: Colors.blue[900],
-                        ),
-                        title: Text("Comments",
-                          style: TextStyle(
-                            fontSize: 16.0,
-                            color: Colors.blue[900],
+                        Flexible(
+                          flex: 7,
+                          child: Container(
+                              decoration: BoxDecoration(
+                                border: Border.all(color: Colors.white, width: 2),
+                              ),
+                              child: Scaffold(
+                                resizeToAvoidBottomPadding: false,
+                                resizeToAvoidBottomInset: false,
+                                //drawer: UserAccount(),
+                                body: //Stack(children: [
+                                GoogleMap(
+                                  onMapCreated: _onMapCreated,
+                                  initialCameraPosition: cameraPosition,
+                                  markers: _markers,
+                                  myLocationEnabled: true,
+                                  myLocationButtonEnabled: true,
+                                ),
+                              )
                           ),
                         ),
-                      ),
-                      BottomNavigationBarItem(
-                        icon: Icon(Icons.how_to_vote_outlined,
-                          color: Colors.blue[900],
-                        ),
-                        title: Text("Voting",
-                          style: TextStyle(
-                              fontSize: 16.0,
-                              color: Colors.blue[900]
-                          ),
-                        ),
-                      ),
-                    ],
-                    onTap: (index){
-                      setState(() {
-                        _currentIndex = index;
-                      });
-                    },
+                      ],
+                    ),
                   ),
+                  
                 );
 
               }

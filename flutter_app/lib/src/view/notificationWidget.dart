@@ -52,7 +52,7 @@ class _NotificationWidgetState extends State<NotificationWidget> {
           yes = result;
         }));
         print("aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa ${message["notification"]["body"]}");
-        Navigator.push(context, MaterialPageRoute(builder:(context)=>MenuStation(name:message["notification"]["station"])));
+        //Navigator.push(context, MaterialPageRoute(builder:(context)=>MenuStation(name:message["notification"]["station"])));
       }
       //store.dispatch(updateCustomer(name:store.state.customer.name, email:store.state.customer.email, photo: store.state.customer.photo,notification: true));
       //setState(() => yes = true);
@@ -65,7 +65,7 @@ class _NotificationWidgetState extends State<NotificationWidget> {
         ch.addMessage(message["notification"]["body"]).then((result) => setState((){
           yes = result;
         }));
-        Navigator.push(context, MaterialPageRoute(builder:(context)=>MenuStation(name:message["notification"]["station"])));
+        //Navigator.push(context, MaterialPageRoute(builder:(context)=>MenuStation(name:message["notification"]["station"])));
         //store.dispatch(updateCustomer(name:store.state.customer.name, email:store.state.customer.email, photo: store.state.customer.photo,notification: true));
         //setState(() => yes = true);
       }

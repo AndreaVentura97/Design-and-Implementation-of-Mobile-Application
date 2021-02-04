@@ -3,6 +3,7 @@ import 'package:delayed_display/delayed_display.dart';
 import 'package:flutter_app/src/services/service.dart';
 import '../services/adminService.dart';
 import 'adminScreenStation.dart';
+import 'login.dart';
 
 class AdminScreen extends StatefulWidget {
   AdminScreenState createState() => AdminScreenState();
@@ -77,7 +78,15 @@ class AdminScreenState extends State<AdminScreen> {
               appBar: AppBar(
                 centerTitle: true,
                 backgroundColor: Colors.blue[900],
+                leading: IconButton(icon: Icon(Icons.exit_to_app, color: Colors.white), onPressed: (){Navigator.of(context).pushReplacement(MaterialPageRoute(builder: (_) {
+                  return Login();
+                }));}),
                 title: Text("Stations"),
+                actions: [
+                  IconButton(icon: Icon(Icons.refresh), onPressed:  (){Navigator.of(context).pushReplacement(MaterialPageRoute(builder: (_) {
+                    return AdminScreen();
+                  }));}),
+                ],
               ),
               body: (ready) ? ListView.builder(
                 //shrinkWrap: true,

@@ -1,5 +1,5 @@
 import 'dart:convert';
-
+import 'loadingTab.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_app/src/services/sendNotification.dart';
 import 'package:flutter_app/src/view/popupVoteScreen.dart';
@@ -27,6 +27,7 @@ class MessagesState extends State<Messages> {
   List messagesInteractions = [];
   List myLikes = [];
   List myUnlikes = [];
+  bool ready = false;
   var valueDrop = "Date";
 
   void listMessages(station) {
@@ -34,6 +35,7 @@ class MessagesState extends State<Messages> {
         setState(() {
           messages = new List.from(netMessages.reversed);
           messagesInteractions = orderListByInteractions(netMessages);
+          ready = true;
         }));
 
 
@@ -73,6 +75,7 @@ class MessagesState extends State<Messages> {
   void initState() {
     super.initState();
     listMessages(widget.station);
+    //ready = true;
   }
 
   Widget build(BuildContext context) {
@@ -80,7 +83,7 @@ class MessagesState extends State<Messages> {
         converter: (store) => createViewModel(store),
         onInit: (store) => retrieveMyPreference(store.state.customer.email),
         builder: (context, _viewModel) {
-          return Column(
+          return (ready) ?  Column(
                 children: [
                   Container(
                     color: Colors.grey[300],
@@ -593,7 +596,7 @@ class MessagesState extends State<Messages> {
                     ),
                   ),
                 ],
-              );
+              ) : Loading();
         });
   }
 

@@ -1,6 +1,7 @@
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:flutter/gestures.dart';
+import 'login.dart';
 import 'package:flutter/material.dart';
-import 'profile.dart';
 import 'package:auto_size_text/auto_size_text.dart';
 import '../services/userService.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
@@ -62,7 +63,12 @@ class _RegisterState extends State<Register> {
                     mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                     mainAxisSize: MainAxisSize.max,
                     children: [
-                      SizedBox(height: 2,),
+                      // Row(
+                      //   mainAxisAlignment: MainAxisAlignment.start,
+                      //   children: [
+                      //     IconButton(icon: Icon(Icons.arrow_back_outlined, color: Colors.white), onPressed: (){Navigator.pop(context);})
+                      //   ],
+                      // ),
 
                       Container(
                         height: 200,
@@ -284,6 +290,33 @@ class _RegisterState extends State<Register> {
                           ),
                         ),
                       ),
+
+                      Align(
+                        alignment: Alignment.bottomCenter,
+                        child: RichText(
+                          text: TextSpan(
+                              text: "Go back to ",
+                              style: TextStyle(
+                                color: Colors.white,
+                                fontSize: 16.0,
+                              ),
+                              children: [
+                                TextSpan(
+                                  text: 'Login',
+                                  style: TextStyle(
+                                    color: Colors.blue,
+                                    decoration:
+                                    TextDecoration.underline,
+                                    fontSize: 16.0,
+                                  ),
+                                  recognizer: TapGestureRecognizer()
+                                    ..onTap = () async {
+                                      Navigator.pop(context);
+                                    },
+                                )
+                              ]),
+                        ),
+                      )
                     ],
                   ),
                     showAlert(),

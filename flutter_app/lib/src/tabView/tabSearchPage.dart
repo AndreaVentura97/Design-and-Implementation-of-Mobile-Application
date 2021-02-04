@@ -6,6 +6,7 @@ import '../services/service.dart';
 import 'package:location/location.dart';
 import 'package:flutter/services.dart' show rootBundle;
 //import 'displayMenuStation.dart';
+import 'tabStationPage.dart';
 import '../services/stationServices.dart';
 
 import 'tabDrawerWidget.dart';
@@ -89,165 +90,193 @@ class TabSearchState extends State<TabSearch> {
           backgroundColor: Colors.blue[900],
         ),
         drawer: TabDrawer(),
-        body: Container(
-          child: Stack(
+        body: SafeArea(
+          child: Row(
             children: [
-              Stack(children: [
-                Container(
-                  color: Colors.white,
-                  child: Center(
-                    child: Container(
-                      height: 300,
-                      width: 200,
-                      child: FittedBox(
-                        child: Image.asset(
-                          'assets/Logo_Name.jpeg',
+              Flexible(
+                flex: 4,
+                child: Stack(
+                  children: [
+                    Stack(children: [
+                      Container(
+                        color: Colors.white,
+                        child: Center(
+                          child: Container(
+                            height: 300,
+                            width: 200,
+                            child: FittedBox(
+                              child: Image.asset(
+                                'assets/Logo_Name.jpeg',
+                              ),
+                            ),
+                          ),
                         ),
                       ),
-                    ),
-                  ),
-                ),
-                Container(
-                  color: Color.fromRGBO(255, 255, 255, 0.3),
-                )
-              ]),
-              Column(
-                        children: [
-                          Container(
-                            color: Colors.grey[300],
-                            child: Column(
+                      Container(
+                        color: Color.fromRGBO(255, 255, 255, 0.3),
+                      )
+                    ]),
+                    Column(
                               children: [
                                 Container(
-                                  margin: EdgeInsets.all(10),
-                                  child: Row(
-                                    mainAxisSize: MainAxisSize.min,
+                                  color: Colors.grey[300],
+                                  child: Column(
                                     children: [
-                                      Flexible(
-                                        child: TextField(
-                                          controller: _controller,
-                                          textAlign: TextAlign.start,
-                                          style: TextStyle(
-                                              fontSize: 22,
-                                              fontWeight: FontWeight.w500,
-                                              color: Colors.black),
-                                          decoration: InputDecoration(
-                                            contentPadding: EdgeInsets.symmetric(vertical: 5.0, horizontal: 10),
-                                            isDense: true,
-                                            fillColor: Colors.grey[300],
-                                            filled: true,
-                                            hintText: 'Search Station',
-                                            hintStyle: TextStyle(color: Colors.grey, fontSize: 22),
-                                            enabledBorder:
-                                            // UnderlineInputBorder(
-                                            //   borderSide: BorderSide(
-                                            //     color: Colors.blue[900],
-                                            //     width: 2.0,
-                                            //   ),
-                                            //   //borderRadius: BorderRadius.circular(10.0),
-                                            // ),
-                                            InputBorder.none,
-                                            focusedBorder:
-                                            // UnderlineInputBorder(
-                                            //   borderSide: BorderSide(
-                                            //     color: Colors.blue[900],
-                                            //     width: 2.0,
-                                            //   ),
-                                            //   //borderRadius: BorderRadius.circular(10.0),
-                                            // ),
-                                            InputBorder.none,
-                                          ),
-                                          onChanged: updateStations,
+                                      Container(
+                                        margin: EdgeInsets.all(10),
+                                        child: Row(
+                                          mainAxisSize: MainAxisSize.min,
+                                          children: [
+                                            Flexible(
+                                              child: TextField(
+                                                controller: _controller,
+                                                textAlign: TextAlign.start,
+                                                style: TextStyle(
+                                                    fontSize: 22,
+                                                    fontWeight: FontWeight.w500,
+                                                    color: Colors.black),
+                                                decoration: InputDecoration(
+                                                  contentPadding: EdgeInsets.symmetric(vertical: 5.0, horizontal: 10),
+                                                  isDense: true,
+                                                  fillColor: Colors.grey[300],
+                                                  filled: true,
+                                                  hintText: 'Search Station',
+                                                  hintStyle: TextStyle(color: Colors.grey, fontSize: 22),
+                                                  enabledBorder:
+                                                  // UnderlineInputBorder(
+                                                  //   borderSide: BorderSide(
+                                                  //     color: Colors.blue[900],
+                                                  //     width: 2.0,
+                                                  //   ),
+                                                  //   //borderRadius: BorderRadius.circular(10.0),
+                                                  // ),
+                                                  InputBorder.none,
+                                                  focusedBorder:
+                                                  // UnderlineInputBorder(
+                                                  //   borderSide: BorderSide(
+                                                  //     color: Colors.blue[900],
+                                                  //     width: 2.0,
+                                                  //   ),
+                                                  //   //borderRadius: BorderRadius.circular(10.0),
+                                                  // ),
+                                                  InputBorder.none,
+                                                ),
+                                                onChanged: updateStations,
+                                              ),
+                                            ),
+                                            IconButton(
+                                              icon: Icon(
+                                                Icons.clear,
+                                                size: 25.0,
+                                              ),
+                                              padding: EdgeInsets.zero,
+                                              constraints: BoxConstraints(),
+                                              onPressed: () {
+                                                _controller.clear();
+                                                updateStations('null');
+                                              },
+                                            ),
+                                          ],
                                         ),
                                       ),
-                                      IconButton(
-                                        icon: Icon(
-                                          Icons.clear,
-                                          size: 25.0,
-                                        ),
-                                        padding: EdgeInsets.zero,
-                                        constraints: BoxConstraints(),
-                                        onPressed: () {
-                                          _controller.clear();
-                                          updateStations('null');
-                                        },
+                                      Divider(
+                                        height: 1,
+                                        thickness: 1.0,
+                                        //indent: 10, endIndent: 10,
+                                        color: Colors.black,
                                       ),
                                     ],
                                   ),
                                 ),
-                                Divider(
-                                  height: 1,
-                                  thickness: 1.0,
-                                  //indent: 10, endIndent: 10,
-                                  color: Colors.black,
+                                Expanded(
+                                  child: ListView.builder(
+                                      //shrinkWrap: true,
+                                      itemCount: stations.length,
+                                      itemBuilder: (BuildContext context, int index) {
+                                        return Card(
+                                          margin: EdgeInsets.fromLTRB(10.0, 15.0, 10.0, 0.0),
+                                          elevation: 3.0,
+                                          shape: RoundedRectangleBorder(
+                                            borderRadius: BorderRadius.circular(10.0),
+                                            side: BorderSide(
+                                              color: Colors.blue[900],
+                                              width: 2.0,
+                                            ),
+                                          ),
+                                          child: Container(
+                                            padding: EdgeInsets.all(10),
+                                            child: ListTile(
+                                              tileColor: Colors.white,
+                                              contentPadding:
+                                              EdgeInsets.symmetric(horizontal: 5.0),
+                                              leading: Container(
+                                                child: Image(
+                                                  image: AssetImage(checkLine(stations[index])),
+                                                  height: 40.0,
+                                                  width: 60.0,
+                                                ),
+                                              ),
+                                              title: Text(stations[index]["name"],
+                                                  style: TextStyle(
+                                                      fontSize: 25,
+                                                      fontWeight: FontWeight.w500,
+                                                      color: Colors.black)),
+                                              onTap: () => {
+                                                setState((){
+                                                  targetPosition = CameraPosition(
+                                                      target: LatLng(stations[index]['latitude'],stations[index]['longitude']),
+                                                      zoom: 16.5);
+                                                  CameraUpdate update =CameraUpdate.newCameraPosition(targetPosition);
+                                                  //mapController.moveCamera(update);
+                                                  mapController.animateCamera(update);
+                                                  //_controller.clear();
+                                                  stations.clear();
+                                                }),
+                                              Navigator.push(
+                                                    context,
+                                                    MaterialPageRoute(
+                                                        builder: (context) => tabMenuStation(
+                                                            name: stations[index]['name'])))
+                                              },
+
+
+                                              dense: true,
+                                            ),
+                                          ),
+                                        );
+                                      },
+                                      // separatorBuilder: (BuildContext context, int index) {
+                                      //   return Divider(color: Colors.grey, thickness: 1);
+                                      // },
+                                    ),
                                 ),
                               ],
                             ),
-                          ),
-                          Expanded(
-                            child: ListView.builder(
-                                //shrinkWrap: true,
-                                itemCount: stations.length,
-                                itemBuilder: (BuildContext context, int index) {
-                                  return Card(
-                                    margin: EdgeInsets.fromLTRB(10.0, 15.0, 10.0, 0.0),
-                                    elevation: 3.0,
-                                    shape: RoundedRectangleBorder(
-                                      borderRadius: BorderRadius.circular(10.0),
-                                      side: BorderSide(
-                                        color: Colors.blue[900],
-                                        width: 2.0,
-                                      ),
-                                    ),
-                                    child: Container(
-                                      padding: EdgeInsets.all(10),
-                                      child: ListTile(
-                                        tileColor: Colors.white,
-                                        contentPadding:
-                                        EdgeInsets.symmetric(horizontal: 5.0),
-                                        leading: Container(
-                                          child: Image(
-                                            image: AssetImage(checkLine(stations[index])),
-                                            height: 40.0,
-                                            width: 60.0,
-                                          ),
-                                        ),
-                                        title: Text(stations[index]["name"],
-                                            style: TextStyle(
-                                                fontSize: 25,
-                                                fontWeight: FontWeight.w500,
-                                                color: Colors.black)),
-                                        onTap: () => {
-                                          setState((){
-                                            targetPosition = CameraPosition(
-                                                target: LatLng(stations[index]['latitude'],stations[index]['longitude']),
-                                                zoom: 16.5);
-                                            CameraUpdate update =CameraUpdate.newCameraPosition(targetPosition);
-                                            //mapController.moveCamera(update);
-                                            mapController.animateCamera(update);
-                                            //_controller.clear();
-                                            stations.clear();
-                                          })},
-                                        // onLongPress: () => {
-                                        //   Navigator.push(
-                                        //       context,
-                                        //       MaterialPageRoute(
-                                        //           builder: (context) => MenuStation(
-                                        //               name: stations[index]['name'])))
-                                        // },
+                  ],
+                ),
+              ),
 
-
-                                        dense: true,
-                                      ),
-                                    ),
-                                  );
-                                },
-                                // separatorBuilder: (BuildContext context, int index) {
-                                //   return Divider(color: Colors.grey, thickness: 1);
-                                // },
-                              ),
-                          ),
-                        ],
+              Flexible(
+                flex: 7,
+                child: Container(
+                    decoration: BoxDecoration(
+                      border: Border.all(color: Colors.white, width: 2),
+                    ),
+                    child: Scaffold(
+                      resizeToAvoidBottomPadding: false,
+                      resizeToAvoidBottomInset: false,
+                      //drawer: UserAccount(),
+                      body: //Stack(children: [
+                      GoogleMap(
+                        onMapCreated: _onMapCreated,
+                        initialCameraPosition: cameraPosition,
+                        markers: _markers,
+                        myLocationEnabled: true,
+                        myLocationButtonEnabled: true,
                       ),
+                    )
+                ),
+              ),
             ],
           ),
         ),

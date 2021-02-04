@@ -89,10 +89,10 @@ class VotingState extends State<Voting> {
       converter: (store) => createViewModel(store),
       onInit: (store) => retrieveMyVotes(store.state.customer.email),
       builder: (context, _viewModel) {
-        return Stack(
-          children: [
+        return
             SingleChildScrollView(
-                  child: Column(
+                  child: Stack(
+                      children: [Column(
                         //mainAxisSize: MainAxisSize.min,
                           children: [
                             Card(
@@ -711,73 +711,11 @@ class VotingState extends State<Voting> {
                             )
                           ]),
 
+                      ],
                 ),
-            Container(padding: EdgeInsets.all(8), child: showAlert())
-          ],
+
         );
       },
-    );
-  }
-
-  Widget showAlert() {
-    if (show == 1)
-      {print("commento inserito");
-      return Container(
-        height: 40,
-        color: Colors.amber,
-        width: double.infinity,
-        padding: EdgeInsets.all(8.0),
-        child: Row(
-          crossAxisAlignment: CrossAxisAlignment.center,
-          mainAxisSize: MainAxisSize.max,
-          children: [
-            Icon(Icons.error_outline),
-            SizedBox(width: 8,),
-            Expanded(
-              child: Text(
-                "You've submitted a comment",
-              ),
-            ),
-            IconButton(
-              padding: EdgeInsets.zero,
-                icon: Icon(Icons.close),
-                onPressed: () {
-                  setState(() {
-                    show = 0;
-                  });
-                })
-          ],
-        ),
-      );}
-    if (show == 2)
-      return Container(
-        height: 40,
-        color: Colors.amber,
-        width: double.infinity,
-        padding: EdgeInsets.all(8.0),
-        child: Row(
-          crossAxisAlignment: CrossAxisAlignment.center,
-          mainAxisSize: MainAxisSize.max,
-          children: [
-            Icon(Icons.error_outline),
-            SizedBox(height: 8,),
-            Expanded(
-              child: Text(
-                "You've submitted a report"
-              )
-            ),
-            IconButton(
-                icon: Icon(Icons.close),
-                onPressed: () {
-                  setState(() {
-                    show = 0;
-                  });
-                })
-          ],
-        ),
-      );
-    return SizedBox(
-      height: 0.0,
     );
   }
 }

@@ -38,7 +38,8 @@ class MyStationsState extends State<MyStations> {
                 setState(() {
                   myFullStations.add(result);
                 }));
-        }}));
+        }
+        }));
 
     }
 
@@ -71,6 +72,9 @@ class MyStationsState extends State<MyStations> {
     if (name == "Metro M1-M3"){
       return "assets/M1-M3.jpeg";
     }
+    if (name == "Metro M1-M2"){
+      return "assets/M1-M2.jpeg";
+    }
     if (name == "Metro M2-M3"){
       return "assets/M2-M3.jpeg";
     }
@@ -92,16 +96,11 @@ class MyStationsState extends State<MyStations> {
 
   Widget build(BuildContext context) {
     return Scaffold(
-            appBar:
-            GradientAppBar(
-              gradient: LinearGradient(colors: [Colors.red, Colors.green]),
-              centerTitle: true,
-              title: Row(
-                children: [
-                  Text("My Stations"),
-                ],
-              ),
+            appBar: AppBar(
+              backgroundColor: Colors.blue[900],
+              title: Text("My Stations"),
             ),
+
 
             drawer: UserAccount(),
         body: DelayedDisplay(

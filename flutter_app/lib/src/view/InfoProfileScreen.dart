@@ -8,11 +8,7 @@ import 'displayMenuStation.dart';
 import 'notificationWidget.dart';
 import 'dart:io';
 import 'dart:convert';
-import 'dart:typed_data';
-import 'package:android_intent/android_intent.dart';
-import 'package:device_apps/device_apps.dart';
-import 'package:firebase_messaging/firebase_messaging.dart';
-import 'package:flutter/material.dart';
+import 'loadingTab.dart';
 import 'package:flutter_app/redux/actions/actions.dart';
 import 'package:flutter_app/redux/model/AppState.dart';
 import 'package:flutter_app/src/services/userService.dart';
@@ -104,8 +100,8 @@ class InfoProfileState extends State<InfoProfile> {
               ),
             ),
             drawer: UserAccount(),
-            body: DelayedDisplay(
-              delay: Duration(milliseconds:1500),
+            body: (ready) ? DelayedDisplay(
+              delay: Duration(milliseconds:1000),
               child: SingleChildScrollView(
                 child: Container(
                     color: Colors.white,
@@ -121,7 +117,7 @@ class InfoProfileState extends State<InfoProfile> {
                                 //color: Colors.yellow,
                                 child: InkWell(
                                     child: new CircleAvatar(
-                                      backgroundImage: (ready) ? photo : null,
+                                      backgroundImage: photo,
                                       radius: 40,
                                     ),
                                     onTap: () {
@@ -431,7 +427,7 @@ class InfoProfileState extends State<InfoProfile> {
                     ),
                   ),
               ),
-            )
+            ) : Loading()
           );
         });
   }
