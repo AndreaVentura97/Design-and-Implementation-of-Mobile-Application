@@ -117,6 +117,12 @@ class InfoStationState extends State<InfoStation> {
         image = "assets/M2-M3.jpeg";
       });
     }
+    if (line=="Metro M1-M3"){
+      setState(() {
+        print('here');
+        image = "assets/M1-M3.jpeg";
+      });
+    }
   }
 
   updateFav(email,station){
