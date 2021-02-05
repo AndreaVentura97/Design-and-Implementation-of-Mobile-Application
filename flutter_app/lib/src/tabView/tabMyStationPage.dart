@@ -12,6 +12,7 @@ import 'package:location/location.dart';
 import 'package:flutter/services.dart' show rootBundle;
 import '../services/stationServices.dart';
 import 'tabDrawerWidget.dart';
+import 'tabStationPage.dart';
 
 class TabMyStations extends StatefulWidget {
   var email;
@@ -171,7 +172,7 @@ class TabMyStationsState extends State<TabMyStations> {
                         itemBuilder: (BuildContext context, int index) {
                           return GestureDetector(
                             onTap: (){
-                              Navigator.push(context, MaterialPageRoute(builder:(context)=>MenuStation(name:myFullStations[index]['name'])));
+                              Navigator.push(context, MaterialPageRoute(builder:(context)=>tabMenuStation(name:myFullStations[index]['name'])));
                             },
                             child: Card(
                               margin: EdgeInsets.fromLTRB(10.0, 10.0, 10.0, 0.0),

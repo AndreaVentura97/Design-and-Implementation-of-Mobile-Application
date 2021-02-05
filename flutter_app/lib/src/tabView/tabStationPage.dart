@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:delayed_display/delayed_display.dart';
 import 'package:gradient_app_bar/gradient_app_bar.dart';
 import 'package:flutter_app/redux/model/AppState.dart';
 import 'package:flutter_app/src/tabView/tabDrawerWidget.dart';
@@ -192,126 +193,127 @@ class tabMenuStationState extends State<tabMenuStation> with SingleTickerProvide
             Comments(station: widget.name),
             Voting(station:widget.name),
           ];
-          return AnimatedBuilder(
-              animation:_animationController,
-              builder : (context,child){
-                return Scaffold(
-                  resizeToAvoidBottomInset: false,
-                  appBar: GradientAppBar(
-                    gradient: LinearGradient(colors: [Color.fromRGBO(RGBStation_1[0],RGBStation_1[1],RGBStation_1[2],1),
-                      Color.fromRGBO(RGBStation_2[0],RGBStation_2[1],RGBStation_2[2],1)]),
-                    centerTitle: true,
-                    title: Text("${widget.name}"),
-                    leading: IconButton(icon: Icon(Icons.arrow_back_outlined, color: Colors.white), onPressed: (){Navigator.pop(context);}),
-                  ),
-                  body: SafeArea(
-                    child: Row(
-                      children: [
-                        Flexible(
-                          flex: 4,
-                          child: Scaffold (
-                            body: Stack(
-                              children: [
-                                Stack(children: [
-                                  Container(
-                                    color: Colors.white,
-                                    child: Center(
-                                      child: Container(
-                                        height: 300,
-                                        width: 200,
-                                        child: FittedBox(
-                                          child: Image.asset(
-                                            'assets/Logo_MeMiQ_2.png',
+          return DelayedDisplay(
+            delay: Duration(seconds: 1),
+            child: Scaffold(
+                    resizeToAvoidBottomInset: false,
+                    appBar: GradientAppBar(
+                      gradient: LinearGradient(colors: [Color.fromRGBO(RGBStation_1[0],RGBStation_1[1],RGBStation_1[2],1),
+                        Color.fromRGBO(RGBStation_2[0],RGBStation_2[1],RGBStation_2[2],1)]),
+                      centerTitle: true,
+                      title: Text("${widget.name}"),
+                      leading: IconButton(icon: Icon(Icons.arrow_back_outlined, color: Colors.white), onPressed: (){Navigator.pop(context);}),
+                    ),
+                    body: SafeArea(
+                      child: Row(
+                        children: [
+                          Flexible(
+                            flex: 4,
+                            child: Scaffold (
+                              body: Stack(
+                                children: [
+                                  Stack(children: [
+                                    Container(
+                                      color: Colors.white,
+                                      child: Center(
+                                        child: Container(
+                                          height: 300,
+                                          width: 200,
+                                          child: FittedBox(
+                                            child: Image.asset(
+                                              'assets/Logo_MeMiQ_2.png',
+                                            ),
                                           ),
                                         ),
                                       ),
                                     ),
-                                  ),
-                                  Container(
-                                    color: Color.fromRGBO(255, 255, 255, 0.3),
-                                  )
-                                ]),
-                                tabs[_currentIndex],
-                              ],
-                            ),
-                            bottomNavigationBar: BottomNavigationBar(
-                              currentIndex: _currentIndex,
-                              //type: BottomNavigationBarType.fixed,
-                              selectedFontSize: 15,
-                              items: [
-                                BottomNavigationBarItem(
-                                  icon: Icon(Icons.home,
-                                    color: Colors.blue[900],
-                                  ),
-                                  title: Text("Info Station",
-                                    style: TextStyle(
-                                        fontSize: 16.0,
-                                        color: Colors.blue[900]
-                                    ),
-                                  ),
-                                ),
-                                BottomNavigationBarItem(
-                                  icon: Icon(Icons.search,
-                                    color: Colors.blue[900],
-                                  ),
-                                  title: Text("Comments",
-                                    style: TextStyle(
-                                      fontSize: 16.0,
+                                    Container(
+                                      color: Color.fromRGBO(255, 255, 255, 0.3),
+                                    )
+                                  ]),
+                                  tabs[_currentIndex],
+                                ],
+                              ),
+                              bottomNavigationBar: BottomNavigationBar(
+                                currentIndex: _currentIndex,
+                                //type: BottomNavigationBarType.fixed,
+                                selectedFontSize: 15,
+                                items: [
+                                  BottomNavigationBarItem(
+                                    icon: Icon(Icons.home,
                                       color: Colors.blue[900],
                                     ),
-                                  ),
-                                ),
-                                BottomNavigationBarItem(
-                                  icon: Icon(Icons.how_to_vote_outlined,
-                                    color: Colors.blue[900],
-                                  ),
-                                  title: Text("Voting",
-                                    style: TextStyle(
-                                        fontSize: 16.0,
-                                        color: Colors.blue[900]
+                                    title: Text("Info Station",
+                                      style: TextStyle(
+                                          fontSize: 16.0,
+                                          color: Colors.blue[900]
+                                      ),
                                     ),
                                   ),
-                                ),
-                              ],
-                              onTap: (index){
-                                setState(() {
-                                  _currentIndex = index;
-                                });
-                              },
+                                  BottomNavigationBarItem(
+                                    icon: Icon(Icons.search,
+                                      color: Colors.blue[900],
+                                    ),
+                                    title: Text("Comments",
+                                      style: TextStyle(
+                                        fontSize: 16.0,
+                                        color: Colors.blue[900],
+                                      ),
+                                    ),
+                                  ),
+                                  BottomNavigationBarItem(
+                                    icon: Icon(Icons.how_to_vote_outlined,
+                                      color: Colors.blue[900],
+                                    ),
+                                    title: Text("Voting",
+                                      style: TextStyle(
+                                          fontSize: 16.0,
+                                          color: Colors.blue[900]
+                                      ),
+                                    ),
+                                  ),
+                                ],
+                                onTap: (index){
+                                  setState(() {
+                                    _currentIndex = index;
+                                  });
+                                },
+                              ),
                             ),
                           ),
-                        ),
-                        Flexible(
-                          flex: 7,
-                          child: Container(
-                              decoration: BoxDecoration(
-                                border: Border.all(color: Colors.white, width: 2),
-                              ),
-                              child: Scaffold(
-                                resizeToAvoidBottomPadding: false,
-                                resizeToAvoidBottomInset: false,
-                                //drawer: UserAccount(),
-                                body: //Stack(children: [
-                                GoogleMap(
-                                  onMapCreated: _onMapCreated,
-                                  initialCameraPosition: CameraPosition(
-                                      target: LatLng(latitude, longitude),
-                                      zoom: 16.5),
-                                  markers: _markers,
-                                  myLocationEnabled: true,
-                                  myLocationButtonEnabled: true,
+                          Flexible(
+                            flex: 7,
+                            child: Container(
+                                decoration: BoxDecoration(
+                                  border: Border.all(color: Colors.white, width: 2),
                                 ),
-                              )
+                                child: Scaffold(
+                                  resizeToAvoidBottomPadding: false,
+                                  resizeToAvoidBottomInset: false,
+                                  //drawer: UserAccount(),
+                                  body: //Stack(children: [
+                                  DelayedDisplay(
+                                    delay: Duration(seconds:1),
+                                    child: GoogleMap(
+                                      onMapCreated: _onMapCreated,
+                                      initialCameraPosition: CameraPosition(
+                                          target: LatLng(latitude, longitude),
+                                          zoom: 16.5),
+                                      markers: _markers,
+                                      myLocationEnabled: true,
+                                      myLocationButtonEnabled: true,
+                                    ),
+                                  ),
+                                )
+                            ),
                           ),
-                        ),
-                      ],
+                        ],
+                      ),
                     ),
-                  ),
-                  
-                );
 
-              }
+                  ),
           );
+
         }
 
     );
